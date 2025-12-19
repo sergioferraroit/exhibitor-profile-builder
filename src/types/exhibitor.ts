@@ -42,6 +42,15 @@ export interface ProductDocument {
   url: string;
 }
 
+export interface CompanyDocument {
+  id: string;
+  name: string;
+  description: string;
+  category: 'brochure' | 'case-study' | 'white-paper' | 'press-release' | 'other';
+  fileUrl: string;
+  fileName: string;
+}
+
 export interface Session {
   id: string;
   title: string;
