@@ -272,7 +272,63 @@ const createInitialProfile = (): ExhibitorProfile => ({
       },
     },
   ],
-  products: [],
+  products: [
+    {
+      id: '1',
+      name: '1-Day Hop-On Hop-Off Bus + Harbour Cruise Pass',
+      description: "Explore the city's top landmarks with the 1-Day Hop-On Hop-Off Bus and Harbour Cruise pass! Ride both the North (Blue Line) and South (Red Line) routes, with stops near iconic attractions like the Opera House, Bondi Beach, and Darling Harbour.",
+      categories: ['Tours', 'Attractions'],
+      images: [
+        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=300&fit=crop',
+      ],
+      videoUrl: 'https://example.com/video1.mp4',
+      documents: [
+        { id: 'd1', name: 'Tour Brochure', type: 'brochure', url: '#' },
+        { id: 'd2', name: 'Route Map', type: 'other', url: '#' },
+      ],
+      status: 'published',
+      localeData: {
+        'en-GB': { name: '1-Day Hop-On Hop-Off Bus + Harbour Cruise Pass', description: "Explore the city's top landmarks with the 1-Day Hop-On Hop-Off Bus and Harbour Cruise pass!" },
+        'fr-FR': { name: 'Pass Bus Hop-On Hop-Off + Croisière 1 Jour', description: "Explorez les principaux monuments de la ville avec le pass Bus Hop-On Hop-Off et Croisière!" },
+        'ja-JP': { name: '1日乗り降り自由バス + ハーバークルーズパス', description: '1日乗り降り自由バスとハーバークルーズパスで、街の主要なランドマークを探索しましょう！' },
+      },
+    },
+    {
+      id: '2',
+      name: 'Premium City Walking Tour',
+      description: 'Discover hidden gems and local secrets on our premium guided walking tour. Expert guides share fascinating stories about the city\'s history, culture, and architecture.',
+      categories: ['Tours', 'Experiences'],
+      images: [
+        'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=300&fit=crop',
+      ],
+      documents: [
+        { id: 'd3', name: 'Tour Guide', type: 'brochure', url: '#' },
+      ],
+      status: 'published',
+      localeData: {
+        'en-GB': { name: 'Premium City Walking Tour', description: 'Discover hidden gems and local secrets on our premium guided walking tour.' },
+        'fr-FR': { name: 'Visite Guidée Premium', description: 'Découvrez des joyaux cachés et des secrets locaux lors de notre visite guidée premium.' },
+        'ja-JP': { name: 'プレミアムシティウォーキングツアー', description: 'プレミアムガイドウォーキングツアーで、隠れた名所や地元の秘密を発見しましょう。' },
+      },
+    },
+    {
+      id: '3',
+      name: 'Adventure Package - Coming Soon',
+      description: 'An exciting new adventure package featuring exclusive experiences. Stay tuned for more details!',
+      categories: ['Adventure'],
+      images: [],
+      documents: [],
+      status: 'draft',
+      localeData: {
+        'en-GB': { name: 'Adventure Package - Coming Soon', description: 'An exciting new adventure package featuring exclusive experiences.' },
+        'fr-FR': { name: 'Forfait Aventure - Bientôt', description: 'Un nouveau forfait aventure passionnant avec des expériences exclusives.' },
+        'ja-JP': { name: 'アドベンチャーパッケージ - 近日公開', description: 'エキサイティングな新しいアドベンチャーパッケージが間もなく登場！' },
+      },
+    },
+  ],
   sessions: [],
 });
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Product, Locale } from '@/types/exhibitor';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -13,7 +13,11 @@ import {
   Edit, 
   Trash2,
   TrendingUp,
-  Image
+  Image,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  FileText
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
@@ -221,8 +225,23 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: ProductCardProps) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const name = product.localeData[selectedLocale]?.name || product.name;
   const description = product.localeData[selectedLocale]?.description || product.description;
+
+  const handlePrevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIndex(prev => 
+      prev === 0 ? product.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIndex(prev => 
+      prev === product.images.length - 1 ? 0 : prev + 1
+    );
+  };
 
   if (viewMode === 'list') {
     return (
@@ -230,9 +249,18 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
         <CardContent className="py-3">
           <div className="flex items-center gap-4">
             <GripVertical className="h-5 w-5 text-muted-foreground cursor-grab" />
-            <div className="w-16 h-16 bg-muted rounded-lg overflow-hidden flex-shrink-0">
+            <div className="w-16 h-16 bg-muted rounded-lg overflow-hidden flex-shrink-0 relative">
               {product.images[0] ? (
-                <img src={product.images[0]} alt={name} className="w-full h-full object-cover" />
+                <>
+                  <img src={product.images[0]} alt={name} className="w-full h-full object-cover" />
+                  {product.videoUrl && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-6 h-6 rounded-full bg-black/60 flex items-center justify-center">
+                        <Play className="h-3 w-3 text-white fill-white" />
+                      </div>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <Image className="h-6 w-6 text-muted-foreground" />
@@ -240,6 +268,11 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
               )}
             </div>
             <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-muted-foreground">
+                  {product.categories.join(' · ')}
+                </span>
+              </div>
               <div className="flex items-center gap-2">
                 <h4 className="font-medium text-foreground truncate">{name}</h4>
                 <Badge variant={product.status === 'published' ? 'default' : 'secondary'}>
@@ -247,6 +280,12 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
                 </Badge>
               </div>
               <p className="text-sm text-muted-foreground truncate">{description}</p>
+              {product.documents.length > 0 && (
+                <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                  <FileText className="h-3 w-3" />
+                  {product.documents.length} Document{product.documents.length !== 1 ? 's' : ''}
+                </div>
+              )}
             </div>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" onClick={onEdit}>
@@ -263,37 +302,105 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
   }
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden group">
+      {/* Image Carousel */}
       <div className="aspect-video bg-muted relative">
-        {product.images[0] ? (
-          <img src={product.images[0]} alt={name} className="w-full h-full object-cover" />
+        {product.images.length > 0 ? (
+          <>
+            <img 
+              src={product.images[currentImageIndex]} 
+              alt={name} 
+              className="w-full h-full object-cover" 
+            />
+            
+            {/* Video Play Button */}
+            {product.videoUrl && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-12 h-12 rounded-full bg-black/60 flex items-center justify-center">
+                  <Play className="h-5 w-5 text-white fill-white ml-0.5" />
+                </div>
+              </div>
+            )}
+
+            {/* Carousel Navigation - Only show if multiple images */}
+            {product.images.length > 1 && (
+              <>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                  onClick={handlePrevImage}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                  onClick={handleNextImage}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+
+                {/* Pagination Dots */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                  {product.images.map((_, idx) => (
+                    <button
+                      key={idx}
+                      className={cn(
+                        "w-2 h-2 rounded-full transition-colors",
+                        idx === currentImageIndex 
+                          ? "bg-white" 
+                          : "bg-white/50 hover:bg-white/75"
+                      )}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentImageIndex(idx);
+                      }}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </>
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <Image className="h-12 w-12 text-muted-foreground" />
           </div>
         )}
-        <div className="absolute top-2 right-2">
-          <Badge variant={product.status === 'published' ? 'default' : 'secondary'}>
-            {product.status}
-          </Badge>
-        </div>
       </div>
+
       <CardContent className="p-4">
-        <h4 className="font-medium text-foreground truncate mb-1">{name}</h4>
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{description}</p>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Image className="h-3 w-3" />
-            {product.images.length} photos
+        {/* Categories */}
+        {product.categories.length > 0 && (
+          <p className="text-xs text-muted-foreground mb-1">
+            {product.categories.join(' · ')}
+          </p>
+        )}
+
+        {/* Title */}
+        <h4 className="font-semibold text-foreground truncate mb-1">{name}</h4>
+
+        {/* Description */}
+        <p className="text-sm text-muted-foreground line-clamp-3 mb-3">{description}</p>
+
+        {/* Document Count */}
+        {product.documents.length > 0 && (
+          <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-3">
+            <FileText className="h-4 w-4" />
+            {product.documents.length} Document{product.documents.length !== 1 ? 's' : ''}
           </div>
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" onClick={onEdit}>
-              <Edit className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={onDelete}>
-              <Trash2 className="h-4 w-4 text-destructive" />
-            </Button>
-          </div>
+        )}
+
+        {/* Actions */}
+        <div className="flex items-center justify-end gap-1 pt-2 border-t">
+          <Button variant="outline" size="sm" onClick={onEdit} className="gap-1.5">
+            <Edit className="h-3.5 w-3.5" />
+            Edit
+          </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onDelete}>
+            <Trash2 className="h-4 w-4 text-destructive" />
+          </Button>
         </div>
       </CardContent>
     </Card>
