@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ProfileSection, Locale, SectionStatus, CompanyDocument } from '@/types/exhibitor';
 import { useAISimulation } from '@/hooks/useAISimulation';
-import { Sparkles, Loader2, RefreshCw, Globe, Upload, FileText, Plus, Trash2 } from 'lucide-react';
+import { Sparkles, Loader2, RefreshCw, Globe, Upload, FileText, Plus, Trash2, Undo2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SectionEditModalProps {
@@ -60,6 +60,9 @@ export function SectionEditModal({
     Array.isArray(currentValue) ? currentValue.join(', ') : currentValue || ''
   );
   
+  // Undo AI state
+  const [previousValue, setPreviousValue] = useState<string | null>(null);
+  
   // Documents state
   const [documents, setDocuments] = useState<CompanyDocument[]>([]);
   const [newDocument, setNewDocument] = useState<Partial<CompanyDocument>>({
@@ -73,17 +76,27 @@ export function SectionEditModal({
   useEffect(() => {
     const currentVal = section.localeData[selectedLocale]?.value;
     setValue(Array.isArray(currentVal) ? currentVal.join(', ') : currentVal || '');
+    setPreviousValue(null); // Reset undo state on locale change
   }, [selectedLocale, section.localeData]);
 
   const handleAIGenerate = async () => {
     const aiType = getAITypeForSection(section.id);
     if (!aiType) return;
     
+    setPreviousValue(value); // Save current value before AI generation
+    
     const result = await generateContent(aiType, true);
     if (typeof result === 'string') {
       setValue(result);
     } else {
       setValue(result.join(', '));
+    }
+  };
+
+  const handleUndoAI = () => {
+    if (previousValue !== null) {
+      setValue(previousValue);
+      setPreviousValue(null);
     }
   };
 
@@ -306,20 +319,32 @@ export function SectionEditModal({
               <div className="flex items-center justify-between">
                 <Label>{isMultiValue ? 'Values (comma-separated)' : 'Value'}</Label>
                 {showAIButton && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleAIGenerate}
-                    disabled={isLoading(getAITypeForSection(section.id)!)}
-                    className="gap-2 text-primary"
-                  >
-                    {isLoading(getAITypeForSection(section.id)!) ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Sparkles className="h-4 w-4" />
-                    )}
-                    Use AI
-                  </Button>
+                  previousValue !== null ? (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleUndoAI}
+                      className="gap-2 text-amber-600"
+                    >
+                      <Undo2 className="h-4 w-4" />
+                      Undo AI
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleAIGenerate}
+                      disabled={isLoading(getAITypeForSection(section.id)!)}
+                      className="gap-2 text-primary"
+                    >
+                      {isLoading(getAITypeForSection(section.id)!) ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Sparkles className="h-4 w-4" />
+                      )}
+                      Use AI
+                    </Button>
+                  )
                 )}
               </div>
               
