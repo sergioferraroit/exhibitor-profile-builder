@@ -461,6 +461,13 @@ export function useExhibitorProfile() {
     return steps;
   }, [profile, getIncompleteSections]);
 
+  const updateCompanyName = useCallback((name: string) => {
+    setProfile(prev => ({
+      ...prev,
+      companyName: name,
+    }));
+  }, []);
+
   return {
     profile,
     selectedLocale,
@@ -473,5 +480,6 @@ export function useExhibitorProfile() {
     reorderProducts,
     getIncompleteSections,
     getWizardSteps,
+    updateCompanyName,
   };
 }
