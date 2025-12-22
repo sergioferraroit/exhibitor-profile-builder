@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,9 +6,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useAISimulation } from '@/hooks/useAISimulation';
-import { ArrowLeft, Upload, Sparkles, Loader2, Globe, Plus, X } from 'lucide-react';
-import { Locale } from '@/types/exhibitor';
+import { useExhibitorProfile } from '@/hooks/useExhibitorProfile';
+import { ArrowLeft, Upload, Sparkles, Loader2, Globe, Plus, X, FileText } from 'lucide-react';
+import { Locale, ProductDocument } from '@/types/exhibitor';
 
 const LOCALE_LABELS: Record<Locale, string> = {
   'en-GB': 'English (UK)',
@@ -16,18 +18,82 @@ const LOCALE_LABELS: Record<Locale, string> = {
   'ja-JP': '日本語',
 };
 
+const CATEGORY_LABELS: Record<string, string> = {
+  'brochure': 'Brochure',
+  'case-study': 'Case Study',
+  'white-paper': 'White Paper',
+  'press-release': 'Press Release',
+  'other': 'Other',
+};
+
+interface AvailableDocument {
+  id: string;
+  name: string;
+  fileName: string;
+  category: string;
+  source: 'company' | 'product';
+  sourceProductName?: string;
+}
+
 const ProductEditPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const isNew = productId === 'new';
+  const { profile } = useExhibitorProfile();
   
   const [selectedLocale, setSelectedLocale] = useState<Locale>('en-GB');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [categories, setCategories] = useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
+  const [linkedDocumentIds, setLinkedDocumentIds] = useState<string[]>([]);
   
   const { generateContent, isLoading, typewriterText, isTyping } = useAISimulation();
+
+  // Gather all available documents from company profile and other products
+  const availableDocuments = useMemo((): AvailableDocument[] => {
+    const docs: AvailableDocument[] = [];
+    
+    // Add company documents
+    profile.companyDocuments.forEach(doc => {
+      docs.push({
+        id: doc.id,
+        name: doc.name,
+        fileName: doc.fileName,
+        category: doc.category,
+        source: 'company',
+      });
+    });
+    
+    // Add documents from other products
+    profile.products.forEach(product => {
+      if (product.id !== productId) {
+        product.documents.forEach(doc => {
+          // Avoid duplicates by checking if document already exists
+          if (!docs.some(d => d.id === doc.id)) {
+            docs.push({
+              id: doc.id,
+              name: doc.name,
+              fileName: `${doc.name}.pdf`,
+              category: doc.type,
+              source: 'product',
+              sourceProductName: product.name,
+            });
+          }
+        });
+      }
+    });
+    
+    return docs;
+  }, [profile, productId]);
+
+  const toggleDocument = (docId: string) => {
+    setLinkedDocumentIds(prev => 
+      prev.includes(docId) 
+        ? prev.filter(id => id !== docId)
+        : [...prev, docId]
+    );
+  };
 
   const handleAIName = async () => {
     const result = await generateContent('product-name', true);
@@ -137,14 +203,73 @@ const ProductEditPage = () => {
             </CardContent>
           </Card>
 
-          {/* Documents */}
+          {/* Documents - Upload new */}
           <Card>
             <CardContent className="p-6">
-              <Label className="mb-4 block">Product Documents</Label>
+              <Label className="mb-4 block">Upload New Documents</Label>
               <div className="border-2 border-dashed rounded-lg p-6 text-center">
                 <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
                 <p className="text-sm text-muted-foreground">Upload brochures, case studies, etc.</p>
               </div>
+            </CardContent>
+          </Card>
+
+          {/* Link Existing Documents */}
+          <Card>
+            <CardContent className="p-6">
+              <Label className="mb-2 block">Link Existing Documents</Label>
+              <p className="text-sm text-muted-foreground mb-4">
+                Select documents from your company profile or other products to link to this product.
+              </p>
+              
+              {availableDocuments.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  <FileText className="h-10 w-10 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">No documents available to link.</p>
+                  <p className="text-xs">Upload documents to your company profile first.</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {availableDocuments.map((doc) => (
+                    <div
+                      key={doc.id}
+                      className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer hover:bg-muted/50 ${
+                        linkedDocumentIds.includes(doc.id) ? 'border-primary bg-primary/5' : 'border-border'
+                      }`}
+                      onClick={() => toggleDocument(doc.id)}
+                    >
+                      <Checkbox
+                        checked={linkedDocumentIds.includes(doc.id)}
+                        onCheckedChange={() => toggleDocument(doc.id)}
+                        className="mt-0.5"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
+                          <span className="font-medium text-sm truncate">{doc.name}</span>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+                            {CATEGORY_LABELS[doc.category] || doc.category}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {doc.source === 'company' ? 'Company Profile' : `From: ${doc.sourceProductName}`}
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1 truncate">{doc.fileName}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {linkedDocumentIds.length > 0 && (
+                <div className="mt-4 pt-4 border-t">
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">{linkedDocumentIds.length}</span> document{linkedDocumentIds.length !== 1 ? 's' : ''} selected
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
