@@ -24,6 +24,7 @@ const ExhibitorHub = () => {
     deleteProduct,
     reorderProducts,
     getWizardSteps,
+    updateCompanyName,
   } = useExhibitorProfile();
 
   const completion = useProfileCompletion(profile);
@@ -48,6 +49,7 @@ const ExhibitorHub = () => {
         onLocaleChange={setSelectedLocale}
         onOpenWizard={() => setIsWizardOpen(true)}
         onOpenPreview={() => setIsPreviewOpen(true)}
+        onUpdateCompanyName={updateCompanyName}
         availableLocales={[profile.primaryLocale, ...profile.secondaryLocales]}
         primaryLocale={profile.primaryLocale}
       />

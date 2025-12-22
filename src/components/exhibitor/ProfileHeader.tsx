@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -7,7 +8,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Wand2, Globe, Eye } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Wand2, Globe, Eye, Pencil } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 
 interface ProfileHeaderProps {
@@ -17,6 +27,7 @@ interface ProfileHeaderProps {
   onLocaleChange: (locale: Locale) => void;
   onOpenWizard: () => void;
   onOpenPreview: () => void;
+  onUpdateCompanyName: (name: string) => void;
   availableLocales: Locale[];
   primaryLocale: Locale;
 }
@@ -34,62 +45,117 @@ export function ProfileHeader({
   onLocaleChange,
   onOpenWizard,
   onOpenPreview,
+  onUpdateCompanyName,
   availableLocales,
   primaryLocale,
 }: ProfileHeaderProps) {
-  return (
-    <header className="border-b bg-card">
-      <div className="container mx-auto px-4 py-4 max-w-6xl">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold text-foreground">{companyName}</h1>
-            <p className="text-sm text-muted-foreground">Edit Company Profile</p>
-          </div>
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editedName, setEditedName] = useState(companyName);
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            {/* Completion Progress */}
-            <div className="flex items-center gap-3 min-w-[200px]">
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-medium text-muted-foreground">Profile Complete</span>
-                  <span className="text-xs font-bold text-foreground">{completionPercentage}%</span>
-                </div>
-                <Progress value={completionPercentage} className="h-2" />
+  const handleOpenModal = () => {
+    setEditedName(companyName);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSave = () => {
+    if (editedName.trim()) {
+      onUpdateCompanyName(editedName.trim());
+      setIsEditModalOpen(false);
+    }
+  };
+
+  return (
+    <>
+      <header className="border-b bg-card">
+        <div className="container mx-auto px-4 py-4 max-w-6xl">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-bold text-foreground">{companyName}</h1>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={handleOpenModal}
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
               </div>
+              <p className="text-sm text-muted-foreground">Edit Company Profile</p>
             </div>
 
-            {/* Language Selector */}
-            <Select value={selectedLocale} onValueChange={(v) => onLocaleChange(v as Locale)}>
-              <SelectTrigger className="w-[160px]">
-                <Globe className="h-4 w-4 mr-2" />
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {availableLocales.map((locale) => (
-                  <SelectItem key={locale} value={locale}>
-                    {LOCALE_LABELS[locale]}
-                    {locale === primaryLocale && (
-                      <span className="ml-2 text-xs text-muted-foreground">(Primary)</span>
-                    )}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              {/* Completion Progress */}
+              <div className="flex items-center gap-3 min-w-[200px]">
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-muted-foreground">Profile Complete</span>
+                    <span className="text-xs font-bold text-foreground">{completionPercentage}%</span>
+                  </div>
+                  <Progress value={completionPercentage} className="h-2" />
+                </div>
+              </div>
 
-            {/* Preview Button */}
-            <Button variant="outline" onClick={onOpenPreview} className="gap-2">
-              <Eye className="h-4 w-4" />
-              Preview
-            </Button>
+              {/* Language Selector */}
+              <Select value={selectedLocale} onValueChange={(v) => onLocaleChange(v as Locale)}>
+                <SelectTrigger className="w-[160px]">
+                  <Globe className="h-4 w-4 mr-2" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableLocales.map((locale) => (
+                    <SelectItem key={locale} value={locale}>
+                      {LOCALE_LABELS[locale]}
+                      {locale === primaryLocale && (
+                        <span className="ml-2 text-xs text-muted-foreground">(Primary)</span>
+                      )}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-            {/* Wizard Button */}
-            <Button onClick={onOpenWizard} className="gap-2">
-              <Wand2 className="h-4 w-4" />
-              Fill Profile
-            </Button>
+              {/* Preview Button */}
+              <Button variant="outline" onClick={onOpenPreview} className="gap-2">
+                <Eye className="h-4 w-4" />
+                Preview
+              </Button>
+
+              {/* Wizard Button */}
+              <Button onClick={onOpenWizard} className="gap-2">
+                <Wand2 className="h-4 w-4" />
+                Fill Profile
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Company Name</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="company-name">Company Name</Label>
+              <Input
+                id="company-name"
+                value={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+                placeholder="Enter company name"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsEditModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSave} disabled={!editedName.trim()}>
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
