@@ -71,6 +71,7 @@ export interface ExhibitorProfile {
   sections: ProfileSection[];
   products: Product[];
   sessions: Session[];
+  companyDocuments: CompanyDocument[];
 }
 
 // Section IDs for the profile

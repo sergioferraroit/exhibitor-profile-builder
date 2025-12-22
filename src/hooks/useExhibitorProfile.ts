@@ -4,6 +4,7 @@ import {
   ProfileSection, 
   Product, 
   Session,
+  CompanyDocument,
   Locale, 
   SectionStatus,
   SECTION_IDS 
@@ -330,6 +331,40 @@ const createInitialProfile = (): ExhibitorProfile => ({
     },
   ],
   sessions: [],
+  companyDocuments: [
+    {
+      id: 'doc-1',
+      name: 'Company Brochure 2024',
+      description: 'Our latest company brochure with product overview',
+      category: 'brochure',
+      fileUrl: '#',
+      fileName: 'company-brochure-2024.pdf',
+    },
+    {
+      id: 'doc-2',
+      name: 'Sustainability Case Study',
+      description: 'How we reduced carbon footprint by 50%',
+      category: 'case-study',
+      fileUrl: '#',
+      fileName: 'sustainability-case-study.pdf',
+    },
+    {
+      id: 'doc-3',
+      name: 'Product Technical Specifications',
+      description: 'Technical specs for all our products',
+      category: 'white-paper',
+      fileUrl: '#',
+      fileName: 'product-specs.pdf',
+    },
+    {
+      id: 'doc-4',
+      name: 'Press Release - Q4 2024',
+      description: 'Latest press release announcing new partnerships',
+      category: 'press-release',
+      fileUrl: '#',
+      fileName: 'press-release-q4-2024.pdf',
+    },
+  ],
 });
 
 export function useExhibitorProfile() {
