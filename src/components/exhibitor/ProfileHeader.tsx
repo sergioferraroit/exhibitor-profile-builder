@@ -67,7 +67,7 @@ export function ProfileHeader({
   return (
     <>
       <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4 max-w-6xl">
+        <div className="container mx-auto py-4">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2">

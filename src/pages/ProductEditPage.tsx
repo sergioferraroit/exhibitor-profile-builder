@@ -146,7 +146,7 @@ const ProductEditPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4 max-w-4xl">
+        <div className="container mx-auto py-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm" onClick={() => navigate('/')} className="gap-2">
               <ArrowLeft className="h-4 w-4" />
@@ -157,7 +157,7 @@ const ProductEditPage = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-6 max-w-4xl">
+      <main className="container mx-auto py-6">
         <div className="space-y-6">
           {/* Images */}
           <Card>

@@ -159,7 +159,7 @@ export function PublicProfilePreview({
           </div>
 
           {/* Company Info Section */}
-          <div className="container mx-auto px-6 -mt-16 relative z-10">
+          <div className="container mx-auto -mt-16 relative z-10">
             <div className="flex flex-col md:flex-row gap-6 items-start">
               {/* Logo */}
               <div className="w-32 h-32 rounded-xl bg-card border-4 border-background shadow-lg overflow-hidden flex-shrink-0">
@@ -205,8 +205,8 @@ export function PublicProfilePreview({
           </div>
 
           {/* Main Content */}
-          <div className="container mx-auto px-6 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="container mx-auto py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
               {/* Left Column - Main Info */}
               <div className="lg:col-span-2 space-y-6">
                 {/* About */}

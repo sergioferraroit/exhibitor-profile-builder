@@ -54,7 +54,7 @@ const ExhibitorHub = () => {
         primaryLocale={profile.primaryLocale}
       />
 
-      <main className="container mx-auto px-4 py-6 max-w-6xl">
+      <main className="container mx-auto py-6">
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'profile' | 'products')}>
           <TabsList className="mb-6">
             <TabsTrigger value="profile">Company Profile</TabsTrigger>
