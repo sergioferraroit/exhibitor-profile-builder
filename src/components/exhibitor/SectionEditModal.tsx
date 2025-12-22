@@ -140,8 +140,8 @@ export function SectionEditModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-2xl flex flex-col">
+        <DialogHeader className="pr-8">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-muted-foreground">
               {completionPercentage}% PROFILE COMPLETE
@@ -149,8 +149,8 @@ export function SectionEditModal({
           </div>
           <Progress value={completionPercentage} className="h-1 mb-4" />
           
-          <div className="flex items-center gap-2">
-            <DialogTitle>{section.name}</DialogTitle>
+          <div className="flex flex-wrap items-center gap-2">
+            <DialogTitle className="text-lg">{section.name}</DialogTitle>
             {section.group === 'A' && (
               <Badge variant="secondary" className="bg-high-impact/10 text-high-impact text-xs">
                 High Impact
@@ -168,13 +168,14 @@ export function SectionEditModal({
         {/* Language Tabs - only show for non-document sections */}
         {!isDocumentsSection && (
           <Tabs value={selectedLocale} onValueChange={(v) => onLocaleChange(v as Locale)} className="mt-4">
-            <TabsList>
+            <TabsList className="w-full sm:w-auto flex overflow-x-auto">
               {availableLocales.map((locale) => (
-                <TabsTrigger key={locale} value={locale} className="gap-2">
+                <TabsTrigger key={locale} value={locale} className="gap-1 sm:gap-2 text-xs sm:text-sm flex-1 sm:flex-initial">
                   <Globe className="h-3 w-3" />
-                  {LOCALE_LABELS[locale]}
+                  <span className="hidden sm:inline">{LOCALE_LABELS[locale]}</span>
+                  <span className="sm:hidden">{locale.split('-')[0].toUpperCase()}</span>
                   {locale === primaryLocale && (
-                    <span className="text-xs text-muted-foreground">(Primary)</span>
+                    <span className="text-xs text-muted-foreground hidden sm:inline">(Primary)</span>
                   )}
                 </TabsTrigger>
               ))}
@@ -388,11 +389,11 @@ export function SectionEditModal({
           )}
         </div>
 
-        <div className="flex justify-end gap-2 mt-6">
-          <Button variant="outline" onClick={onClose}>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 mt-6 pt-4 border-t">
+          <Button variant="outline" onClick={onClose} className="w-full sm:w-auto">
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={isTyping}>
+          <Button onClick={handleSave} disabled={isTyping} className="w-full sm:w-auto">
             Save
           </Button>
         </div>
