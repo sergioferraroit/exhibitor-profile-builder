@@ -41,7 +41,8 @@ const ProductEditPage = () => {
   const isNew = productId === 'new';
   const { profile } = useExhibitorProfile();
   
-  const [selectedLocale, setSelectedLocale] = useState<Locale>('en-GB');
+  const [nameLocale, setNameLocale] = useState<Locale>('en-GB');
+  const [descriptionLocale, setDescriptionLocale] = useState<Locale>('en-GB');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [categories, setCategories] = useState<string[]>([]);
@@ -125,17 +126,6 @@ const ProductEditPage = () => {
       </header>
 
       <main className="container mx-auto px-4 py-6 max-w-4xl">
-        <Tabs value={selectedLocale} onValueChange={(v) => setSelectedLocale(v as Locale)} className="mb-6">
-          <TabsList>
-            {(['en-GB', 'fr-FR', 'ja-JP'] as Locale[]).map((locale) => (
-              <TabsTrigger key={locale} value={locale} className="gap-2">
-                <Globe className="h-3 w-3" />
-                {LOCALE_LABELS[locale]}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
-
         <div className="space-y-6">
           {/* Images */}
           <Card>
@@ -178,13 +168,23 @@ const ProductEditPage = () => {
           {/* Name */}
           <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-3">
                 <Label>Product Name</Label>
                 <Button variant="ghost" size="sm" onClick={handleAIName} disabled={isLoading('product-name')} className="gap-2 text-primary">
                   {isLoading('product-name') ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
                   Use AI
                 </Button>
               </div>
+              <Tabs value={nameLocale} onValueChange={(v) => setNameLocale(v as Locale)} className="mb-3">
+                <TabsList className="h-8">
+                  {(['en-GB', 'fr-FR', 'ja-JP'] as Locale[]).map((locale) => (
+                    <TabsTrigger key={locale} value={locale} className="gap-1.5 text-xs px-2.5 h-6">
+                      <Globe className="h-3 w-3" />
+                      {LOCALE_LABELS[locale]}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
               <Input value={isTyping ? typewriterText : name} onChange={(e) => setName(e.target.value)} placeholder="Enter product name..." disabled={isTyping} />
             </CardContent>
           </Card>
@@ -192,13 +192,23 @@ const ProductEditPage = () => {
           {/* Description */}
           <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-3">
                 <Label>Product Description</Label>
                 <Button variant="ghost" size="sm" onClick={handleAIDescription} disabled={isLoading('product-description')} className="gap-2 text-primary">
                   {isLoading('product-description') ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
                   Use AI
                 </Button>
               </div>
+              <Tabs value={descriptionLocale} onValueChange={(v) => setDescriptionLocale(v as Locale)} className="mb-3">
+                <TabsList className="h-8">
+                  {(['en-GB', 'fr-FR', 'ja-JP'] as Locale[]).map((locale) => (
+                    <TabsTrigger key={locale} value={locale} className="gap-1.5 text-xs px-2.5 h-6">
+                      <Globe className="h-3 w-3" />
+                      {LOCALE_LABELS[locale]}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
               <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Describe your product..." rows={4} />
             </CardContent>
           </Card>
