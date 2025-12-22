@@ -59,11 +59,17 @@ export function SectionCard({
   const showNotRelevantCheckbox = !section.isMandatory && (section.status === 'empty' || section.isNotRelevant);
   const isWebsiteSection = section.id === 'website';
 
+  const isComplete = status === 'complete';
+  const isEmpty = status === 'empty';
+
   return (
     <Card className={cn(
-      "relative transition-all",
+      "relative transition-all border-2",
       section.isNotRelevant && "opacity-60",
-      isWebsiteSection && "ring-2 ring-primary/50 bg-primary/5"
+      isWebsiteSection && "ring-2 ring-primary/50 bg-primary/5",
+      !isWebsiteSection && isComplete && "border-status-complete/50 bg-status-complete/5",
+      !isWebsiteSection && isEmpty && !section.isNotRelevant && "border-dashed border-muted-foreground/30 bg-muted/30",
+      !isWebsiteSection && !isComplete && !isEmpty && "border-status-partial/40 bg-status-partial/5"
     )}>
       {isWebsiteSection && (
         <div className="absolute -top-3 left-4 flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium shadow-sm">
