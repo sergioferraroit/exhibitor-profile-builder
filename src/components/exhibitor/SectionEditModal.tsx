@@ -143,7 +143,7 @@ export function SectionEditModal({
       <DialogContent className="sm:max-w-2xl flex flex-col">
         <DialogHeader className="pr-8">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-muted-foreground">
+            <span className="text-xs font-medium text-foreground-secondary">
               {completionPercentage}% PROFILE COMPLETE
             </span>
           </div>
@@ -162,7 +162,7 @@ export function SectionEditModal({
               </Badge>
             )}
           </div>
-          <p className="text-sm text-muted-foreground">{section.description}</p>
+          <p className="text-sm text-foreground-secondary">{section.description}</p>
         </DialogHeader>
 
         {/* Language Tabs - only show for non-document sections */}
@@ -175,7 +175,7 @@ export function SectionEditModal({
                   <span className="hidden sm:inline">{LOCALE_LABELS[locale]}</span>
                   <span className="sm:hidden">{locale.split('-')[0].toUpperCase()}</span>
                   {locale === primaryLocale && (
-                    <span className="text-xs text-muted-foreground hidden sm:inline">(Primary)</span>
+                    <span className="text-xs text-foreground-secondary hidden sm:inline">(Primary)</span>
                   )}
                 </TabsTrigger>
               ))}
@@ -195,7 +195,7 @@ export function SectionEditModal({
                       <FileText className="h-8 w-8 text-primary shrink-0 mt-1" />
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm truncate">{doc.name}</p>
-                        <p className="text-xs text-muted-foreground truncate">{doc.description || 'No description'}</p>
+                        <p className="text-xs text-foreground-secondary truncate">{doc.description || 'No description'}</p>
                         <Badge variant="secondary" className="mt-1 text-xs">
                           {DOCUMENT_CATEGORIES.find(c => c.value === doc.category)?.label}
                         </Badge>
@@ -219,10 +219,10 @@ export function SectionEditModal({
                 
                 {/* PDF Upload */}
                 <div className="space-y-2">
-                  <Label className="text-xs text-muted-foreground">PDF File</Label>
+                  <Label className="text-xs text-foreground-secondary">PDF File</Label>
                   <div className="border rounded-lg p-4 text-center bg-muted/20">
-                    <Upload className="h-6 w-6 mx-auto text-muted-foreground mb-2" />
-                    <p className="text-xs text-muted-foreground mb-2">
+                    <Upload className="h-6 w-6 mx-auto text-icon-soft mb-2" />
+                    <p className="text-xs text-foreground-secondary mb-2">
                       Drag and drop or click to upload PDF
                     </p>
                     <Button variant="outline" size="sm">
@@ -233,7 +233,7 @@ export function SectionEditModal({
 
                 {/* Document Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="doc-name" className="text-xs text-muted-foreground">
+                  <Label htmlFor="doc-name" className="text-xs text-foreground-secondary">
                     Document Name <span className="text-destructive">*</span>
                   </Label>
                   <Input
@@ -246,7 +246,7 @@ export function SectionEditModal({
 
                 {/* Document Description */}
                 <div className="space-y-2">
-                  <Label htmlFor="doc-description" className="text-xs text-muted-foreground">
+                  <Label htmlFor="doc-description" className="text-xs text-foreground-secondary">
                     Description
                   </Label>
                   <Textarea
@@ -260,7 +260,7 @@ export function SectionEditModal({
 
                 {/* Category Select */}
                 <div className="space-y-2">
-                  <Label className="text-xs text-muted-foreground">Category</Label>
+                  <Label className="text-xs text-foreground-secondary">Category</Label>
                   <Select
                     value={newDocument.category || 'brochure'}
                     onValueChange={(v) => setNewDocument({ ...newDocument, category: v as CompanyDocument['category'] })}
@@ -291,8 +291,8 @@ export function SectionEditModal({
           ) : isImageSection ? (
             <div className="space-y-4">
               <div className="border-2 border-dashed rounded-lg p-8 text-center">
-                <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                <p className="text-sm text-muted-foreground mb-2">
+                <Upload className="h-8 w-8 mx-auto text-icon-soft mb-2" />
+                <p className="text-sm text-foreground-secondary mb-2">
                   Drag and drop or click to upload
                 </p>
                 <Button variant="outline" size="sm">
@@ -360,7 +360,7 @@ export function SectionEditModal({
                     disabled={isTyping}
                   />
                   <div className="flex items-center justify-between mt-1">
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-foreground-secondary">
                       {displayValue.length} / {section.id === 'why-visit' ? 200 : 600} characters
                     </span>
                     {value && (

@@ -42,7 +42,7 @@ export function CompanyProfileTab({
             80% weight
           </span>
         </div>
-        <p className="text-sm text-muted-foreground mb-4">
+        <p className="text-sm text-foreground-secondary mb-4">
           These sections appear on the exhibitor directory and receive the most visitor engagement.
         </p>
         <div className="grid gap-gutter grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -70,11 +70,11 @@ export function CompanyProfileTab({
       <section>
         <div className="flex items-center gap-2 mb-4">
           <h2 className="text-lg font-semibold text-foreground">Additional Sections</h2>
-          <span className="px-2 py-0.5 text-xs font-medium bg-muted text-muted-foreground rounded-full">
+          <span className="px-2 py-0.5 text-xs font-medium bg-muted text-foreground-secondary rounded-full">
             20% weight
           </span>
         </div>
-        <p className="text-sm text-muted-foreground mb-4">
+        <p className="text-sm text-foreground-secondary mb-4">
           These sections appear on your exhibitor details page.
         </p>
         <div className="grid gap-gutter grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

@@ -146,7 +146,7 @@ export function WizardModal({
               Profile Complete!
             </DialogTitle>
           </DialogHeader>
-          <p className="text-muted-foreground">
+          <p className="text-foreground-secondary">
             Congratulations! Your profile is 100% complete. You can still edit individual sections if needed.
           </p>
           <div className="flex justify-end">
@@ -169,7 +169,7 @@ export function WizardModal({
         <div className="md:hidden p-4 border-b">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium">Step {currentStepIndex + 1} of {steps.length}</span>
-            <span className="text-sm text-muted-foreground">{completionPercentage}%</span>
+            <span className="text-sm text-foreground-secondary">{completionPercentage}%</span>
           </div>
           <Progress value={(currentStepIndex + 1) / steps.length * 100} className="h-2" />
         </div>
@@ -178,7 +178,7 @@ export function WizardModal({
           {/* Desktop: Sidebar */}
           <div className="hidden md:flex w-72 flex-col border-r bg-muted/30">
             <div className="p-4 border-b">
-              <div className="text-sm font-medium text-muted-foreground mb-1">Profile Completion</div>
+              <div className="text-sm font-medium text-foreground-secondary mb-1">Profile Completion</div>
               <div className="text-2xl font-bold text-foreground">{completionPercentage}%</div>
               <Progress value={completionPercentage} className="h-2 mt-2" />
             </div>
@@ -202,7 +202,7 @@ export function WizardModal({
                         ? "bg-success text-success-foreground"
                         : index === currentStepIndex
                           ? "bg-primary-foreground text-primary"
-                          : "bg-muted-foreground/20 text-muted-foreground"
+                          : "bg-foreground-disabled/20 text-foreground-secondary"
                     )}>
                       {index < currentStepIndex ? (
                         <Check className="h-3 w-3" />
@@ -229,7 +229,7 @@ export function WizardModal({
             </ScrollArea>
 
             <div className="p-4 border-t">
-              <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+              <button className="flex items-center gap-2 text-sm text-foreground-secondary hover:text-foreground">
                 <Phone className="h-4 w-4" />
                 Call support
               </button>
@@ -253,7 +253,7 @@ export function WizardModal({
                 )}
               </div>
               {currentSection && (
-                <p className="text-sm text-muted-foreground">{currentSection.description}</p>
+                <p className="text-sm text-foreground-secondary">{currentSection.description}</p>
               )}
             </DialogHeader>
 
@@ -268,14 +268,14 @@ export function WizardModal({
                       "flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-t-lg transition-colors whitespace-nowrap",
                       selectedLocale === locale
                         ? "bg-background border border-b-0 font-medium"
-                        : "text-muted-foreground hover:text-foreground"
+                        : "text-foreground-secondary hover:text-foreground"
                     )}
                   >
                     <Globe className="h-3 w-3" />
                     <span className="hidden sm:inline">{LOCALE_LABELS[locale]}</span>
                     <span className="sm:hidden">{locale.split('-')[0].toUpperCase()}</span>
                     {locale === primaryLocale && (
-                      <span className="text-xs text-muted-foreground hidden sm:inline">(Primary)</span>
+                      <span className="text-xs text-foreground-secondary hidden sm:inline">(Primary)</span>
                     )}
                   </button>
                 ))}
@@ -286,9 +286,9 @@ export function WizardModal({
             <ScrollArea className="flex-1 p-4 sm:p-6">
               {isProductStep ? (
                 <div className="text-center py-8">
-                  <Package className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+                  <Package className="h-16 w-16 mx-auto text-icon-soft mb-4" />
                   <h3 className="text-lg font-medium mb-2">Add Your First Product</h3>
-                  <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                  <p className="text-foreground-secondary mb-6 max-w-md mx-auto">
                     Products help visitors understand what you offer. Add at least one product to complete this step.
                   </p>
                   <Button onClick={onNavigateToProducts} className="gap-2">
@@ -299,8 +299,8 @@ export function WizardModal({
               ) : isImageSection ? (
                 <div className="space-y-4">
                   <div className="border-2 border-dashed rounded-lg p-8 text-center">
-                    <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <Upload className="h-8 w-8 mx-auto text-icon-soft mb-2" />
+                    <p className="text-sm text-foreground-secondary mb-2">
                       Drag and drop or click to upload
                     </p>
                     <Button variant="outline" size="sm">
@@ -360,7 +360,7 @@ export function WizardModal({
                         disabled={isTyping}
                       />
                       <div className="flex items-center justify-between mt-1">
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-foreground-secondary">
                           {displayValue.length} / {currentSection?.id === 'why-visit' ? 200 : 600} characters
                         </span>
                         {value && (
