@@ -81,7 +81,7 @@ export function ProfileHeader({
                   <Pencil className="h-4 w-4" />
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">Edit Company Profile</p>
+              <p className="text-sm text-foreground-secondary">Edit Company Profile</p>
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -89,7 +89,7 @@ export function ProfileHeader({
               <div className="flex items-center gap-3 min-w-[200px]">
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-medium text-muted-foreground">Profile Complete</span>
+                    <span className="text-xs font-medium text-foreground-secondary">Profile Complete</span>
                     <span className="text-xs font-bold text-foreground">{completionPercentage}%</span>
                   </div>
                   <Progress value={completionPercentage} className="h-2" />
@@ -107,7 +107,7 @@ export function ProfileHeader({
                     <SelectItem key={locale} value={locale}>
                       {LOCALE_LABELS[locale]}
                       {locale === primaryLocale && (
-                        <span className="ml-2 text-xs text-muted-foreground">(Primary)</span>
+                        <span className="ml-2 text-xs text-foreground-secondary">(Primary)</span>
                       )}
                     </SelectItem>
                   ))}

@@ -67,9 +67,9 @@ export function SectionCard({
       "relative transition-all border-2",
       section.isNotRelevant && "opacity-60",
       isWebsiteSection && "ring-2 ring-primary/50 bg-primary/5",
-      !isWebsiteSection && isComplete && "border-status-complete/50 bg-status-complete/5",
-      !isWebsiteSection && isEmpty && !section.isNotRelevant && "border-dashed border-muted-foreground/30 bg-muted/30",
-      !isWebsiteSection && !isComplete && !isEmpty && "border-status-partial/40 bg-status-partial/5"
+      !isWebsiteSection && isComplete && "border-success/50 bg-success-subdued",
+      !isWebsiteSection && isEmpty && !section.isNotRelevant && "border-dashed border-border-strong bg-muted/30",
+      !isWebsiteSection && !isComplete && !isEmpty && "border-warning/40 bg-warning-subdued"
     )}>
       {isWebsiteSection && (
         <div className="absolute -top-3 left-4 flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium shadow-sm">
@@ -86,7 +86,7 @@ export function SectionCard({
             )}>
               <SectionIcon className={cn(
                 "h-5 w-5",
-                isWebsiteSection ? "text-primary" : isHighImpact ? "text-high-impact" : "text-muted-foreground"
+                isWebsiteSection ? "text-primary" : isHighImpact ? "text-high-impact" : "text-icon-soft"
               )} />
             </div>
             <div>
@@ -122,7 +122,7 @@ export function SectionCard({
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground mb-3">{section.description}</p>
+        <p className="text-sm text-foreground-secondary mb-3">{section.description}</p>
         
         {isWebsiteSection && (
           <div className="flex items-start gap-2 p-3 bg-primary/10 rounded-lg mb-3 border border-primary/20">
@@ -143,7 +143,7 @@ export function SectionCard({
             />
             <label
               htmlFor={`not-relevant-${section.id}`}
-              className="text-xs text-muted-foreground cursor-pointer"
+              className="text-xs text-foreground-secondary cursor-pointer"
             >
               Mark as not relevant (exclude from completion score)
             </label>

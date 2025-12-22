@@ -69,7 +69,7 @@ function ProductCarousel({ product, locale }: { product: Product; locale: Locale
             )}
           </>
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+          <div className="w-full h-full flex items-center justify-center text-foreground-secondary">
             No image
           </div>
         )}
@@ -85,7 +85,7 @@ function ProductCarousel({ product, locale }: { product: Product; locale: Locale
         <h4 className="font-semibold text-foreground line-clamp-1">
           {product.localeData[locale]?.name || product.name || 'Untitled Product'}
         </h4>
-        <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+        <p className="text-sm text-foreground-secondary line-clamp-2 mt-1">
           {product.localeData[locale]?.description || product.description || 'No description'}
         </p>
       </div>
@@ -139,7 +139,7 @@ export function PublicProfilePreview({
               <X className="h-4 w-4" />
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground-secondary">
             This is how your profile appears to visitors on the show website.
           </p>
         </DialogHeader>
@@ -167,7 +167,7 @@ export function PublicProfilePreview({
                   <img src={logoUrl} alt={companyName} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-muted">
-                    <Building2 className="h-12 w-12 text-muted-foreground" />
+                    <Building2 className="h-12 w-12 text-icon-soft" />
                   </div>
                 )}
               </div>
@@ -176,7 +176,7 @@ export function PublicProfilePreview({
               <div className="flex-1 pt-4 md:pt-8">
                 <h1 className="text-2xl md:text-3xl font-bold text-foreground">{companyName}</h1>
                 {tagline && (
-                  <p className="text-lg text-muted-foreground mt-1">{tagline}</p>
+                  <p className="text-lg text-foreground-secondary mt-1">{tagline}</p>
                 )}
                 
                 {/* Quick Info Badges */}
@@ -213,7 +213,7 @@ export function PublicProfilePreview({
                 {description && (
                   <div className="bg-card rounded-xl p-6 border">
                     <h2 className="text-lg font-semibold text-foreground mb-3">About Us</h2>
-                    <p className="text-muted-foreground whitespace-pre-wrap">{description}</p>
+                    <p className="text-foreground-secondary whitespace-pre-wrap">{description}</p>
                   </div>
                 )}
 
@@ -229,7 +229,7 @@ export function PublicProfilePreview({
                       ))}
                     </div>
                     {availableProducts.length > 4 && (
-                      <p className="text-sm text-muted-foreground text-center mt-4">
+                      <p className="text-sm text-foreground-secondary text-center mt-4">
                         +{availableProducts.length - 4} more products
                       </p>
                     )}
@@ -246,7 +246,7 @@ export function PublicProfilePreview({
                           <Award className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <p className="font-medium text-foreground">Awards</p>
-                            <p className="text-sm text-muted-foreground">{awards}</p>
+                            <p className="text-sm text-foreground-secondary">{awards}</p>
                           </div>
                         </div>
                       )}
@@ -255,7 +255,7 @@ export function PublicProfilePreview({
                           <FileText className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <p className="font-medium text-foreground">Accreditations</p>
-                            <p className="text-sm text-muted-foreground">{accreditations}</p>
+                            <p className="text-sm text-foreground-secondary">{accreditations}</p>
                           </div>
                         </div>
                       )}
@@ -284,7 +284,7 @@ export function PublicProfilePreview({
                     {email && (
                       <a 
                         href={`mailto:${email}`}
-                        className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground"
+                        className="flex items-center gap-3 text-sm text-foreground-secondary hover:text-foreground"
                       >
                         <Mail className="h-4 w-4" />
                         {email}
@@ -293,14 +293,14 @@ export function PublicProfilePreview({
                     {phone && (
                       <a 
                         href={`tel:${phone}`}
-                        className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground"
+                        className="flex items-center gap-3 text-sm text-foreground-secondary hover:text-foreground"
                       >
                         <Phone className="h-4 w-4" />
                         {phone}
                       </a>
                     )}
                     {address && (
-                      <div className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <div className="flex items-start gap-3 text-sm text-foreground-secondary">
                         <MapPin className="h-4 w-4 mt-0.5" />
                         <span>{address}</span>
                       </div>
@@ -312,7 +312,7 @@ export function PublicProfilePreview({
                 {tradeAffiliations && (
                   <div className="bg-card rounded-xl p-6 border">
                     <h2 className="text-lg font-semibold text-foreground mb-3">Trade Affiliations</h2>
-                    <p className="text-sm text-muted-foreground">{tradeAffiliations}</p>
+                    <p className="text-sm text-foreground-secondary">{tradeAffiliations}</p>
                   </div>
                 )}
               </div>

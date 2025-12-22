@@ -69,7 +69,7 @@ export function ProductListingTab({
                 <p className="font-medium text-foreground">
                   Exhibitors with products get 30-40% more visitor engagement
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground-secondary">
                   Showcase your products and services to attract more visitors to your stand.
                 </p>
               </div>
@@ -124,7 +124,7 @@ export function ProductListingTab({
           />
           <label
             htmlFor="products-not-relevant"
-            className="text-sm text-muted-foreground cursor-pointer"
+            className="text-sm text-foreground-secondary cursor-pointer"
           >
             Products are not relevant for my company (exclude from completion score)
           </label>
@@ -134,7 +134,7 @@ export function ProductListingTab({
       {isNotRelevant ? (
         <Card className="opacity-60">
           <CardContent className="py-12 text-center">
-            <p className="text-muted-foreground">
+            <p className="text-foreground-secondary">
               Products section marked as not relevant
             </p>
             <Button variant="link" onClick={onToggleNotRelevant} className="mt-2">
@@ -147,7 +147,7 @@ export function ProductListingTab({
           {/* Published Products */}
           {publishedProducts.length > 0 && (
             <section>
-              <h3 className="text-sm font-medium text-muted-foreground mb-3">
+              <h3 className="text-sm font-medium text-foreground-secondary mb-3">
                 Published ({publishedProducts.length})
               </h3>
               <div className={cn(
@@ -172,7 +172,7 @@ export function ProductListingTab({
           {/* Draft Products */}
           {draftProducts.length > 0 && (
             <section>
-              <h3 className="text-sm font-medium text-muted-foreground mb-3">
+              <h3 className="text-sm font-medium text-foreground-secondary mb-3">
                 Drafts ({draftProducts.length})
               </h3>
               <div className={cn(
@@ -198,9 +198,9 @@ export function ProductListingTab({
           {products.length === 0 && (
             <Card>
               <CardContent className="py-12 text-center">
-                <Image className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                <Image className="h-12 w-12 mx-auto text-icon-soft mb-4" />
                 <h3 className="font-medium text-foreground mb-2">No products yet</h3>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-sm text-foreground-secondary mb-4">
                   Add your first product to showcase on your exhibitor profile.
                 </p>
                 <Button onClick={handleAddProduct} className="gap-2">
@@ -248,7 +248,7 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
       <Card>
         <CardContent className="py-3">
           <div className="flex items-center gap-4">
-            <GripVertical className="h-5 w-5 text-muted-foreground cursor-grab" />
+            <GripVertical className="h-5 w-5 text-icon-soft cursor-grab" />
             <div className="w-16 h-16 bg-muted rounded-lg overflow-hidden flex-shrink-0 relative">
               {product.images[0] ? (
                 <>
@@ -263,13 +263,13 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
                 </>
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <Image className="h-6 w-6 text-muted-foreground" />
+                  <Image className="h-6 w-6 text-icon-soft" />
                 </div>
               )}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-foreground-secondary">
                   {product.categories.join(' · ')}
                 </span>
               </div>
@@ -279,9 +279,9 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
                   {product.status}
                 </Badge>
               </div>
-              <p className="text-sm text-muted-foreground truncate">{description}</p>
+              <p className="text-sm text-foreground-secondary truncate">{description}</p>
               {product.documents.length > 0 && (
-                <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                <div className="flex items-center gap-1 text-xs text-foreground-secondary mt-1">
                   <FileText className="h-3 w-3" />
                   {product.documents.length} Document{product.documents.length !== 1 ? 's' : ''}
                 </div>
@@ -365,7 +365,7 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
           </>
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Image className="h-12 w-12 text-muted-foreground" />
+            <Image className="h-12 w-12 text-icon-soft" />
           </div>
         )}
       </div>
@@ -373,7 +373,7 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
       <CardContent className="p-4">
         {/* Categories */}
         {product.categories.length > 0 && (
-          <p className="text-xs text-muted-foreground mb-1">
+          <p className="text-xs text-foreground-secondary mb-1">
             {product.categories.join(' · ')}
           </p>
         )}
@@ -382,11 +382,11 @@ function ProductCard({ product, selectedLocale, viewMode, onEdit, onDelete }: Pr
         <h4 className="font-semibold text-foreground truncate mb-1">{name}</h4>
 
         {/* Description */}
-        <p className="text-sm text-muted-foreground line-clamp-3 mb-3">{description}</p>
+        <p className="text-sm text-foreground-secondary line-clamp-3 mb-3">{description}</p>
 
         {/* Document Count */}
         {product.documents.length > 0 && (
-          <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-3">
+          <div className="flex items-center gap-1.5 text-sm text-foreground-secondary mb-3">
             <FileText className="h-4 w-4" />
             {product.documents.length} Document{product.documents.length !== 1 ? 's' : ''}
           </div>
