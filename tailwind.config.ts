@@ -7,12 +7,35 @@ export default {
   theme: {
   	container: {
   		center: true,
-  		padding: '2rem',
+  		padding: {
+  			DEFAULT: '1rem',
+  			sm: '1rem',
+  			md: '1rem',
+  			lg: '3.75rem',
+  			xl: '3.75rem',
+  			'2xl': '3.75rem'
+  		},
   		screens: {
-  			'2xl': '1400px'
+  			sm: '600px',
+  			md: '840px',
+  			lg: '1200px',
+  			xl: '1600px',
+  			'2xl': '1920px'
   		}
   	},
+  	screens: {
+  		sm: '600px',
+  		md: '840px',
+  		lg: '1200px',
+  		xl: '1600px',
+  		'2xl': '1920px'
+  	},
   	extend: {
+  		spacing: {
+  			'layout-margin-compact': '1rem',
+  			'layout-margin-expanded': '3.75rem',
+  			'layout-gutter': '1.5rem'
+  		},
   		colors: {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
@@ -78,6 +101,9 @@ export default {
   				DEFAULT: 'hsl(var(--badge-high-impact))',
   				foreground: 'hsl(var(--badge-high-impact-foreground))'
   			}
+  		},
+  		gap: {
+  			'gutter': '1.5rem'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
