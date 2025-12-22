@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Wand2, Globe } from 'lucide-react';
+import { Wand2, Globe, Eye } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 
 interface ProfileHeaderProps {
@@ -16,6 +16,7 @@ interface ProfileHeaderProps {
   selectedLocale: Locale;
   onLocaleChange: (locale: Locale) => void;
   onOpenWizard: () => void;
+  onOpenPreview: () => void;
   availableLocales: Locale[];
   primaryLocale: Locale;
 }
@@ -32,6 +33,7 @@ export function ProfileHeader({
   selectedLocale,
   onLocaleChange,
   onOpenWizard,
+  onOpenPreview,
   availableLocales,
   primaryLocale,
 }: ProfileHeaderProps) {
@@ -73,6 +75,12 @@ export function ProfileHeader({
                 ))}
               </SelectContent>
             </Select>
+
+            {/* Preview Button */}
+            <Button variant="outline" onClick={onOpenPreview} className="gap-2">
+              <Eye className="h-4 w-4" />
+              Preview
+            </Button>
 
             {/* Wizard Button */}
             <Button onClick={onOpenWizard} className="gap-2">
