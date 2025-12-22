@@ -10,7 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useAISimulation } from '@/hooks/useAISimulation';
 import { useExhibitorProfile } from '@/hooks/useExhibitorProfile';
 import { DocumentUploadModal } from '@/components/exhibitor/DocumentUploadModal';
-import { ArrowLeft, Upload, Sparkles, Loader2, Globe, Plus, X, FileText } from 'lucide-react';
+import { ArrowLeft, Upload, Sparkles, Loader2, Globe, Plus, X, FileText, Undo2 } from 'lucide-react';
 import { Locale, ProductDocument, CompanyDocument } from '@/types/exhibitor';
 
 const LOCALE_LABELS: Record<Locale, string> = {
@@ -51,6 +51,11 @@ const ProductEditPage = () => {
   const [linkedDocumentIds, setLinkedDocumentIds] = useState<string[]>([]);
   const [uploadedDocuments, setUploadedDocuments] = useState<CompanyDocument[]>([]);
   const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
+
+  // Undo AI state
+  const [previousName, setPreviousName] = useState<string | null>(null);
+  const [previousDescription, setPreviousDescription] = useState<string | null>(null);
+  const [previousCategories, setPreviousCategories] = useState<string[] | null>(null);
   
   const { generateContent, isLoading, typewriterText, isTyping } = useAISimulation();
 
@@ -100,18 +105,42 @@ const ProductEditPage = () => {
   };
 
   const handleAIName = async () => {
+    setPreviousName(name);
     const result = await generateContent('product-name', true);
     if (typeof result === 'string') setName(result);
   };
 
+  const handleUndoName = () => {
+    if (previousName !== null) {
+      setName(previousName);
+      setPreviousName(null);
+    }
+  };
+
   const handleAIDescription = async () => {
+    setPreviousDescription(description);
     const result = await generateContent('product-description', true);
     if (typeof result === 'string') setDescription(result);
   };
 
+  const handleUndoDescription = () => {
+    if (previousDescription !== null) {
+      setDescription(previousDescription);
+      setPreviousDescription(null);
+    }
+  };
+
   const handleAICategories = async () => {
+    setPreviousCategories([...categories]);
     const result = await generateContent('product-categories', false);
     if (Array.isArray(result)) setCategories(result);
+  };
+
+  const handleUndoCategories = () => {
+    if (previousCategories !== null) {
+      setCategories(previousCategories);
+      setPreviousCategories(null);
+    }
   };
 
   return (
@@ -149,10 +178,17 @@ const ProductEditPage = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <Label>Product Categories</Label>
-                <Button variant="ghost" size="sm" onClick={handleAICategories} disabled={isLoading('product-categories')} className="gap-2 text-primary">
-                  {isLoading('product-categories') ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-                  Use AI
-                </Button>
+                {previousCategories !== null ? (
+                  <Button variant="ghost" size="sm" onClick={handleUndoCategories} className="gap-2 text-amber-600">
+                    <Undo2 className="h-4 w-4" />
+                    Undo AI
+                  </Button>
+                ) : (
+                  <Button variant="ghost" size="sm" onClick={handleAICategories} disabled={isLoading('product-categories')} className="gap-2 text-primary">
+                    {isLoading('product-categories') ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                    Use AI
+                  </Button>
+                )}
               </div>
               <div className="flex flex-wrap gap-2 mb-3">
                 {categories.map((cat, i) => (
@@ -173,10 +209,17 @@ const ProductEditPage = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-3">
                 <Label>Product Name</Label>
-                <Button variant="ghost" size="sm" onClick={handleAIName} disabled={isLoading('product-name')} className="gap-2 text-primary">
-                  {isLoading('product-name') ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-                  Use AI
-                </Button>
+                {previousName !== null ? (
+                  <Button variant="ghost" size="sm" onClick={handleUndoName} className="gap-2 text-amber-600">
+                    <Undo2 className="h-4 w-4" />
+                    Undo AI
+                  </Button>
+                ) : (
+                  <Button variant="ghost" size="sm" onClick={handleAIName} disabled={isLoading('product-name')} className="gap-2 text-primary">
+                    {isLoading('product-name') ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                    Use AI
+                  </Button>
+                )}
               </div>
               <Tabs value={nameLocale} onValueChange={(v) => setNameLocale(v as Locale)} className="mb-3">
                 <TabsList className="h-8">
@@ -197,10 +240,17 @@ const ProductEditPage = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-3">
                 <Label>Product Description</Label>
-                <Button variant="ghost" size="sm" onClick={handleAIDescription} disabled={isLoading('product-description')} className="gap-2 text-primary">
-                  {isLoading('product-description') ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-                  Use AI
-                </Button>
+                {previousDescription !== null ? (
+                  <Button variant="ghost" size="sm" onClick={handleUndoDescription} className="gap-2 text-amber-600">
+                    <Undo2 className="h-4 w-4" />
+                    Undo AI
+                  </Button>
+                ) : (
+                  <Button variant="ghost" size="sm" onClick={handleAIDescription} disabled={isLoading('product-description')} className="gap-2 text-primary">
+                    {isLoading('product-description') ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                    Use AI
+                  </Button>
+                )}
               </div>
               <Tabs value={descriptionLocale} onValueChange={(v) => setDescriptionLocale(v as Locale)} className="mb-3">
                 <TabsList className="h-8">
