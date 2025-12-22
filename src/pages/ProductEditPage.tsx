@@ -9,8 +9,9 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAISimulation } from '@/hooks/useAISimulation';
 import { useExhibitorProfile } from '@/hooks/useExhibitorProfile';
+import { DocumentUploadModal } from '@/components/exhibitor/DocumentUploadModal';
 import { ArrowLeft, Upload, Sparkles, Loader2, Globe, Plus, X, FileText } from 'lucide-react';
-import { Locale, ProductDocument } from '@/types/exhibitor';
+import { Locale, ProductDocument, CompanyDocument } from '@/types/exhibitor';
 
 const LOCALE_LABELS: Record<Locale, string> = {
   'en-GB': 'English (UK)',
@@ -48,6 +49,8 @@ const ProductEditPage = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [linkedDocumentIds, setLinkedDocumentIds] = useState<string[]>([]);
+  const [uploadedDocuments, setUploadedDocuments] = useState<CompanyDocument[]>([]);
+  const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
   
   const { generateContent, isLoading, typewriterText, isTyping } = useAISimulation();
 
@@ -216,10 +219,41 @@ const ProductEditPage = () => {
           {/* Documents - Upload new */}
           <Card>
             <CardContent className="p-6">
-              <Label className="mb-4 block">Upload New Documents</Label>
-              <div className="border-2 border-dashed rounded-lg p-6 text-center">
+              <div className="flex items-center justify-between mb-4">
+                <Label>Upload New Documents</Label>
+                {uploadedDocuments.length > 0 && (
+                  <span className="text-xs text-muted-foreground">
+                    {uploadedDocuments.length} document{uploadedDocuments.length !== 1 ? 's' : ''} uploaded
+                  </span>
+                )}
+              </div>
+              
+              {uploadedDocuments.length > 0 && (
+                <div className="space-y-2 mb-4">
+                  {uploadedDocuments.map((doc) => (
+                    <div key={doc.id} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30 border">
+                      <FileText className="h-4 w-4 text-primary shrink-0" />
+                      <span className="text-sm font-medium truncate flex-1">{doc.name}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+                        {CATEGORY_LABELS[doc.category] || doc.category}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              <div
+                className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:bg-muted/50 transition-colors"
+                onClick={() => setIsDocumentModalOpen(true)}
+              >
                 <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                <p className="text-sm text-muted-foreground">Upload brochures, case studies, etc.</p>
+                <p className="text-sm text-muted-foreground">
+                  {uploadedDocuments.length > 0 ? 'Add more documents' : 'Upload brochures, case studies, etc.'}
+                </p>
+                <Button variant="outline" size="sm" className="mt-3">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Documents
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -290,6 +324,14 @@ const ProductEditPage = () => {
           <Button>Publish Product</Button>
         </div>
       </main>
+
+      <DocumentUploadModal
+        isOpen={isDocumentModalOpen}
+        onClose={() => setIsDocumentModalOpen(false)}
+        documents={uploadedDocuments}
+        onSave={setUploadedDocuments}
+        title="Upload Product Documents"
+      />
     </div>
   );
 };
