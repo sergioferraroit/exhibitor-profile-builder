@@ -152,7 +152,7 @@ export function ProductListingTab({
               </h3>
               <div className={cn(
                 viewMode === 'grid' 
-                  ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-3" 
+                  ? "grid gap-gutter grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" 
                   : "space-y-3"
               )}>
                 {publishedProducts.map((product) => (
@@ -177,7 +177,7 @@ export function ProductListingTab({
               </h3>
               <div className={cn(
                 viewMode === 'grid' 
-                  ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-3" 
+                  ? "grid gap-gutter grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" 
                   : "space-y-3"
               )}>
                 {draftProducts.map((product) => (

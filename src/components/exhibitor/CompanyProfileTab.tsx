@@ -45,7 +45,7 @@ export function CompanyProfileTab({
         <p className="text-sm text-muted-foreground mb-4">
           These sections appear on the exhibitor directory and receive the most visitor engagement.
         </p>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-gutter grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {groupASections.map((section) => (
             <SectionCard
               key={section.id}
@@ -77,7 +77,7 @@ export function CompanyProfileTab({
         <p className="text-sm text-muted-foreground mb-4">
           These sections appear on your exhibitor details page.
         </p>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-gutter grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {groupBSections.map((section) => (
             <SectionCard
               key={section.id}
