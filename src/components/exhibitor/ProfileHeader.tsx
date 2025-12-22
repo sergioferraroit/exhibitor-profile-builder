@@ -132,7 +132,7 @@ export function ProfileHeader({
 
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
         <DialogContent className="sm:max-w-md">
-          <DialogHeader>
+          <DialogHeader className="pr-8">
             <DialogTitle>Edit Company Name</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
@@ -146,11 +146,11 @@ export function ProfileHeader({
               />
             </div>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditModalOpen(false)}>
+          <DialogFooter className="flex-col-reverse sm:flex-row gap-2">
+            <Button variant="outline" onClick={() => setIsEditModalOpen(false)} className="w-full sm:w-auto">
               Cancel
             </Button>
-            <Button onClick={handleSave} disabled={!editedName.trim()}>
+            <Button onClick={handleSave} disabled={!editedName.trim()} className="w-full sm:w-auto">
               Save
             </Button>
           </DialogFooter>

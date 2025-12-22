@@ -164,7 +164,7 @@ export function WizardModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl h-[90vh] p-0 gap-0">
+      <DialogContent className="sm:max-w-4xl h-[100dvh] sm:h-[90vh] p-0 gap-0 flex flex-col">
         {/* Mobile: Top Progress Bar */}
         <div className="md:hidden p-4 border-b">
           <div className="flex items-center justify-between mb-2">
@@ -237,10 +237,10 @@ export function WizardModal({
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <DialogHeader className="p-6 border-b">
-              <div className="flex items-center gap-2">
-                <DialogTitle>{currentStep?.name}</DialogTitle>
+          <div className="flex-1 flex flex-col overflow-hidden min-h-0">
+            <DialogHeader className="p-4 sm:p-6 border-b pr-10">
+              <div className="flex flex-wrap items-center gap-2">
+                <DialogTitle className="text-base sm:text-lg">{currentStep?.name}</DialogTitle>
                 {currentSection?.group === 'A' && (
                   <Badge variant="secondary" className="bg-high-impact/10 text-high-impact text-xs">
                     High Impact
@@ -258,23 +258,24 @@ export function WizardModal({
             </DialogHeader>
 
             {/* Language Tabs */}
-            <div className="px-6 pt-4 border-b">
-              <div className="flex gap-2">
+            <div className="px-4 sm:px-6 pt-4 border-b overflow-x-auto">
+              <div className="flex gap-1 sm:gap-2 min-w-max">
                 {availableLocales.map((locale) => (
                   <button
                     key={locale}
                     onClick={() => onLocaleChange(locale)}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-2 text-sm rounded-t-lg transition-colors",
+                      "flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-t-lg transition-colors whitespace-nowrap",
                       selectedLocale === locale
                         ? "bg-background border border-b-0 font-medium"
                         : "text-muted-foreground hover:text-foreground"
                     )}
                   >
                     <Globe className="h-3 w-3" />
-                    {LOCALE_LABELS[locale]}
+                    <span className="hidden sm:inline">{LOCALE_LABELS[locale]}</span>
+                    <span className="sm:hidden">{locale.split('-')[0].toUpperCase()}</span>
                     {locale === primaryLocale && (
-                      <span className="text-xs text-muted-foreground">(Primary)</span>
+                      <span className="text-xs text-muted-foreground hidden sm:inline">(Primary)</span>
                     )}
                   </button>
                 ))}
@@ -282,7 +283,7 @@ export function WizardModal({
             </div>
 
             {/* Form Content */}
-            <ScrollArea className="flex-1 p-6">
+            <ScrollArea className="flex-1 p-4 sm:p-6">
               {isProductStep ? (
                 <div className="text-center py-8">
                   <Package className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
@@ -412,16 +413,16 @@ export function WizardModal({
             </ScrollArea>
 
             {/* Footer Actions */}
-            <div className="p-6 border-t flex items-center justify-between">
-              <div>
+            <div className="p-4 sm:p-6 border-t flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0">
+              <div className="order-2 sm:order-1">
                 {currentStepIndex > 0 && (
-                  <Button variant="ghost" onClick={handleBack} className="gap-2">
+                  <Button variant="ghost" onClick={handleBack} className="gap-2 w-full sm:w-auto">
                     <ChevronLeft className="h-4 w-4" />
                     Back
                   </Button>
                 )}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 order-1 sm:order-2">
                 {!isProductStep && !currentSection?.isMandatory && (
                   <Button variant="ghost" onClick={handleSkip} className="gap-2">
                     <SkipForward className="h-4 w-4" />
@@ -429,11 +430,11 @@ export function WizardModal({
                   </Button>
                 )}
                 {isProductStep ? (
-                  <Button onClick={handleSkip} variant="outline">
+                  <Button onClick={handleSkip} variant="outline" className="w-full sm:w-auto">
                     Skip for Now
                   </Button>
                 ) : (
-                  <Button onClick={handleValidate} disabled={isTyping} className="gap-2">
+                  <Button onClick={handleValidate} disabled={isTyping} className="gap-2 w-full sm:w-auto">
                     {isLastStep ? 'Finish' : 'Validate'}
                     {!isLastStep && <ChevronRight className="h-4 w-4" />}
                   </Button>
