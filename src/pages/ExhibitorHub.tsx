@@ -9,6 +9,7 @@ import { CompanyProfileTab } from '@/components/exhibitor/CompanyProfileTab';
 import { ProductListingTab } from '@/components/exhibitor/ProductListingTab';
 import { SectionEditModal } from '@/components/exhibitor/SectionEditModal';
 import { WizardModal } from '@/components/exhibitor/WizardModal';
+import { PublicProfilePreview } from '@/components/exhibitor/PublicProfilePreview';
 import { Locale, SectionId } from '@/types/exhibitor';
 
 const ExhibitorHub = () => {
@@ -30,8 +31,9 @@ const ExhibitorHub = () => {
   const [activeTab, setActiveTab] = useState<'profile' | 'products'>('profile');
   const [editingSectionId, setEditingSectionId] = useState<SectionId | null>(null);
   const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
-  const editingSection = editingSectionId 
+  const editingSection = editingSectionId
     ? profile.sections.find(s => s.id === editingSectionId) 
     : null;
 
@@ -45,6 +47,7 @@ const ExhibitorHub = () => {
         selectedLocale={selectedLocale}
         onLocaleChange={setSelectedLocale}
         onOpenWizard={() => setIsWizardOpen(true)}
+        onOpenPreview={() => setIsPreviewOpen(true)}
         availableLocales={[profile.primaryLocale, ...profile.secondaryLocales]}
         primaryLocale={profile.primaryLocale}
       />
@@ -122,6 +125,14 @@ const ExhibitorHub = () => {
           setIsWizardOpen(false);
           setActiveTab('products');
         }}
+      />
+
+      {/* Public Profile Preview */}
+      <PublicProfilePreview
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+        profile={profile}
+        selectedLocale={selectedLocale}
       />
     </div>
   );
