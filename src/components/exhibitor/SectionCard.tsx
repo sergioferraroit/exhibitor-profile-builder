@@ -36,6 +36,19 @@ const SECTION_ICONS: Record<string, React.ElementType> = {
   'privacy-policy': Shield,
 };
 
+// Sections that support AI autofill
+const AI_FILLABLE_SECTIONS = [
+  'logo',
+  'description',
+  'filters',
+  'matchmaking',
+  'products',
+  'documents',
+  'social-media',
+  'cover-image',
+  'why-visit',
+];
+
 const STATUS_CONFIG: Record<SectionStatus, { icon: React.ElementType; color: string; label: string }> = {
   empty: { icon: Circle, color: 'text-status-empty', label: 'Empty' },
   partial: { icon: AlertCircle, color: 'text-status-partial', label: 'Incomplete' },
@@ -92,6 +105,9 @@ export function SectionCard({
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="font-medium text-foreground truncate">{section.name}</h3>
+                {AI_FILLABLE_SECTIONS.includes(section.id) && (
+                  <Sparkles className="h-3.5 w-3.5 text-[#F97316] shrink-0" />
+                )}
                 {isHighImpact && (
                   <Badge variant="secondary" className="bg-high-impact/10 text-high-impact text-xs shrink-0">
                     High Impact
