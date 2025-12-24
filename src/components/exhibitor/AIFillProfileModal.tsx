@@ -16,9 +16,13 @@ import { cn } from '@/lib/utils';
 const AI_EDITABLE_SECTIONS = [
   'company-description',
   'why-visit',
+  'company-logo',
+  'cover-image',
+  'products',
+  'documents',
+  'social-links',
   'filter-tags',
   'matchmaking-tags',
-  'social-links',
 ];
 
 interface AIFillProfileModalProps {
