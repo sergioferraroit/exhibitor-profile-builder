@@ -10,7 +10,10 @@ import { ProductListingTab } from '@/components/exhibitor/ProductListingTab';
 import { SectionEditModal } from '@/components/exhibitor/SectionEditModal';
 import { WizardModal } from '@/components/exhibitor/WizardModal';
 import { PublicProfilePreview } from '@/components/exhibitor/PublicProfilePreview';
+import { AIFloatingTrigger } from '@/components/exhibitor/AIFloatingTrigger';
+import { AIOnboardingModal } from '@/components/exhibitor/AIOnboardingModal';
 import { Locale, SectionId } from '@/types/exhibitor';
+import { toast } from 'sonner';
 
 const ExhibitorHub = () => {
   const {
@@ -33,6 +36,28 @@ const ExhibitorHub = () => {
   const [editingSectionId, setEditingSectionId] = useState<SectionId | null>(null);
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isAIOnboardingOpen, setIsAIOnboardingOpen] = useState(false);
+  const [hasSeenAIOnboarding, setHasSeenAIOnboarding] = useState(false);
+
+  const handleAITriggerClick = () => {
+    if (!hasSeenAIOnboarding) {
+      setIsAIOnboardingOpen(true);
+    } else {
+      // Future: open AI assistant panel
+      toast.info('AI Assistant is ready to help!');
+    }
+  };
+
+  const handleAIStart = (url: string) => {
+    setHasSeenAIOnboarding(true);
+    setIsAIOnboardingOpen(false);
+    toast.success(`Starting AI profile generation from: ${url}`);
+    // Future: trigger AI scraping logic
+  };
+
+  const handleAISkip = () => {
+    setHasSeenAIOnboarding(true);
+  };
 
   const editingSection = editingSectionId
     ? profile.sections.find(s => s.id === editingSectionId) 
@@ -135,6 +160,16 @@ const ExhibitorHub = () => {
         onClose={() => setIsPreviewOpen(false)}
         profile={profile}
         selectedLocale={selectedLocale}
+      />
+      {/* AI Floating Trigger */}
+      <AIFloatingTrigger onClick={handleAITriggerClick} />
+
+      {/* AI Onboarding Modal */}
+      <AIOnboardingModal
+        isOpen={isAIOnboardingOpen}
+        onClose={() => setIsAIOnboardingOpen(false)}
+        onStart={handleAIStart}
+        onSkip={handleAISkip}
       />
     </div>
   );
