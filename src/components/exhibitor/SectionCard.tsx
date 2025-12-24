@@ -79,9 +79,9 @@ export function SectionCard({
       )}
       <CardHeader className={cn("pb-2", isWebsiteSection && "pt-6")}>
         <div className="flex items-start justify-between gap-2">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className={cn(
-              "p-2 rounded-lg",
+              "p-2 rounded-lg shrink-0",
               isWebsiteSection ? "bg-primary/20" : isHighImpact ? "bg-high-impact/10" : "bg-muted"
             )}>
               <SectionIcon className={cn(
@@ -89,22 +89,22 @@ export function SectionCard({
                 isWebsiteSection ? "text-primary" : isHighImpact ? "text-high-impact" : "text-icon-soft"
               )} />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-medium text-foreground">{section.name}</h3>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-medium text-foreground truncate">{section.name}</h3>
                 {isHighImpact && (
-                  <Badge variant="secondary" className="bg-high-impact/10 text-high-impact text-xs">
+                  <Badge variant="secondary" className="bg-high-impact/10 text-high-impact text-xs shrink-0">
                     High Impact
                   </Badge>
                 )}
                 {section.isMandatory && (
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="outline" className="text-xs shrink-0">
                     Required
                   </Badge>
                 )}
               </div>
               <div className="flex items-center gap-1 mt-1">
-                <StatusIcon className={cn("h-4 w-4", statusConfig.color)} />
+                <StatusIcon className={cn("h-4 w-4 shrink-0", statusConfig.color)} />
                 <span className={cn("text-xs", statusConfig.color)}>
                   {section.isNotRelevant ? 'Not relevant' : statusConfig.label}
                 </span>
@@ -113,7 +113,8 @@ export function SectionCard({
           </div>
           <Button
             variant="ghost"
-            size="sm"
+            size="icon"
+            className="shrink-0 h-8 w-8"
             onClick={onEdit}
             disabled={section.isNotRelevant}
           >
