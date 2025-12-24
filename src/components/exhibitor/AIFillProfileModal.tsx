@@ -13,16 +13,17 @@ import { ProfileSection } from '@/types/exhibitor';
 import { cn } from '@/lib/utils';
 
 // Sections that can be AI-edited
+// Sections that can be AI-edited (ordered for display)
 const AI_EDITABLE_SECTIONS = [
-  'company-description',
-  'why-visit',
-  'company-logo',
-  'cover-image',
+  'logo',
+  'description',
+  'filters',
+  'matchmaking',
   'products',
   'documents',
-  'social-links',
-  'filter-tags',
-  'matchmaking-tags',
+  'social-media',
+  'cover-image',
+  'why-visit',
 ];
 
 interface AIFillProfileModalProps {
