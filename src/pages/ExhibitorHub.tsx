@@ -12,6 +12,7 @@ import { WizardModal } from '@/components/exhibitor/WizardModal';
 import { PublicProfilePreview } from '@/components/exhibitor/PublicProfilePreview';
 import { AIFloatingTrigger } from '@/components/exhibitor/AIFloatingTrigger';
 import { AIOnboardingModal } from '@/components/exhibitor/AIOnboardingModal';
+import { AIFillProfileModal } from '@/components/exhibitor/AIFillProfileModal';
 import { Locale, SectionId } from '@/types/exhibitor';
 import { toast } from 'sonner';
 
@@ -37,26 +38,31 @@ const ExhibitorHub = () => {
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isAIOnboardingOpen, setIsAIOnboardingOpen] = useState(false);
+  const [isAIFillProfileOpen, setIsAIFillProfileOpen] = useState(false);
   const [hasSeenAIOnboarding, setHasSeenAIOnboarding] = useState(false);
 
   const handleAITriggerClick = () => {
     if (!hasSeenAIOnboarding) {
       setIsAIOnboardingOpen(true);
     } else {
-      // Future: open AI assistant panel
-      toast.info('AI Assistant is ready to help!');
+      setIsAIFillProfileOpen(true);
     }
   };
 
   const handleAIStart = (url: string) => {
     setHasSeenAIOnboarding(true);
     setIsAIOnboardingOpen(false);
-    toast.success(`Starting AI profile generation from: ${url}`);
-    // Future: trigger AI scraping logic
+    setIsAIFillProfileOpen(true);
+    toast.success(`Website URL saved: ${url}`);
   };
 
   const handleAISkip = () => {
     setHasSeenAIOnboarding(true);
+  };
+
+  const handleFillSections = (sectionIds: string[]) => {
+    toast.success(`AI is filling ${sectionIds.length} section(s)...`);
+    // Future: trigger AI fill logic for selected sections
   };
 
   const editingSection = editingSectionId
@@ -170,6 +176,14 @@ const ExhibitorHub = () => {
         onClose={() => setIsAIOnboardingOpen(false)}
         onStart={handleAIStart}
         onSkip={handleAISkip}
+      />
+
+      {/* AI Fill Profile Modal */}
+      <AIFillProfileModal
+        isOpen={isAIFillProfileOpen}
+        onClose={() => setIsAIFillProfileOpen(false)}
+        sections={profile.sections}
+        onFillSections={handleFillSections}
       />
     </div>
   );
