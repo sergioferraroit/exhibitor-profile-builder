@@ -4,7 +4,7 @@ import { SectionCard } from './SectionCard';
 import { CompanyProfileWYSIWYG } from './CompanyProfileWYSIWYG';
 import { Button } from '@/components/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { LayoutGrid, Eye } from 'lucide-react';
+import { LayoutGrid, FileEdit } from 'lucide-react';
 
 type ViewMode = 'wysiwyg' | 'cards';
 
@@ -57,11 +57,11 @@ export function CompanyProfileTab({
         >
           <ToggleGroupItem 
             value="wysiwyg" 
-            aria-label="Public view"
+            aria-label="Page layout view"
             className="gap-2 data-[state=on]:bg-background data-[state=on]:shadow-sm"
           >
-            <Eye className="h-4 w-4" />
-            <span className="hidden sm:inline">Public view</span>
+            <FileEdit className="h-4 w-4" />
+            <span className="hidden sm:inline">Page layout view</span>
           </ToggleGroupItem>
           <ToggleGroupItem 
             value="cards" 
