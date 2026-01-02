@@ -65,11 +65,11 @@ export function CompanyProfileTab({
           </ToggleGroupItem>
           <ToggleGroupItem 
             value="cards" 
-            aria-label="Layout view"
+            aria-label="Card view"
             className="gap-2 data-[state=on]:bg-background data-[state=on]:shadow-sm"
           >
             <LayoutGrid className="h-4 w-4" />
-            <span className="hidden sm:inline">Layout</span>
+            <span className="hidden sm:inline">Card view</span>
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
