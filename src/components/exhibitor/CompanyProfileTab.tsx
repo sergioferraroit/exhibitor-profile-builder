@@ -57,19 +57,19 @@ export function CompanyProfileTab({
         >
           <ToggleGroupItem 
             value="wysiwyg" 
-            aria-label="Preview view"
+            aria-label="Public view"
             className="gap-2 data-[state=on]:bg-background data-[state=on]:shadow-sm"
           >
             <Eye className="h-4 w-4" />
-            <span className="hidden sm:inline">Preview</span>
+            <span className="hidden sm:inline">Public view</span>
           </ToggleGroupItem>
           <ToggleGroupItem 
             value="cards" 
-            aria-label="Card view"
+            aria-label="Layout view"
             className="gap-2 data-[state=on]:bg-background data-[state=on]:shadow-sm"
           >
             <LayoutGrid className="h-4 w-4" />
-            <span className="hidden sm:inline">Cards</span>
+            <span className="hidden sm:inline">Layout</span>
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
