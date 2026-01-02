@@ -114,10 +114,10 @@ export function ProfileHeader({
                 </SelectContent>
               </Select>
 
-              {/* Preview Button */}
+              {/* Public View Button */}
               <Button variant="outline" onClick={onOpenPreview} className="gap-2">
                 <Eye className="h-4 w-4" />
-                Preview
+                Public view
               </Button>
 
               {/* Wizard Button */}
