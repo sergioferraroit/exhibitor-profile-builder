@@ -94,6 +94,7 @@ const ExhibitorHub = () => {
 
           <TabsContent value="profile">
             <CompanyProfileTab
+              profile={profile}
               sections={profile.sections}
               selectedLocale={selectedLocale}
               packageType={profile.packageType}
