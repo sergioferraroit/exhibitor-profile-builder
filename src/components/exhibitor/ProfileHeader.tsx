@@ -69,18 +69,9 @@ export function ProfileHeader({
       <header className="bg-card border-b">
         <div className="container mx-auto py-4">
           <div className="flex items-center justify-between">
-            {/* Left: Company name and edit button */}
-            <div className="flex items-center gap-3">
-              <h1 className="text-xl font-semibold text-foreground">{companyName}</h1>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 rounded-full border-primary text-primary hover:bg-primary-tint-4"
-                onClick={handleOpenModal}
-              >
-                <Pencil className="h-3.5 w-3.5" />
-              </Button>
-              <p className="text-sm text-foreground-secondary ml-2">Edit company profile</p>
+            {/* Left: Page title */}
+            <div>
+              <h1 className="text-xl font-semibold text-foreground">Edit company profile</h1>
             </div>
 
             {/* Right: Progress, language, buttons */}
