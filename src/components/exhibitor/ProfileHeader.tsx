@@ -69,13 +69,10 @@ export function ProfileHeader({
       <header className="bg-card border-b">
         <div className="container mx-auto py-4">
           <div className="flex items-center justify-between">
-            {/* Left: Page title */}
-            <div>
-              <h1 className="text-xl font-semibold text-foreground">Edit company profile</h1>
-            </div>
-
-            {/* Right: Progress, language, buttons */}
+            {/* Left: Page title and progress */}
             <div className="flex items-center gap-6">
+              <h1 className="text-xl font-semibold text-foreground">Edit company profile</h1>
+              
               {/* Completion Progress */}
               <div className="flex items-center gap-3">
                 <span className="text-sm text-foreground-secondary">Profile complete</span>
@@ -84,7 +81,10 @@ export function ProfileHeader({
                   <Progress value={completionPercentage} className="h-1.5" />
                 </div>
               </div>
+            </div>
 
+            {/* Right: Language, buttons */}
+            <div className="flex items-center gap-6">
               {/* Language Selector */}
               <Select value={selectedLocale} onValueChange={(v) => onLocaleChange(v as Locale)}>
                 <SelectTrigger className="w-[120px] h-9">
