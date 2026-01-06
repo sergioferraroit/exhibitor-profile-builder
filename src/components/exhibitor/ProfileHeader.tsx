@@ -70,16 +70,15 @@ export function ProfileHeader({
         <div className="container mx-auto py-4">
           <div className="flex items-center justify-between">
             {/* Left: Page title and progress */}
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col gap-1">
               <h1 className="text-xl font-semibold text-foreground">Edit company profile</h1>
               
               {/* Completion Progress */}
               <div className="flex items-center gap-3">
-                <span className="text-sm text-foreground-secondary">Profile complete</span>
-                <span className="text-sm font-medium text-foreground">{completionPercentage}%</span>
                 <div className="w-24">
                   <Progress value={completionPercentage} className="h-1.5" />
                 </div>
+                <span className="text-sm text-foreground-secondary">{completionPercentage}% complete</span>
               </div>
             </div>
 
