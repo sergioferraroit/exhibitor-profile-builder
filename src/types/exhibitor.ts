@@ -77,6 +77,7 @@ export interface ExhibitorProfile {
 // Section IDs for the profile
 export const SECTION_IDS = {
   // Group A - High Impact (80% weight)
+  COMPANY_NAME: 'company-name',
   LOGO: 'logo',
   DESCRIPTION: 'description',
   FILTERS: 'filters',

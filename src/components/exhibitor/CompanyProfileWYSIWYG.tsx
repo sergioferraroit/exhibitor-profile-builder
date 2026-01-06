@@ -126,6 +126,14 @@ export function CompanyProfileWYSIWYG({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h1 className="text-2xl font-bold text-foreground truncate">{profile.companyName}</h1>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-7 w-7 shrink-0"
+                onClick={() => onEditSection(SECTION_IDS.COMPANY_NAME)}
+              >
+                <Edit className="h-3.5 w-3.5" />
+              </Button>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />
