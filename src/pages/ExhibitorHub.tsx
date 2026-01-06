@@ -10,9 +10,6 @@ import { ProductListingTab } from '@/components/exhibitor/ProductListingTab';
 import { SectionEditModal } from '@/components/exhibitor/SectionEditModal';
 import { WizardModal } from '@/components/exhibitor/WizardModal';
 import { PublicProfilePreview } from '@/components/exhibitor/PublicProfilePreview';
-import { AIFloatingTrigger } from '@/components/exhibitor/AIFloatingTrigger';
-import { AIOnboardingModal } from '@/components/exhibitor/AIOnboardingModal';
-import { AIFillProfileModal } from '@/components/exhibitor/AIFillProfileModal';
 import { Locale, SectionId } from '@/types/exhibitor';
 import { toast } from 'sonner';
 
@@ -37,37 +34,11 @@ const ExhibitorHub = () => {
   const [editingSectionId, setEditingSectionId] = useState<SectionId | null>(null);
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  const [isAIOnboardingOpen, setIsAIOnboardingOpen] = useState(false);
-  const [isAIFillProfileOpen, setIsAIFillProfileOpen] = useState(false);
-  const [hasSeenAIOnboarding, setHasSeenAIOnboarding] = useState(false);
   
   // Top bar state
   const [topBarLanguage, setTopBarLanguage] = useState('en-GB');
   const [eventEdition, setEventEdition] = useState('2025');
 
-  const handleAITriggerClick = () => {
-    if (!hasSeenAIOnboarding) {
-      setIsAIOnboardingOpen(true);
-    } else {
-      setIsAIFillProfileOpen(true);
-    }
-  };
-
-  const handleAIStart = (url: string) => {
-    setHasSeenAIOnboarding(true);
-    setIsAIOnboardingOpen(false);
-    setIsAIFillProfileOpen(true);
-    toast.success(`Website URL saved: ${url}`);
-  };
-
-  const handleAISkip = () => {
-    setHasSeenAIOnboarding(true);
-  };
-
-  const handleFillSections = (sectionIds: string[]) => {
-    toast.success(`AI is filling ${sectionIds.length} section(s)...`);
-    // Future: trigger AI fill logic for selected sections
-  };
 
   const editingSection = editingSectionId
     ? profile.sections.find(s => s.id === editingSectionId) 
@@ -195,24 +166,6 @@ const ExhibitorHub = () => {
         selectedLocale={selectedLocale}
       />
       
-      {/* AI Floating Trigger */}
-      <AIFloatingTrigger onClick={handleAITriggerClick} />
-
-      {/* AI Onboarding Modal */}
-      <AIOnboardingModal
-        isOpen={isAIOnboardingOpen}
-        onClose={() => setIsAIOnboardingOpen(false)}
-        onStart={handleAIStart}
-        onSkip={handleAISkip}
-      />
-
-      {/* AI Fill Profile Modal */}
-      <AIFillProfileModal
-        isOpen={isAIFillProfileOpen}
-        onClose={() => setIsAIFillProfileOpen(false)}
-        sections={profile.sections}
-        onFillSections={handleFillSections}
-      />
     </div>
   );
 };
