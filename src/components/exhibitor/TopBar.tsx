@@ -1,4 +1,4 @@
-import { Calendar, MapPin, ChevronDown, QrCode } from 'lucide-react';
+import { Calendar, MapPin, ChevronDown, Briefcase } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -81,8 +81,9 @@ export function TopBar({
               </Select>
             </div>
 
-            <button className="p-2 border border-topbar-muted/30 rounded hover:bg-topbar-muted/10 transition-colors">
-              <QrCode className="h-5 w-5" />
+            <button className="flex items-center gap-1 p-2 border border-topbar-muted/30 rounded hover:bg-topbar-muted/10 transition-colors">
+              <Briefcase className="h-5 w-5" />
+              <ChevronDown className="h-4 w-4 opacity-70" />
             </button>
           </div>
         </div>
