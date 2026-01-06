@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { useExhibitorProfile } from '@/hooks/useExhibitorProfile';
 import { useProfileCompletion } from '@/hooks/useProfileCompletion';
+import { TopBar } from '@/components/exhibitor/TopBar';
+import { MainNav } from '@/components/exhibitor/MainNav';
 import { ProfileHeader } from '@/components/exhibitor/ProfileHeader';
 import { CompanyProfileTab } from '@/components/exhibitor/CompanyProfileTab';
 import { ProductListingTab } from '@/components/exhibitor/ProductListingTab';
@@ -40,6 +40,10 @@ const ExhibitorHub = () => {
   const [isAIOnboardingOpen, setIsAIOnboardingOpen] = useState(false);
   const [isAIFillProfileOpen, setIsAIFillProfileOpen] = useState(false);
   const [hasSeenAIOnboarding, setHasSeenAIOnboarding] = useState(false);
+  
+  // Top bar state
+  const [topBarLanguage, setTopBarLanguage] = useState('en-GB');
+  const [eventEdition, setEventEdition] = useState('2025');
 
   const handleAITriggerClick = () => {
     if (!hasSeenAIOnboarding) {
@@ -73,6 +77,18 @@ const ExhibitorHub = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <TopBar
+        eventName="The London Book Fair"
+        eventDates="11 - 13 March 2025"
+        eventLocation="Olympia London"
+        language={topBarLanguage}
+        onLanguageChange={setTopBarLanguage}
+        eventEdition={eventEdition}
+        onEventEditionChange={setEventEdition}
+      />
+      
+      <MainNav />
+      
       <ProfileHeader
         companyName={profile.companyName}
         completionPercentage={completion.overallPercentage}
@@ -168,6 +184,7 @@ const ExhibitorHub = () => {
         profile={profile}
         selectedLocale={selectedLocale}
       />
+      
       {/* AI Floating Trigger */}
       <AIFloatingTrigger onClick={handleAITriggerClick} />
 

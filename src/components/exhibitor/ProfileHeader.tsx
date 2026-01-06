@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Wand2, Globe, Eye, Pencil } from 'lucide-react';
+import { Pencil, Eye } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 
 interface ProfileHeaderProps {
@@ -33,7 +33,7 @@ interface ProfileHeaderProps {
 }
 
 const LOCALE_LABELS: Record<Locale, string> = {
-  'en-GB': 'English (UK)',
+  'en-GB': 'English',
   'fr-FR': 'Français',
   'ja-JP': '日本語',
 };
@@ -66,40 +66,37 @@ export function ProfileHeader({
 
   return (
     <>
-      <header className="border-b bg-card">
+      <header className="bg-card border-b">
         <div className="container mx-auto py-4">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold text-foreground">{companyName}</h1>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8"
-                  onClick={handleOpenModal}
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-              </div>
-              <p className="text-sm text-foreground-secondary">Edit Company Profile</p>
+          <div className="flex items-center justify-between">
+            {/* Left: Company name and edit button */}
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl font-semibold text-foreground">{companyName}</h1>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8 rounded-full border-primary text-primary hover:bg-primary-tint-4"
+                onClick={handleOpenModal}
+              >
+                <Pencil className="h-3.5 w-3.5" />
+              </Button>
+              <p className="text-sm text-foreground-secondary ml-2">Edit company profile</p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            {/* Right: Progress, language, buttons */}
+            <div className="flex items-center gap-6">
               {/* Completion Progress */}
-              <div className="flex items-center gap-3 min-w-[200px]">
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-medium text-foreground-secondary">Profile Complete</span>
-                    <span className="text-xs font-bold text-foreground">{completionPercentage}%</span>
-                  </div>
-                  <Progress value={completionPercentage} className="h-2" />
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-foreground-secondary">Profile complete</span>
+                <span className="text-sm font-medium text-foreground">{completionPercentage}%</span>
+                <div className="w-24">
+                  <Progress value={completionPercentage} className="h-1.5" />
                 </div>
               </div>
 
               {/* Language Selector */}
               <Select value={selectedLocale} onValueChange={(v) => onLocaleChange(v as Locale)}>
-                <SelectTrigger className="w-[160px]">
-                  <Globe className="h-4 w-4 mr-2" />
+                <SelectTrigger className="w-[120px] h-9">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -107,23 +104,23 @@ export function ProfileHeader({
                     <SelectItem key={locale} value={locale}>
                       {LOCALE_LABELS[locale]}
                       {locale === primaryLocale && (
-                        <span className="ml-2 text-xs text-foreground-secondary">(Primary)</span>
+                        <span className="ml-1 text-xs text-foreground-secondary">(Primary)</span>
                       )}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
-              {/* Public View Button */}
+              {/* Preview Button */}
               <Button variant="outline" onClick={onOpenPreview} className="gap-2">
                 <Eye className="h-4 w-4" />
-                Public view
+                Preview
               </Button>
 
-              {/* Wizard Button */}
+              {/* Fill Profile Button */}
               <Button onClick={onOpenWizard} className="gap-2">
-                <Wand2 className="h-4 w-4" />
-                Fill Profile
+                <Pencil className="h-4 w-4" />
+                Fill profile
               </Button>
             </div>
           </div>

@@ -144,6 +144,11 @@ export default {
 				'misty-blue': 'hsl(var(--data-misty-blue))',
 				'smoky-blue': 'hsl(var(--data-smoky-blue))',
 				turquoise: 'hsl(var(--data-turquoise))'
+			},
+			topbar: {
+				DEFAULT: 'hsl(var(--topbar-bg))',
+				foreground: 'hsl(var(--topbar-foreground))',
+				muted: 'hsl(var(--topbar-muted))'
 			}
 		},
   		gap: {
