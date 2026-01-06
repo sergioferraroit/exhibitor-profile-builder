@@ -103,9 +103,19 @@ const ExhibitorHub = () => {
 
       <main className="container mx-auto py-6">
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'profile' | 'products')}>
-          <TabsList className="mb-6">
-            <TabsTrigger value="profile">Company Profile</TabsTrigger>
-            <TabsTrigger value="products">Product Listing</TabsTrigger>
+          <TabsList className="mb-6 bg-muted/50 p-1 rounded-lg border border-border">
+            <TabsTrigger 
+              value="profile" 
+              className="px-6 py-2.5 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border rounded-md transition-all"
+            >
+              Company Profile
+            </TabsTrigger>
+            <TabsTrigger 
+              value="products"
+              className="px-6 py-2.5 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border rounded-md transition-all"
+            >
+              Product Listing
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="profile">
