@@ -57,7 +57,6 @@ export function TopBar({
               <Select value={language} onValueChange={onLanguageChange}>
                 <SelectTrigger className="w-[140px] h-8 bg-transparent border-none text-topbar-foreground text-sm p-0 focus:ring-0">
                   <SelectValue />
-                  <ChevronDown className="h-4 w-4 ml-1 opacity-70" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="en-GB">English (GB)</SelectItem>
@@ -72,7 +71,6 @@ export function TopBar({
               <Select value={eventEdition} onValueChange={onEventEditionChange}>
                 <SelectTrigger className="w-[180px] h-8 bg-transparent border-none text-topbar-foreground text-sm p-0 focus:ring-0">
                   <SelectValue />
-                  <ChevronDown className="h-4 w-4 ml-1 opacity-70" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="2025">The London Book Fair 2025</SelectItem>
