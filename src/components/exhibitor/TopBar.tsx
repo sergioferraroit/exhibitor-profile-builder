@@ -1,6 +1,9 @@
 import { Calendar, MapPin, ChevronDown } from 'lucide-react';
-import logoPlaceholder from '@/assets/logo-placeholder.png';
+import logoPlaceholder from '@/assets/logo-placeholder.svg';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Link } from 'react-router-dom';
+
 interface TopBarProps {
   eventName: string;
   eventDates: string;
@@ -10,6 +13,7 @@ interface TopBarProps {
   eventEdition: string;
   onEventEditionChange: (edition: string) => void;
 }
+
 export function TopBar({
   eventName,
   eventDates,
@@ -71,10 +75,45 @@ export function TopBar({
               </Select>
             </div>
 
-            <button className="flex items-center gap-1 p-2 border border-topbar-muted/30 rounded hover:bg-topbar-muted/10 transition-colors">
-              <img src={logoPlaceholder} alt="Company logo" className="h-5 w-5 object-contain" />
-              <ChevronDown className="h-4 w-4 opacity-70" />
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 p-1 rounded hover:bg-topbar-muted/10 transition-colors focus:outline-none">
+                  <img src={logoPlaceholder} alt="Company logo" className="h-12 w-12 object-contain" />
+                  <ChevronDown className="h-4 w-4 opacity-70" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64 bg-white z-50">
+                <div className="px-4 py-3">
+                  <p className="text-xs text-muted-foreground">Company name</p>
+                  <p className="font-medium text-foreground">Acme Corporation</p>
+                </div>
+                <DropdownMenuSeparator />
+                <div className="px-4 py-3">
+                  <p className="text-xs text-muted-foreground">Stand number</p>
+                  <p className="font-medium text-foreground">7B68</p>
+                </div>
+                <DropdownMenuSeparator />
+                <div className="px-4 py-3">
+                  <p className="text-xs text-muted-foreground">Digital offering</p>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-foreground">Exhibitor Profile</span>
+                    <Link to="#" className="text-primary underline text-sm">Upgrade</Link>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/edit-company-profile" className="text-primary underline cursor-pointer px-4 py-2">
+                    Edit company profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/login" className="text-primary underline cursor-pointer px-4 py-2">
+                    Logout
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
