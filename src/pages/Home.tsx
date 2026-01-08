@@ -15,6 +15,7 @@ interface Task {
   dueDate: string;
   mandatory?: boolean;
   checked: boolean;
+  link?: string;
 }
 
 interface ProfileViewer {
@@ -27,7 +28,7 @@ const Home = () => {
   const [eventEdition, setEventEdition] = useState('2025');
   
   const [tasks, setTasks] = useState<Task[]>([
-    { id: '1', title: 'Edit company profile', status: 'overdue', dueDate: '24th Jan 2025', checked: false },
+    { id: '1', title: 'Edit company profile', status: 'overdue', dueDate: '24th Jan 2025', checked: false, link: '/edit-company-profile' },
     { id: '2', title: 'Manage sharers', status: 'overdue', dueDate: '6th Feb 2025', checked: false },
     { id: '3', title: 'Admin, marketing and operations', status: 'pending', dueDate: '14th Feb 2025', mandatory: true, checked: false },
     { id: '4', title: 'Invite customers', status: 'completed', dueDate: '16th Feb 2025', checked: true },
@@ -87,7 +88,7 @@ const Home = () => {
               <CardContent className="p-0">
                 <div className="divide-y">
                   {tasks.map((task) => (
-                    <div key={task.id} className="flex items-center gap-3 p-3 hover:bg-muted/50 cursor-pointer">
+                    <Link key={task.id} to={task.link || '#'} className="flex items-center gap-3 p-3 hover:bg-muted/50 cursor-pointer">
                       <Checkbox 
                         checked={task.checked} 
                         onCheckedChange={() => toggleTask(task.id)}
@@ -110,7 +111,7 @@ const Home = () => {
                         )}
                       </div>
                       <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </CardContent>
