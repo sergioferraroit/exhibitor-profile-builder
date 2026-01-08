@@ -10,21 +10,21 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Color/Text */
-    --foreground: 0 0% 18%;
+    --foreground: 222.2 84% 4.9%;
     --foreground-secondary: 0 0% 45%;
     --foreground-disabled: 0 0% 75%;
 
     /* Color/Background */
-    --background: 0 0% 97%;
+    --background: 0 0% 98%;
     --background-body: 0 0% 100%;
 
     /* Color/Card */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 18%;
+    --card-foreground: 222.2 84% 4.9%;
 
     /* Color/Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 18%;
+    --popover-foreground: 222.2 84% 4.9%;
 
     /* Color/Interactive (Primary) */
     --primary: 221 54% 41%;
@@ -35,38 +35,38 @@ All colors MUST be HSL.
     --primary-tint-50: 221 83% 75%;
 
     /* Color/Secondary */
-    --secondary: 221 83% 96%;
-    --secondary-foreground: 221 83% 53%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 0 0% 10%;
 
     /* Color/Muted */
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
     /* Color/Accent */
-    --accent: 221 83% 96%;
-    --accent-foreground: 221 83% 53%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     /* Color/Destructive (Error) */
-    --destructive: 0 79% 63%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
     /* Color/Border */
-    --border: 0 0% 90%;
+    --border: 214.3 31.8% 91.4%;
     --border-strong: 0 0% 75%;
     --border-dark: 0 0% 45%;
-    --input: 0 0% 90%;
+    --input: 214.3 31.8% 91.4%;
     --ring: 221 83% 53%;
 
     --radius: 0.5rem;
 
     /* Color/Semantic - Success */
-    --success: 145 63% 42%;
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     --success-subdued: 145 63% 95%;
 
     /* Color/Semantic - Warning */
     --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 18%;
+    --warning-foreground: 0 0% 100%;
     --warning-subdued: 38 92% 95%;
 
     /* Color/Semantic - Error */
@@ -75,7 +75,7 @@ All colors MUST be HSL.
     --error-subdued: 0 79% 95%;
 
     /* Color/Semantic - Info */
-    --info: 221 83% 53%;
+    --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
     --info-subdued: 221 83% 95%;
 
@@ -86,7 +86,7 @@ All colors MUST be HSL.
     /* Status colors */
     --status-empty: 0 0% 75%;
     --status-partial: 38 92% 50%;
-    --status-complete: 145 63% 42%;
+    --status-complete: 142 76% 36%;
 
     /* High impact badge */
     --badge-high-impact: 262 83% 58%;
@@ -110,14 +110,14 @@ All colors MUST be HSL.
     --data-turquoise: 180 65% 50%;
 
     /* Sidebar */
-    --sidebar-background: 0 0% 97%;
-    --sidebar-foreground: 0 0% 18%;
-    --sidebar-primary: 221 83% 53%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 221 83% 96%;
-    --sidebar-accent-foreground: 221 83% 53%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 221 83% 53%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Top Bar */
     --topbar-bg: 220 60% 18%;
@@ -129,24 +129,24 @@ All colors MUST be HSL.
 
   .dark {
     /* Color/Text */
-    --foreground: 0 0% 95%;
+    --foreground: 210 40% 98%;
     --foreground-secondary: 0 0% 65%;
     --foreground-disabled: 0 0% 45%;
 
     /* Color/Background */
-    --background: 222 47% 11%;
+    --background: 222.2 84% 4.9%;
     --background-body: 222 47% 8%;
 
     /* Color/Card */
-    --card: 222 47% 11%;
-    --card-foreground: 0 0% 95%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
     /* Color/Popover */
-    --popover: 222 47% 11%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
     /* Color/Interactive (Primary) */
-    --primary: 217 91% 60%;
+    --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 0 0% 100%;
     --primary-hover: 217 91% 50%;
     --primary-tint-4: 221 50% 20%;
@@ -154,36 +154,36 @@ All colors MUST be HSL.
     --primary-tint-50: 221 83% 65%;
 
     /* Color/Secondary */
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 0 0% 100%;
 
     /* Color/Muted */
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
     /* Color/Accent */
-    --accent: 217 32% 17%;
+    --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
 
     /* Color/Destructive (Error) */
-    --destructive: 0 79% 50%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
     /* Color/Border */
-    --border: 217 32% 25%;
+    --border: 217.2 32.6% 17.5%;
     --border-strong: 0 0% 45%;
     --border-dark: 0 0% 65%;
-    --input: 217 32% 25%;
-    --ring: 217 91% 60%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
 
     /* Color/Semantic - Success */
-    --success: 145 63% 42%;
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     --success-subdued: 145 40% 15%;
 
     /* Color/Semantic - Warning */
     --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 18%;
+    --warning-foreground: 0 0% 100%;
     --warning-subdued: 38 60% 15%;
 
     /* Color/Semantic - Error */
@@ -192,7 +192,7 @@ All colors MUST be HSL.
     --error-subdued: 0 50% 15%;
 
     /* Color/Semantic - Info */
-    --info: 217 91% 60%;
+    --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
     --info-subdued: 221 50% 15%;
 
@@ -203,7 +203,7 @@ All colors MUST be HSL.
     /* Status colors */
     --status-empty: 0 0% 45%;
     --status-partial: 38 92% 50%;
-    --status-complete: 145 63% 42%;
+    --status-complete: 142 76% 36%;
 
     /* High impact badge */
     --badge-high-impact: 262 83% 58%;
@@ -227,14 +227,14 @@ All colors MUST be HSL.
     --data-turquoise: 180 65% 45%;
 
     /* Sidebar */
-    --sidebar-background: 222 47% 11%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 32% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 32% 25%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Top Bar */
     --topbar-bg: 220 60% 18%;
