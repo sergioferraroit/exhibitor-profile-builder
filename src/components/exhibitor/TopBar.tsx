@@ -1,12 +1,5 @@
 import { Calendar, MapPin, ChevronDown, Briefcase } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 interface TopBarProps {
   eventName: string;
   eventDates: string;
@@ -16,7 +9,6 @@ interface TopBarProps {
   eventEdition: string;
   onEventEditionChange: (edition: string) => void;
 }
-
 export function TopBar({
   eventName,
   eventDates,
@@ -24,10 +16,9 @@ export function TopBar({
   language,
   onLanguageChange,
   eventEdition,
-  onEventEditionChange,
+  onEventEditionChange
 }: TopBarProps) {
-  return (
-    <div className="bg-topbar text-topbar-foreground">
+  return <div className="text-topbar-foreground bg-[#1a1a1a]">
       <div className="container mx-auto py-3">
         <div className="flex items-center justify-between">
           {/* Left: Event Branding */}
@@ -86,6 +77,5 @@ export function TopBar({
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
