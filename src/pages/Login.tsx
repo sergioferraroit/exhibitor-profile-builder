@@ -1,15 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
-  const navigate = useNavigate();
-
-  const handleLogin = () => {
-    navigate('/home');
-  };
-
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Main Content */}
@@ -54,10 +48,7 @@ export default function Login() {
               </div>
 
               <div className="flex items-center justify-between pt-2">
-                <Button 
-                  className="bg-slate-700 hover:bg-slate-800 text-white px-4"
-                  onClick={handleLogin}
-                >
+                <Button className="bg-slate-700 hover:bg-slate-800 text-white px-4">
                   Login
                 </Button>
                 <Link
