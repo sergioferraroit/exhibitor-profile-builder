@@ -1,53 +1,17 @@
 import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useExhibitorProfile } from '@/hooks/useExhibitorProfile';
-import { useProfileCompletion } from '@/hooks/useProfileCompletion';
 import { TopBar } from '@/components/exhibitor/TopBar';
 import { MainNav } from '@/components/exhibitor/MainNav';
-import { ProfileHeader } from '@/components/exhibitor/ProfileHeader';
-import { CompanyProfileTab } from '@/components/exhibitor/CompanyProfileTab';
-import { ProductListingTab } from '@/components/exhibitor/ProductListingTab';
-import { SectionEditModal } from '@/components/exhibitor/SectionEditModal';
-import { WizardModal } from '@/components/exhibitor/WizardModal';
-import { PublicProfilePreview } from '@/components/exhibitor/PublicProfilePreview';
-import { Locale, SectionId } from '@/types/exhibitor';
-import { toast } from 'sonner';
+import { TaskProgressCard } from '@/components/exhibitor/home/TaskProgressCard';
+import { RecommendedActionsCard } from '@/components/exhibitor/home/RecommendedActionsCard';
+import { PerformanceSnapshotCard } from '@/components/exhibitor/home/PerformanceSnapshotCard';
+import { HomeFooter } from '@/components/exhibitor/home/HomeFooter';
 
 const ExhibitorHub = () => {
-  const {
-    profile,
-    selectedLocale,
-    setSelectedLocale,
-    updateSection,
-    toggleNotRelevant,
-    addProduct,
-    updateProduct,
-    deleteProduct,
-    reorderProducts,
-    getWizardSteps,
-    updateCompanyName,
-  } = useExhibitorProfile();
-
-  const completion = useProfileCompletion(profile);
-  
-  const [activeTab, setActiveTab] = useState<'profile' | 'products'>('profile');
-  const [editingSectionId, setEditingSectionId] = useState<SectionId | null>(null);
-  const [isWizardOpen, setIsWizardOpen] = useState(false);
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  
-  // Top bar state
   const [topBarLanguage, setTopBarLanguage] = useState('en-GB');
   const [eventEdition, setEventEdition] = useState('2025');
 
-
-  const editingSection = editingSectionId
-    ? profile.sections.find(s => s.id === editingSectionId) 
-    : null;
-
-  const wizardSteps = getWizardSteps();
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <TopBar
         eventName="The London Book Fair"
         eventDates="11 - 13 March 2025"
@@ -60,112 +24,26 @@ const ExhibitorHub = () => {
       
       <MainNav />
       
-      <ProfileHeader
-        companyName={profile.companyName}
-        completionPercentage={completion.overallPercentage}
-        selectedLocale={selectedLocale}
-        onLocaleChange={setSelectedLocale}
-        onOpenWizard={() => setIsWizardOpen(true)}
-        onOpenPreview={() => setIsPreviewOpen(true)}
-        onUpdateCompanyName={updateCompanyName}
-        availableLocales={[profile.primaryLocale, ...profile.secondaryLocales]}
-        primaryLocale={profile.primaryLocale}
-      />
-
-      <main className="container mx-auto py-6">
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'profile' | 'products')}>
-          <TabsList className="mb-6 bg-muted/50 p-1 rounded-lg border border-border">
-            <TabsTrigger 
-              value="profile" 
-              className="px-6 py-2.5 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border rounded-md transition-all"
-            >
-              Company Profile
-            </TabsTrigger>
-            <TabsTrigger 
-              value="products"
-              className="px-6 py-2.5 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border rounded-md transition-all"
-            >
-              Product Listing
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="profile">
-            <CompanyProfileTab
-              profile={profile}
-              sections={profile.sections}
-              selectedLocale={selectedLocale}
-              packageType={profile.packageType}
-              onEditSection={(sectionId) => setEditingSectionId(sectionId as SectionId)}
-              onToggleNotRelevant={toggleNotRelevant}
-              onNavigateToProducts={() => setActiveTab('products')}
-              hasProducts={profile.products.length > 0}
-            />
-          </TabsContent>
-
-          <TabsContent value="products">
-            <ProductListingTab
-              products={profile.products}
-              selectedLocale={selectedLocale}
-              onAddProduct={addProduct}
-              onUpdateProduct={updateProduct}
-              onDeleteProduct={deleteProduct}
-              onReorderProducts={reorderProducts}
-              onToggleNotRelevant={() => {
-                const productsSection = profile.sections.find(s => s.id === 'products');
-                if (productsSection) toggleNotRelevant(productsSection.id);
-              }}
-              isNotRelevant={profile.sections.find(s => s.id === 'products')?.isNotRelevant ?? false}
-            />
-          </TabsContent>
-        </Tabs>
+      <main className="container mx-auto px-4 py-6 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column - Task Progress */}
+          <div>
+            <TaskProgressCard />
+          </div>
+          
+          {/* Middle Column - Recommended Actions */}
+          <div>
+            <RecommendedActionsCard />
+          </div>
+          
+          {/* Right Column - Performance Snapshot */}
+          <div>
+            <PerformanceSnapshotCard />
+          </div>
+        </div>
       </main>
 
-      {/* Section Edit Modal */}
-      {editingSection && (
-        <SectionEditModal
-          isOpen={!!editingSectionId}
-          onClose={() => setEditingSectionId(null)}
-          section={editingSection}
-          selectedLocale={selectedLocale}
-          onLocaleChange={setSelectedLocale}
-          availableLocales={[profile.primaryLocale, ...profile.secondaryLocales]}
-          primaryLocale={profile.primaryLocale}
-          completionPercentage={completion.overallPercentage}
-          onSave={(value, status) => {
-            updateSection(editingSection.id, selectedLocale, value, status);
-            setEditingSectionId(null);
-          }}
-        />
-      )}
-
-      {/* Wizard Modal */}
-      <WizardModal
-        isOpen={isWizardOpen}
-        onClose={() => setIsWizardOpen(false)}
-        steps={wizardSteps}
-        sections={profile.sections}
-        selectedLocale={selectedLocale}
-        onLocaleChange={setSelectedLocale}
-        availableLocales={[profile.primaryLocale, ...profile.secondaryLocales]}
-        primaryLocale={profile.primaryLocale}
-        completionPercentage={completion.overallPercentage}
-        onUpdateSection={updateSection}
-        onSkipSection={toggleNotRelevant}
-        hasProducts={profile.products.length > 0}
-        onNavigateToProducts={() => {
-          setIsWizardOpen(false);
-          setActiveTab('products');
-        }}
-      />
-
-      {/* Public Profile Preview */}
-      <PublicProfilePreview
-        isOpen={isPreviewOpen}
-        onClose={() => setIsPreviewOpen(false)}
-        profile={profile}
-        selectedLocale={selectedLocale}
-      />
-      
+      <HomeFooter />
     </div>
   );
 };
