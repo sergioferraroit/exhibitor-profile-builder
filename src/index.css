@@ -27,7 +27,7 @@ All colors MUST be HSL.
     --popover-foreground: 0 0% 18%;
 
     /* Color/Interactive (Primary) */
-    --primary: 221 83% 53%;
+    --primary: 221 54% 41%;
     --primary-foreground: 0 0% 100%;
     --primary-hover: 221 83% 45%;
     --primary-tint-4: 221 83% 96%;
@@ -63,12 +63,12 @@ All colors MUST be HSL.
     --success: 145 63% 42%;
     --success-foreground: 0 0% 100%;
     --success-subdued: 145 63% 95%;
-    
+
     /* Color/Semantic - Warning */
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 18%;
     --warning-subdued: 38 92% 95%;
-    
+
     /* Color/Semantic - Error */
     --error: 0 79% 63%;
     --error-foreground: 0 0% 100%;
@@ -180,12 +180,12 @@ All colors MUST be HSL.
     --success: 145 63% 42%;
     --success-foreground: 0 0% 100%;
     --success-subdued: 145 40% 15%;
-    
+
     /* Color/Semantic - Warning */
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 18%;
     --warning-subdued: 38 60% 15%;
-    
+
     /* Color/Semantic - Error */
     --error: 0 79% 63%;
     --error-foreground: 0 0% 100%;
