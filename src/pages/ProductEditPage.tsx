@@ -177,7 +177,7 @@ const ProductEditPage = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <Label>Product Categories</Label>
+                <Label>Product Categories Sergio Test</Label>
                 {previousCategories !== null ? (
                   <Button variant="ghost" size="sm" onClick={handleUndoCategories} className="gap-2 text-amber-600">
                     <Undo2 className="h-4 w-4" />
