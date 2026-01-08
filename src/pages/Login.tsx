@@ -48,8 +48,8 @@ export default function Login() {
               </div>
 
               <div className="flex items-center justify-between pt-2">
-                <Button className="bg-slate-700 hover:bg-slate-800 text-white px-4">
-                  Login
+                <Button asChild className="bg-slate-700 hover:bg-slate-800 text-white px-4">
+                  <Link to="/">Login</Link>
                 </Button>
                 <Link
                   to="/forgot-password"
