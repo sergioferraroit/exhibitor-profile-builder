@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 import ExhibitorHub from "./pages/ExhibitorHub";
 import ProductEditPage from "./pages/ProductEditPage";
 import NotFound from "./pages/NotFound";
@@ -44,11 +45,12 @@ const App = () => (
           <Route path="/forgot-password" element={<ForgotPassword />} />
           
           {/* Home */}
-          <Route path="/" element={<ExhibitorHub />} />
+          <Route path="/" element={<Home />} />
           
           {/* My Show */}
           <Route path="/admin-marketing-operations" element={<AdminMarketingOperations />} />
           <Route path="/edit-company-profile" element={<ExhibitorHub />} />
+          <Route path="/product-listing" element={<ExhibitorHub />} />
           <Route path="/product-listing" element={<ProductListing />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/manage-shares" element={<ManageShares />} />
