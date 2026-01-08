@@ -1,4 +1,5 @@
-import { Calendar, MapPin, ChevronDown, Briefcase } from 'lucide-react';
+import { Calendar, MapPin, ChevronDown } from 'lucide-react';
+import logoPlaceholder from '@/assets/logo-placeholder.png';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 interface TopBarProps {
   eventName: string;
@@ -71,7 +72,7 @@ export function TopBar({
             </div>
 
             <button className="flex items-center gap-1 p-2 border border-topbar-muted/30 rounded hover:bg-topbar-muted/10 transition-colors">
-              <Briefcase className="h-5 w-5" />
+              <img src={logoPlaceholder} alt="Company logo" className="h-5 w-5 object-contain" />
               <ChevronDown className="h-4 w-4 opacity-70" />
             </button>
           </div>
