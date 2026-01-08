@@ -83,23 +83,7 @@ export function ProfileHeader({
             </div>
 
             {/* Right: Language, buttons */}
-            <div className="flex items-center gap-6">
-              {/* Language Selector */}
-              <Select value={selectedLocale} onValueChange={(v) => onLocaleChange(v as Locale)}>
-                <SelectTrigger className="w-[120px] h-9">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableLocales.map((locale) => (
-                    <SelectItem key={locale} value={locale}>
-                      {LOCALE_LABELS[locale]}
-                      {locale === primaryLocale && (
-                        <span className="ml-1 text-xs text-foreground-secondary">(Primary)</span>
-                      )}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="flex items-center gap-4">
 
               {/* Preview Button */}
               <Button variant="outline" onClick={onOpenPreview} className="gap-2">
