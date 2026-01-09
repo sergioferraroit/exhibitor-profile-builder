@@ -29,7 +29,7 @@ const Home = () => {
   
   const [tasks, setTasks] = useState<Task[]>([
     { id: '1', title: 'Edit company profile', status: 'overdue', dueDate: '24th Jan 2025', checked: false, link: '/edit-company-profile' },
-    { id: '2', title: 'Manage sharers', status: 'overdue', dueDate: '6th Feb 2025', checked: false },
+    { id: '2', title: 'Manage sharers', status: 'overdue', dueDate: '6th Feb 2025', checked: false, link: '/manage-shares' },
     { id: '3', title: 'Admin, marketing and operations', status: 'pending', dueDate: '14th Feb 2025', mandatory: true, checked: false },
     { id: '4', title: 'Invite customers', status: 'completed', dueDate: '16th Feb 2025', checked: true },
     { id: '5', title: 'Manage badges', status: 'completed', dueDate: '24th Jan 2025', checked: true },
