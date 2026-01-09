@@ -31,7 +31,7 @@ const Home = () => {
     { id: '1', title: 'Edit company profile', status: 'overdue', dueDate: '24th Jan 2025', checked: false, link: '/edit-company-profile' },
     { id: '2', title: 'Manage sharers', status: 'overdue', dueDate: '6th Feb 2025', checked: false, link: '/manage-shares' },
     { id: '3', title: 'Admin, marketing and operations', status: 'pending', dueDate: '14th Feb 2025', mandatory: true, checked: false, link: '/admin-marketing-operations' },
-    { id: '4', title: 'Invite customers', status: 'completed', dueDate: '16th Feb 2025', checked: true },
+    { id: '4', title: 'Invite customers', status: 'completed', dueDate: '16th Feb 2025', checked: true, link: '/invite-customers' },
     { id: '5', title: 'Manage badges', status: 'completed', dueDate: '24th Jan 2025', checked: true },
     { id: '6', title: 'Create Offer to capture leads', status: 'completed', dueDate: '24th Jan 2025', checked: true },
     { id: '7', title: 'View Exhibitor manual', status: 'pending', dueDate: '1st Mar 2025', checked: false },
