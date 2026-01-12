@@ -51,7 +51,6 @@ const App = () => (
           <Route path="/admin-marketing-operations" element={<AdminMarketingOperations />} />
           <Route path="/edit-company-profile" element={<ExhibitorHub />} />
           <Route path="/product-listing" element={<ExhibitorHub />} />
-          <Route path="/product-listing" element={<ProductListing />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/manage-shares" element={<ManageShares />} />
           <Route path="/shop" element={<Shop />} />
