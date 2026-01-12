@@ -75,7 +75,7 @@ const Home = () => {
         <PageContainer>
           <LayoutGrid>
             {/* Task Progress - Left Column */}
-            <div className="col-span-full sm:col-span-4 md:col-span-3">
+            <div className="col-span-full md:col-span-4">
             <Card>
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
@@ -121,7 +121,7 @@ const Home = () => {
             </div>
 
             {/* Recommended Actions - Middle Column */}
-            <div className="col-span-full sm:col-span-4 md:col-span-5 space-y-6">
+            <div className="col-span-full md:col-span-4 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-semibold">Recommended actions</CardTitle>
@@ -242,7 +242,7 @@ const Home = () => {
             </div>
 
             {/* Performance Snapshot - Right Column */}
-            <div className="col-span-full sm:col-span-8 md:col-span-4 space-y-6">
+            <div className="col-span-full md:col-span-4 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-semibold">Your performance snapshot</CardTitle>
