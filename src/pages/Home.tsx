@@ -55,9 +55,22 @@ const Home = () => {
   const progressPercentage = Math.round((completedTasks / tasks.length) * 100);
 
   const toggleTask = (taskId: string) => {
-    setTasks(prev => prev.map(task => 
-      task.id === taskId ? { ...task, checked: !task.checked } : task
-    ));
+    setTasks(prev => prev.map(task => {
+      if (task.id !== taskId) return task;
+      
+      const newChecked = !task.checked;
+      // When checked, mark as completed; when unchecked, determine if overdue or pending
+      let newStatus: Task['status'];
+      if (newChecked) {
+        newStatus = 'completed';
+      } else {
+        // Check if the task is overdue based on due date
+        // For simplicity, tasks with status 'overdue' before completion stay overdue when unchecked
+        newStatus = task.status === 'completed' ? 'pending' : task.status;
+      }
+      
+      return { ...task, checked: newChecked, status: newStatus };
+    }));
   };
 
   return (
@@ -113,6 +126,7 @@ const Home = () => {
                       <Checkbox 
                         checked={task.checked} 
                         onCheckedChange={() => toggleTask(task.id)}
+                        onClick={(e) => e.stopPropagation()}
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{task.title}</p>
