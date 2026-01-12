@@ -8,33 +8,48 @@ export default {
   	container: {
   		center: true,
   		padding: {
-  			DEFAULT: '1rem',
-  			sm: '1rem',
-  			md: '1rem',
-  			lg: '3.75rem',
-  			xl: '3.75rem',
+  			DEFAULT: '1rem',      // Compact: 16px margin
+  			sm: '1rem',           // Medium: 16px margin
+  			md: '1rem',           // Expanded: 16px margin
+  			lg: '3.75rem',        // Large: 60px margin
+  			xl: '3.75rem',        // Extra-large: 60px margin
   			'2xl': '3.75rem'
   		},
   		screens: {
-  			sm: '600px',
-  			md: '840px',
-  			lg: '1200px',
-  			xl: '1600px',
-  			'2xl': '1920px'
+  			sm: '600px',          // Medium breakpoint
+  			md: '840px',          // Expanded breakpoint
+  			lg: '1200px',         // Large breakpoint
+  			xl: '1600px',         // Extra-large breakpoint
+  			'2xl': '1920px'       // Max width constraint
   		}
   	},
   	screens: {
+  		// Compact (phone portrait): ≤ 599px - 4 columns
+  		// Medium (tablet portrait): 600–839px - 8 columns
   		sm: '600px',
+  		// Expanded (tablet landscape/desktop): 840–1199px - 12 columns
   		md: '840px',
+  		// Large (desktop): 1200–1599px - 12 columns
   		lg: '1200px',
+  		// Extra-large (ultra-wide): ≥ 1600px - 12 columns
   		xl: '1600px',
   		'2xl': '1920px'
   	},
   	extend: {
   		spacing: {
-  			'layout-margin-compact': '1rem',
-  			'layout-margin-expanded': '3.75rem',
-  			'layout-gutter': '1.5rem'
+  			// Layout margins per breakpoint
+  			'layout-margin-compact': '1rem',     // 16px for compact/medium/expanded
+  			'layout-margin-large': '3.75rem',    // 60px for large/extra-large
+  			// Gutter (consistent across all breakpoints)
+  			'layout-gutter': '1.5rem',           // 24px gutter
+  			// Grid column gaps
+  			'gutter': '1.5rem'                   // 24px gutter alias
+  		},
+  		gridTemplateColumns: {
+  			// Layout grid columns per breakpoint
+  			'layout-4': 'repeat(4, minmax(0, 1fr))',   // Compact: 4 columns
+  			'layout-8': 'repeat(8, minmax(0, 1fr))',   // Medium: 8 columns
+  			'layout-12': 'repeat(12, minmax(0, 1fr))' // Expanded/Large/XL: 12 columns
   		},
   		colors: {
   			border: {

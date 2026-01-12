@@ -164,6 +164,15 @@ All colors MUST be HSL.
     --tracking-normal: 0em;
 
     --spacing: 0.25rem;
+
+    /* Layout Grid System */
+    --layout-columns-compact: 4;
+    --layout-columns-medium: 8;
+    --layout-columns-expanded: 12;
+    --layout-gutter: 1.5rem;           /* 24px */
+    --layout-margin-compact: 1rem;     /* 16px for compact/medium/expanded */
+    --layout-margin-large: 3.75rem;    /* 60px for large/extra-large */
+    --layout-max-width: 1920px;
   }
 
   .dark {
