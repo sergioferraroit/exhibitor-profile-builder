@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Calendar, MapPin, Phone, Check } from 'lucide-react';
+import { ChevronRight, Calendar, MapPin, Phone, Check, Info, Timer } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MainNav } from '@/components/exhibitor/MainNav';
 import { TopBar } from '@/components/exhibitor/TopBar';
 import { PageContainer, LayoutGrid } from '@/components/layout/LayoutGrid';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Separator } from '@/components/ui/separator';
 
 interface Task {
   id: string;
@@ -76,21 +78,38 @@ const Home = () => {
           <LayoutGrid>
             {/* Task Progress - Left Column */}
             <div className="col-span-full md:col-span-4">
-            <Card>
+            <Card className="rounded-[20px] border-[hsl(0_0%_84%)]">
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg font-semibold">Task progress</CardTitle>
                   <span className="text-sm text-muted-foreground">{progressPercentage}%</span>
                 </div>
                 <Progress value={progressPercentage} className="h-2" />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {completedTasks} of {tasks.length} tasks completed
-                </p>
+                <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="h-3.5 w-3.5 text-muted-foreground cursor-pointer" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[200px]">
+                        <p>Complete your tasks on time to maximise your success at the show.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  <span>{completedTasks} of {tasks.length} tasks completed</span>
+                </div>
               </CardHeader>
+              <Separator />
               <CardContent className="p-0">
                 <div className="divide-y">
                   {tasks.map((task) => (
-                    <Link key={task.id} to={task.link || '#'} className="flex items-center gap-3 p-3 hover:bg-muted/50 cursor-pointer">
+                    <Link 
+                      key={task.id} 
+                      to={task.link || '#'} 
+                      className={`flex items-center gap-3 p-3 hover:bg-muted/50 cursor-pointer ${
+                        task.status === 'overdue' ? 'bg-[#FFF0F3]' : ''
+                      }`}
+                    >
                       <Checkbox 
                         checked={task.checked} 
                         onCheckedChange={() => toggleTask(task.id)}
@@ -99,13 +118,19 @@ const Home = () => {
                         <p className="text-sm font-medium truncate">{task.title}</p>
                         <div className="flex items-center gap-1 text-xs">
                           {task.status === 'overdue' && (
-                            <span className="text-destructive">⊘ Overdue {task.dueDate}</span>
+                            <span className="text-[#E00021] flex items-center gap-1">
+                              <Timer className="h-3 w-3" /> Overdue {task.dueDate}
+                            </span>
                           )}
                           {task.status === 'completed' && (
-                            <span className="text-green-600">✓ Completed ⊘ Due {task.dueDate}</span>
+                            <span className="text-green-600 flex items-center gap-1">
+                              ✓ Completed <Timer className="h-3 w-3" /> Due {task.dueDate}
+                            </span>
                           )}
                           {task.status === 'pending' && (
-                            <span className="text-muted-foreground">⊘ Due {task.dueDate}</span>
+                            <span className="text-muted-foreground flex items-center gap-1">
+                              <Timer className="h-3 w-3" /> Due {task.dueDate}
+                            </span>
                           )}
                         </div>
                         {task.mandatory && (
@@ -122,7 +147,7 @@ const Home = () => {
 
             {/* Recommended Actions - Middle Column */}
             <div className="col-span-full md:col-span-4 space-y-6">
-            <Card>
+            <Card className="rounded-[20px] border-[hsl(0_0%_84%)]">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold">Recommended actions</CardTitle>
               </CardHeader>
@@ -243,7 +268,7 @@ const Home = () => {
 
             {/* Performance Snapshot - Right Column */}
             <div className="col-span-full md:col-span-4 space-y-6">
-            <Card>
+            <Card className="rounded-[20px] border-[hsl(0_0%_84%)]">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold">Your performance snapshot</CardTitle>
               </CardHeader>
