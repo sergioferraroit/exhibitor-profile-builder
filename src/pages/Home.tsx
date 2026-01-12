@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MainNav } from '@/components/exhibitor/MainNav';
 import { TopBar } from '@/components/exhibitor/TopBar';
+import { PageContainer, LayoutGrid } from '@/components/layout/LayoutGrid';
 
 interface Task {
   id: string;
@@ -70,10 +71,11 @@ const Home = () => {
       />
       <MainNav />
       
-      <main className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Task Progress - Left Column */}
-          <div className="lg:col-span-3">
+      <main className="py-6">
+        <PageContainer>
+          <LayoutGrid>
+            {/* Task Progress - Left Column */}
+            <div className="col-span-full sm:col-span-4 md:col-span-3">
             <Card>
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
@@ -116,10 +118,10 @@ const Home = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
+            </div>
 
-          {/* Recommended Actions - Middle Column */}
-          <div className="lg:col-span-5 space-y-6">
+            {/* Recommended Actions - Middle Column */}
+            <div className="col-span-full sm:col-span-4 md:col-span-5 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-semibold">Recommended actions</CardTitle>
@@ -237,10 +239,10 @@ const Home = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
+            </div>
 
-          {/* Performance Snapshot - Right Column */}
-          <div className="lg:col-span-4 space-y-6">
+            {/* Performance Snapshot - Right Column */}
+            <div className="col-span-full sm:col-span-8 md:col-span-4 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-semibold">Your performance snapshot</CardTitle>
@@ -310,14 +312,15 @@ const Home = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </div>
+            </div>
+          </LayoutGrid>
+        </PageContainer>
       </main>
 
       {/* Footer */}
       <footer className="bg-muted mt-8 py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <PageContainer>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-gutter mb-8">
             <div>
               <div className="flex items-center gap-2 text-sm mb-2">
                 <Calendar className="h-4 w-4" />
@@ -376,7 +379,7 @@ const Home = () => {
               The London Book Fair, RX, and Reed Exhibitions are trade marks of Reed Exhibitions Limited and its affiliates. RELX and the "RE" logo are trade marks of RELX Group plc, used under licence. Reed Exhibitions Limited is a private limited company, having its registered and principal office at Gateway House, 28 The Quadrant, Richmond, Surrey, TW9 1DN, registered in England and Wales with Company No. 678540. Business activity: Activities of exhibition and fair organisers VAT No. GB 232 4004 20 Tax ID No: 13960 00581
             </p>
           </div>
-        </div>
+        </PageContainer>
       </footer>
     </div>
   );
