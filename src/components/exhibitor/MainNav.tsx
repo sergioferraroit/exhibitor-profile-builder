@@ -79,7 +79,7 @@ export function MainNav() {
   return (
     <nav className="bg-card border-b">
       <div className="container mx-auto">
-        <div className="flex items-center gap-1 py-1">
+        <div className="flex items-center justify-center gap-1 py-1">
           {/* Home Icon */}
           <Link
             to="/"
