@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useExhibitorProfile } from '@/hooks/useExhibitorProfile';
 import { useProfileCompletion } from '@/hooks/useProfileCompletion';
@@ -14,6 +15,9 @@ import { Locale, SectionId } from '@/types/exhibitor';
 import { toast } from 'sonner';
 
 const ExhibitorHub = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
   const {
     profile,
     selectedLocale,
@@ -30,7 +34,17 @@ const ExhibitorHub = () => {
 
   const completion = useProfileCompletion(profile);
   
-  const [activeTab, setActiveTab] = useState<'profile' | 'products'>('profile');
+  // Derive active tab from URL
+  const activeTab = location.pathname === '/product-listing' ? 'products' : 'profile';
+  
+  const handleTabChange = (value: string) => {
+    if (value === 'products') {
+      navigate('/product-listing');
+    } else {
+      navigate('/edit-company-profile');
+    }
+  };
+  
   const [editingSectionId, setEditingSectionId] = useState<SectionId | null>(null);
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -73,7 +87,7 @@ const ExhibitorHub = () => {
       />
 
       <main className="container mx-auto py-6">
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'profile' | 'products')}>
+        <Tabs value={activeTab} onValueChange={handleTabChange}>
           <TabsList className="mb-6 bg-muted/50 p-1 rounded-lg border border-border">
             <TabsTrigger 
               value="profile" 
@@ -97,7 +111,7 @@ const ExhibitorHub = () => {
               packageType={profile.packageType}
               onEditSection={(sectionId) => setEditingSectionId(sectionId as SectionId)}
               onToggleNotRelevant={toggleNotRelevant}
-              onNavigateToProducts={() => setActiveTab('products')}
+              onNavigateToProducts={() => navigate('/product-listing')}
               hasProducts={profile.products.length > 0}
             />
           </TabsContent>
@@ -154,7 +168,7 @@ const ExhibitorHub = () => {
         hasProducts={profile.products.length > 0}
         onNavigateToProducts={() => {
           setIsWizardOpen(false);
-          setActiveTab('products');
+          navigate('/product-listing');
         }}
       />
 
