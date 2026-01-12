@@ -79,7 +79,7 @@ export function MainNav() {
   return (
     <nav className="bg-card border-b">
       <div className="container mx-auto">
-        <div className="flex items-center justify-center gap-1 py-1">
+        <div className="flex items-center gap-1 py-1">
           {/* Home Icon */}
           <Link
             to="/"
@@ -96,7 +96,7 @@ export function MainNav() {
           <NavigationMenu>
             <NavigationMenuList>
               {navItems.map((item) => (
-                <NavigationMenuItem key={item.label} className="relative">
+                <NavigationMenuItem key={item.label}>
                   {item.children ? (
                     <>
                       <NavigationMenuTrigger 
@@ -107,7 +107,7 @@ export function MainNav() {
                       >
                         {item.label}
                       </NavigationMenuTrigger>
-                      <NavigationMenuContent className="absolute left-0 top-full mt-0">
+                      <NavigationMenuContent>
                         <ul className="grid w-[280px] gap-1 p-2 bg-popover border rounded-md shadow-lg">
                           {item.children.map((child) => (
                             <li key={child.href}>
