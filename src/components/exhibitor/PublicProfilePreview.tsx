@@ -55,7 +55,7 @@ export function PublicProfilePreview({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="w-[80vw] max-w-[80vw] h-[90vh] max-h-[90vh] overflow-y-auto p-0">
+      <DialogContent className="w-[80vw] max-w-none h-[90vh] max-h-[90vh] overflow-y-auto p-0">
         <DialogHeader className="p-4 border-b sticky top-0 bg-background z-10">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-lg">Public Profile Preview</DialogTitle>
