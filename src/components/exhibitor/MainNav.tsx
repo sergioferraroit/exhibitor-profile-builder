@@ -1,4 +1,4 @@
-import { Home, ExternalLink } from 'lucide-react';
+import { Home, ExternalLink, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   NavigationMenu,
@@ -34,26 +34,30 @@ const navItems: NavItem[] = [
       { label: 'Manage Shares', href: '/manage-shares' },
       { label: 'Shop', href: '/shop' },
       { label: 'Exhibitor Manual', href: '/exhibitor-manual' },
-      { label: 'My Team', href: '/my-team' },
+    ],
+  },
+  {
+    label: 'My Team',
+    children: [
+      { label: 'Edit Company Profile', href: '/edit-company-profile' },
+      { label: 'Add Product/Service', href: '/add-product' },
+      { label: 'Upgrade Digital Package', href: '/shop' },
+    ],
+  },
+  {
+    label: 'Lead capture',
+    children: [
       { label: 'Company Administrators', href: '/company-administrators' },
       { label: 'Allocate Badges', href: '/allocate-badges' },
       { label: 'Your Company Badges', href: '/your-company-badges' },
     ],
   },
   {
-    label: 'Lead capture',
+    label: 'Analytics',
     children: [
       { label: 'Lead Manager App', href: '/lead-manager-app' },
       { label: 'Create Offer', href: '/create-offer' },
       { label: 'Invite Your Customers', href: '/invite-customers' },
-    ],
-  },
-  {
-    label: 'Analytics',
-    children: [
-      { label: 'Exhibitor Dashboard', href: '/exhibitor-dashboard' },
-      { label: 'Profile Viewer', href: '/profile-viewer' },
-      { label: 'Benchmark Analytics', href: '/benchmark-analytics' },
     ],
   },
   {
@@ -79,14 +83,14 @@ export function MainNav() {
   return (
     <nav className="bg-card border-b">
       <div className="container mx-auto">
-        <div className="flex items-center gap-1 py-1">
+        <div className="flex items-center justify-center gap-1 py-1">
           {/* Home Icon */}
           <Link
             to="/"
             className={cn(
-              "flex items-center justify-center h-10 w-10 rounded-md transition-colors",
+              "flex items-center justify-center h-10 w-10 rounded-md transition-colors relative",
               location.pathname === '/' 
-                ? "bg-primary text-primary-foreground" 
+                ? "text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary" 
                 : "hover:bg-muted"
             )}
           >
@@ -101,14 +105,18 @@ export function MainNav() {
                     <>
                       <NavigationMenuTrigger 
                         className={cn(
-                          "bg-transparent hover:bg-muted data-[state=open]:bg-muted",
-                          isActiveSection(item.children) && "text-primary font-semibold"
+                          "bg-transparent hover:bg-transparent data-[state=open]:bg-transparent relative gap-1",
+                          "after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-transparent after:transition-colors",
+                          "data-[state=open]:after:bg-primary",
+                          isActiveSection(item.children) && "after:bg-primary",
+                          "[&>svg]:hidden" // Hide the default chevron
                         )}
                       >
                         {item.label}
+                        <ChevronDown className="h-4 w-4 text-primary transition-transform duration-200 group-data-[state=open]:rotate-180" />
                       </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-[280px] gap-1 p-2 bg-popover border rounded-md shadow-lg">
+                      <NavigationMenuContent className="absolute left-0 top-full mt-0">
+                        <ul className="w-[220px] p-2 bg-popover border rounded-md shadow-lg">
                           {item.children.map((child) => (
                             <li key={child.href}>
                               <NavigationMenuLink asChild>
