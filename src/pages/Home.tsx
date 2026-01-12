@@ -116,9 +116,8 @@ const Home = () => {
               <CardContent className="p-0">
                 <div className="divide-y">
                   {tasks.map((task) => (
-                    <Link 
+                    <div 
                       key={task.id} 
-                      to={task.link || '#'} 
                       className={`flex items-center gap-3 p-3 hover:bg-muted/50 cursor-pointer ${
                         task.status === 'overdue' ? 'bg-[#FFF0F3]' : ''
                       }`}
@@ -126,8 +125,11 @@ const Home = () => {
                       <Checkbox 
                         checked={task.checked} 
                         onCheckedChange={() => toggleTask(task.id)}
-                        onClick={(e) => e.stopPropagation()}
                       />
+                      <Link 
+                        to={task.link || '#'} 
+                        className="flex-1 flex items-center gap-3 min-w-0"
+                      >
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{task.title}</p>
                         <div className="flex items-center gap-1 text-xs">
@@ -152,7 +154,8 @@ const Home = () => {
                         )}
                       </div>
                       <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                    </Link>
+                      </Link>
+                    </div>
                   ))}
                 </div>
               </CardContent>
