@@ -2,8 +2,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Login() {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Main Content */}
@@ -25,37 +28,37 @@ export default function Login() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm font-semibold text-foreground">
-                  Username (email)
+                  {t('login.usernameEmail')}
                 </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Username"
+                  placeholder={t('login.username')}
                   className="h-10 border-border"
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm font-semibold text-foreground">
-                  Enter Password
+                  {t('login.enterPassword')}
                 </Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder={t('login.password')}
                   className="h-10 border-border"
                 />
               </div>
 
               <div className="flex items-center justify-between pt-2">
                 <Button asChild className="bg-slate-700 hover:bg-slate-800 text-white px-4">
-                  <Link to="/">Login</Link>
+                  <Link to="/">{t('login.login')}</Link>
                 </Button>
                 <Link
                   to="/forgot-password"
                   className="text-sm text-blue-600 hover:underline"
                 >
-                  Forgot Password
+                  {t('login.forgotPassword')}
                 </Link>
               </div>
             </div>
@@ -68,17 +71,17 @@ export default function Login() {
         <div className="container mx-auto px-4 py-4">
           <p className="text-lg font-bold mb-3">The London Book Fair</p>
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
-            <a href="#" className="hover:underline">Cookie Policy</a>
+            <a href="#" className="hover:underline">{t('footer.cookiePolicy')}</a>
             <span className="text-zinc-500">|</span>
-            <a href="#" className="hover:underline">RX Privacy Policy</a>
+            <a href="#" className="hover:underline">{t('footer.rxGlobalPrivacyPolicy')}</a>
             <span className="text-zinc-500">|</span>
-            <a href="#" className="hover:underline">Your Privacy Choices</a>
+            <a href="#" className="hover:underline">{t('footer.yourPrivacyChoices')}</a>
             <span className="text-zinc-500">|</span>
-            <a href="#" className="hover:underline">Terms & Conditions of Use</a>
+            <a href="#" className="hover:underline">{t('login.termsConditions')}</a>
             <span className="text-zinc-500">|</span>
-            <a href="#" className="hover:underline">Accessibility</a>
+            <a href="#" className="hover:underline">{t('login.accessibility')}</a>
             <span className="text-zinc-500">|</span>
-            <a href="#" className="hover:underline">Cookie Settings</a>
+            <a href="#" className="hover:underline">{t('login.cookieSettings')}</a>
           </div>
         </div>
         <div className="bg-zinc-900 py-4">

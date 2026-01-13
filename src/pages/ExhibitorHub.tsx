@@ -13,10 +13,12 @@ import { WizardModal } from '@/components/exhibitor/WizardModal';
 import { PublicProfilePreview } from '@/components/exhibitor/PublicProfilePreview';
 import { Locale, SectionId } from '@/types/exhibitor';
 import { toast } from 'sonner';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ExhibitorHub = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   const {
     profile,
@@ -50,7 +52,6 @@ const ExhibitorHub = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   
   // Top bar state
-  const [topBarLanguage, setTopBarLanguage] = useState('en-GB');
   const [eventEdition, setEventEdition] = useState('2025');
 
 
@@ -66,8 +67,6 @@ const ExhibitorHub = () => {
         eventName="The London Book Fair"
         eventDates="11 - 13 March 2025"
         eventLocation="Olympia London"
-        language={topBarLanguage}
-        onLanguageChange={setTopBarLanguage}
         eventEdition={eventEdition}
         onEventEditionChange={setEventEdition}
       />
@@ -93,13 +92,13 @@ const ExhibitorHub = () => {
               value="profile" 
               className="px-6 py-2.5 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border rounded-md transition-all"
             >
-              Company Profile
+              {t('exhibitor.companyProfile')}
             </TabsTrigger>
             <TabsTrigger 
               value="products"
               className="px-6 py-2.5 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border rounded-md transition-all"
             >
-              Product Listing
+              {t('exhibitor.productListing')}
             </TabsTrigger>
           </TabsList>
 
