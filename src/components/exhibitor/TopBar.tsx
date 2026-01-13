@@ -2,7 +2,8 @@ import { Calendar, MapPin, ChevronDown } from 'lucide-react';
 import logoPlaceholder from '@/assets/logo-placeholder.svg';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface TopBarProps {
   eventName: string;
@@ -23,6 +24,13 @@ export function TopBar({
   eventEdition,
   onEventEditionChange
 }: TopBarProps) {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/login');
+  };
   return <div className="text-topbar-foreground bg-[#1a1a1a]">
       <div className="container mx-auto py-3">
         <div className="flex items-center justify-between">
@@ -107,10 +115,11 @@ export function TopBar({
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/login" className="text-primary underline cursor-pointer px-4 py-2">
-                    Logout
-                  </Link>
+                <DropdownMenuItem 
+                  onClick={handleLogout}
+                  className="text-primary underline cursor-pointer px-4 py-2"
+                >
+                  Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

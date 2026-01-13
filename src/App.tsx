@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Home from "./pages/Home";
 import ExhibitorHub from "./pages/ExhibitorHub";
 import ProductEditPage from "./pages/ProductEditPage";
@@ -39,47 +41,49 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          {/* Auth Routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          
-          {/* Home */}
-          <Route path="/" element={<Home />} />
-          
-          {/* My Show */}
-          <Route path="/admin-marketing-operations" element={<AdminMarketingOperations />} />
-          <Route path="/edit-company-profile" element={<ExhibitorHub />} />
-          <Route path="/product-listing" element={<ExhibitorHub />} />
-          <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/manage-shares" element={<ManageShares />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/exhibitor-manual" element={<ExhibitorManual />} />
-          
-          <Route path="/company-administrators" element={<CompanyAdministrators />} />
-          <Route path="/allocate-badges" element={<AllocateBadges />} />
-          <Route path="/your-company-badges" element={<YourCompanyBadges />} />
-          <Route path="/product/:productId" element={<ProductEditPage />} />
-          
-          {/* Lead Capture */}
-          <Route path="/lead-manager-app" element={<LeadManagerApp />} />
-          <Route path="/create-offer" element={<CreateOffer />} />
-          <Route path="/invite-customers" element={<InviteCustomers />} />
-          
-          {/* Analytics */}
-          <Route path="/exhibitor-dashboard" element={<ExhibitorDashboard />} />
-          <Route path="/profile-viewer" element={<ProfileViewer />} />
-          <Route path="/benchmark-analytics" element={<BenchmarkAnalytics />} />
-          
-          {/* Help */}
-          <Route path="/home-guided-tour" element={<HomeGuidedTour />} />
-          <Route path="/company-profile-help" element={<CompanyProfileHelp />} />
-          <Route path="/lead-manager-help" element={<LeadManagerHelp />} />
-          <Route path="/offer-help" element={<OfferHelp />} />
-          <Route path="/exhibitor-dashboard-help" element={<ExhibitorDashboardHelp />} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            {/* Auth Routes (public) */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            
+            {/* Protected Routes */}
+            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            
+            {/* My Show */}
+            <Route path="/admin-marketing-operations" element={<ProtectedRoute><AdminMarketingOperations /></ProtectedRoute>} />
+            <Route path="/edit-company-profile" element={<ProtectedRoute><ExhibitorHub /></ProtectedRoute>} />
+            <Route path="/product-listing" element={<ProtectedRoute><ExhibitorHub /></ProtectedRoute>} />
+            <Route path="/add-product" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+            <Route path="/manage-shares" element={<ProtectedRoute><ManageShares /></ProtectedRoute>} />
+            <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
+            <Route path="/exhibitor-manual" element={<ProtectedRoute><ExhibitorManual /></ProtectedRoute>} />
+            
+            <Route path="/company-administrators" element={<ProtectedRoute><CompanyAdministrators /></ProtectedRoute>} />
+            <Route path="/allocate-badges" element={<ProtectedRoute><AllocateBadges /></ProtectedRoute>} />
+            <Route path="/your-company-badges" element={<ProtectedRoute><YourCompanyBadges /></ProtectedRoute>} />
+            <Route path="/product/:productId" element={<ProtectedRoute><ProductEditPage /></ProtectedRoute>} />
+            
+            {/* Lead Capture */}
+            <Route path="/lead-manager-app" element={<ProtectedRoute><LeadManagerApp /></ProtectedRoute>} />
+            <Route path="/create-offer" element={<ProtectedRoute><CreateOffer /></ProtectedRoute>} />
+            <Route path="/invite-customers" element={<ProtectedRoute><InviteCustomers /></ProtectedRoute>} />
+            
+            {/* Analytics */}
+            <Route path="/exhibitor-dashboard" element={<ProtectedRoute><ExhibitorDashboard /></ProtectedRoute>} />
+            <Route path="/profile-viewer" element={<ProtectedRoute><ProfileViewer /></ProtectedRoute>} />
+            <Route path="/benchmark-analytics" element={<ProtectedRoute><BenchmarkAnalytics /></ProtectedRoute>} />
+            
+            {/* Help */}
+            <Route path="/home-guided-tour" element={<ProtectedRoute><HomeGuidedTour /></ProtectedRoute>} />
+            <Route path="/company-profile-help" element={<ProtectedRoute><CompanyProfileHelp /></ProtectedRoute>} />
+            <Route path="/lead-manager-help" element={<ProtectedRoute><LeadManagerHelp /></ProtectedRoute>} />
+            <Route path="/offer-help" element={<ProtectedRoute><OfferHelp /></ProtectedRoute>} />
+            <Route path="/exhibitor-dashboard-help" element={<ProtectedRoute><ExhibitorDashboardHelp /></ProtectedRoute>} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
