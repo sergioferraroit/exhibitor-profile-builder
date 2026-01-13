@@ -1,9 +1,70 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const { signIn, signUp } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
+
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/';
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      toast({
+        title: 'Error',
+        description: 'Please enter both email and password',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      if (isSignUp) {
+        const { error } = await signUp(email, password);
+        if (error) {
+          toast({
+            title: 'Sign up failed',
+            description: error.message,
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            title: 'Account created',
+            description: 'You can now sign in with your credentials',
+          });
+          setIsSignUp(false);
+        }
+      } else {
+        const { error } = await signIn(email, password);
+        if (error) {
+          toast({
+            title: 'Login failed',
+            description: error.message,
+            variant: 'destructive',
+          });
+        } else {
+          navigate(from, { replace: true });
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Main Content */}
@@ -19,10 +80,10 @@ export default function Login() {
           {/* Form Content */}
           <div className="p-6">
             <h2 className="text-sm font-semibold text-foreground text-center mb-4">
-              THE LONDON BOOK FAIR
+              {isSignUp ? 'Create Account' : 'THE LONDON BOOK FAIR'}
             </h2>
 
-            <div className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm font-semibold text-foreground">
                   Username (email)
@@ -32,32 +93,55 @@ export default function Login() {
                   type="email"
                   placeholder="Username"
                   className="h-10 border-border"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm font-semibold text-foreground">
-                  Enter Password
+                  {isSignUp ? 'Create Password' : 'Enter Password'}
                 </Label>
                 <Input
                   id="password"
                   type="password"
                   placeholder="Password"
                   className="h-10 border-border"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
 
               <div className="flex items-center justify-between pt-2">
-                <Button asChild className="bg-slate-700 hover:bg-slate-800 text-white px-4">
-                  <Link to="/">Login</Link>
-                </Button>
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-blue-600 hover:underline"
+                <Button 
+                  type="submit" 
+                  className="bg-slate-700 hover:bg-slate-800 text-white px-4"
+                  disabled={isLoading}
                 >
-                  Forgot Password
-                </Link>
+                  {isLoading ? 'Please wait...' : (isSignUp ? 'Sign Up' : 'Login')}
+                </Button>
+                {!isSignUp && (
+                  <Link
+                    to="/forgot-password"
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Forgot Password
+                  </Link>
+                )}
               </div>
+            </form>
+
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                onClick={() => setIsSignUp(!isSignUp)}
+                className="text-sm text-blue-600 hover:underline"
+                disabled={isLoading}
+              >
+                {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
+              </button>
             </div>
           </div>
         </div>
