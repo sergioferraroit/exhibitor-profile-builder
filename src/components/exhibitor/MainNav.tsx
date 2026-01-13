@@ -9,6 +9,7 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import { MobileNav } from './MobileNav';
 
 interface NavChild {
   label: string;
@@ -83,7 +84,8 @@ export function MainNav() {
   return (
     <nav className="bg-card border-b">
       <div className="container mx-auto">
-        <div className="flex items-center justify-center gap-1 py-1">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center justify-center gap-1 py-1">
           {/* Home Icon */}
           <Link
             to="/"
@@ -163,6 +165,11 @@ export function MainNav() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="flex md:hidden items-center justify-end py-2 px-2">
+          <MobileNav />
         </div>
       </div>
     </nav>
