@@ -35,6 +35,11 @@ const navItems: NavItem[] = [
       { label: 'Shop', href: '/shop' },
       { label: 'Exhibitor Manual', href: '/exhibitor-manual' },
       { label: 'My Team', href: '/my-team' },
+    ],
+  },
+  {
+    label: 'My team',
+    children: [
       { label: 'Company Administrators', href: '/company-administrators' },
       { label: 'Allocate Badges', href: '/allocate-badges' },
       { label: 'Your Company Badges', href: '/your-company-badges' },
