@@ -125,7 +125,7 @@ export function MobileNav({
 
       {/* Full Screen Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-background">
+        <div className="fixed inset-0 z-50 bg-topbar">
           {/* Main Menu */}
           <div
             className={cn(
@@ -134,13 +134,13 @@ export function MobileNav({
             )}
           >
             {/* Header */}
-            <div className="flex items-center justify-end p-4 border-b">
+            <div className="flex items-center justify-end p-4 border-b border-topbar-muted/20">
               <button
                 onClick={handleClose}
-                className="flex items-center justify-center h-10 w-10 rounded-md hover:bg-muted transition-colors"
+                className="flex items-center justify-center h-10 w-10 rounded-md hover:bg-topbar-muted/10 transition-colors"
                 aria-label="Close menu"
               >
-                <X className="h-6 w-6" />
+                <X className="h-6 w-6 text-topbar-foreground" />
               </button>
             </div>
 
@@ -148,49 +148,49 @@ export function MobileNav({
             <div className="flex-1 overflow-y-auto px-4 py-6">
               {/* Event Edition */}
               <div className="mb-4">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">{t('mobile.eventEdition')}</span>
+                <span className="text-xs text-topbar-muted uppercase tracking-wide">{t('mobile.eventEdition')}</span>
                 <button
                   onClick={onEventEditionClick}
                   className="flex items-center justify-between w-full py-3 text-left"
                 >
-                  <span className="text-base">{eventEdition}</span>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                  <span className="text-base text-topbar-foreground">{eventEdition}</span>
+                  <ChevronRight className="h-5 w-5 text-topbar-muted" />
                 </button>
               </div>
 
               {/* Language */}
-              <div className="mb-6 pb-6 border-b">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">{t('topbar.language')}</span>
+              <div className="mb-6 pb-6 border-b border-topbar-muted/20">
+                <span className="text-xs text-topbar-muted uppercase tracking-wide">{t('topbar.language')}</span>
                 <div className="flex flex-col gap-2 mt-2">
                   <button
                     onClick={() => handleLanguageChange('en-GB')}
                     className={cn(
                       "flex items-center justify-between w-full py-2 text-left rounded px-2",
-                      language === 'en-GB' ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted"
+                      language === 'en-GB' ? "bg-topbar-muted/20 text-topbar-foreground font-medium" : "text-topbar-foreground hover:bg-topbar-muted/10"
                     )}
                   >
                     <span className="text-base">English (GB)</span>
-                    {language === 'en-GB' && <span className="text-primary">✓</span>}
+                    {language === 'en-GB' && <span className="text-topbar-foreground">✓</span>}
                   </button>
                   <button
                     onClick={() => handleLanguageChange('fr-FR')}
                     className={cn(
                       "flex items-center justify-between w-full py-2 text-left rounded px-2",
-                      language === 'fr-FR' ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted"
+                      language === 'fr-FR' ? "bg-topbar-muted/20 text-topbar-foreground font-medium" : "text-topbar-foreground hover:bg-topbar-muted/10"
                     )}
                   >
                     <span className="text-base">Français</span>
-                    {language === 'fr-FR' && <span className="text-primary">✓</span>}
+                    {language === 'fr-FR' && <span className="text-topbar-foreground">✓</span>}
                   </button>
                   <button
                     onClick={() => handleLanguageChange('ja-JP')}
                     className={cn(
                       "flex items-center justify-between w-full py-2 text-left rounded px-2",
-                      language === 'ja-JP' ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted"
+                      language === 'ja-JP' ? "bg-topbar-muted/20 text-topbar-foreground font-medium" : "text-topbar-foreground hover:bg-topbar-muted/10"
                     )}
                   >
                     <span className="text-base">日本語</span>
-                    {language === 'ja-JP' && <span className="text-primary">✓</span>}
+                    {language === 'ja-JP' && <span className="text-topbar-foreground">✓</span>}
                   </button>
                 </div>
               </div>
@@ -203,7 +203,7 @@ export function MobileNav({
                   onClick={handleLinkClick}
                   className={cn(
                     "flex items-center gap-3 py-3 text-base transition-colors",
-                    location.pathname === '/' ? "text-primary font-medium" : "hover:text-primary"
+                    location.pathname === '/' ? "text-topbar-foreground font-medium" : "text-topbar-foreground hover:text-topbar-muted"
                   )}
                 >
                   <Home className="h-5 w-5" />
@@ -218,12 +218,12 @@ export function MobileNav({
                     className={cn(
                       "flex items-center justify-between w-full py-3 text-base text-left transition-colors",
                       item.children?.some(child => !child.external && location.pathname === child.href)
-                        ? "text-primary font-medium"
-                        : "hover:text-primary"
+                        ? "text-topbar-foreground font-medium"
+                        : "text-topbar-foreground hover:text-topbar-muted"
                     )}
                   >
                     {t(item.labelKey)}
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                    <ChevronRight className="h-5 w-5 text-topbar-muted" />
                   </button>
                 ))}
               </nav>
@@ -233,32 +233,32 @@ export function MobileNav({
           {/* Submenu */}
           <div
             className={cn(
-              "absolute inset-0 flex flex-col transition-transform duration-300 ease-in-out bg-background",
+              "absolute inset-0 flex flex-col transition-transform duration-300 ease-in-out bg-topbar",
               activeSubmenu ? "translate-x-0" : "translate-x-full"
             )}
           >
             {/* Submenu Header */}
-            <div className="flex items-center justify-between p-4 border-b">
+            <div className="flex items-center justify-between p-4 border-b border-topbar-muted/20">
               <button
                 onClick={handleBackClick}
-                className="flex items-center justify-center h-10 w-10 rounded-md hover:bg-muted transition-colors"
+                className="flex items-center justify-center h-10 w-10 rounded-md hover:bg-topbar-muted/10 transition-colors"
                 aria-label="Go back"
               >
-                <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="h-6 w-6 text-topbar-foreground" />
               </button>
               <button
                 onClick={handleClose}
-                className="flex items-center justify-center h-10 w-10 rounded-md hover:bg-muted transition-colors"
+                className="flex items-center justify-center h-10 w-10 rounded-md hover:bg-topbar-muted/10 transition-colors"
                 aria-label="Close menu"
               >
-                <X className="h-6 w-6" />
+                <X className="h-6 w-6 text-topbar-foreground" />
               </button>
             </div>
 
             {/* Submenu Title */}
             {activeSubmenu && (
               <div className="px-4 pt-6 pb-4">
-                <h2 className="text-lg font-medium text-muted-foreground">{t(activeSubmenu.labelKey)}</h2>
+                <h2 className="text-lg font-medium text-topbar-muted">{t(activeSubmenu.labelKey)}</h2>
               </div>
             )}
 
@@ -273,10 +273,10 @@ export function MobileNav({
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={handleLinkClick}
-                        className="flex items-center justify-between py-3 text-base hover:text-primary transition-colors"
+                        className="flex items-center justify-between py-3 text-base text-topbar-foreground hover:text-topbar-muted transition-colors"
                       >
                         {t(child.labelKey)}
-                        <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                        <ExternalLink className="h-4 w-4 text-topbar-muted" />
                       </a>
                     ) : (
                       <Link
@@ -285,8 +285,8 @@ export function MobileNav({
                         className={cn(
                           "block py-3 text-base transition-colors",
                           location.pathname === child.href
-                            ? "text-primary font-medium"
-                            : "hover:text-primary"
+                            ? "text-topbar-foreground font-medium"
+                            : "text-topbar-foreground hover:text-topbar-muted"
                         )}
                       >
                         {t(child.labelKey)}
