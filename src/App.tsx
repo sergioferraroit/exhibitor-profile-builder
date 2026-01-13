@@ -15,7 +15,7 @@ import AddProduct from "./pages/AddProduct";
 import ManageShares from "./pages/ManageShares";
 import Shop from "./pages/Shop";
 import ExhibitorManual from "./pages/ExhibitorManual";
-import MyTeam from "./pages/MyTeam";
+
 import CompanyAdministrators from "./pages/CompanyAdministrators";
 import AllocateBadges from "./pages/AllocateBadges";
 import YourCompanyBadges from "./pages/YourCompanyBadges";
@@ -55,7 +55,7 @@ const App = () => (
           <Route path="/manage-shares" element={<ManageShares />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/exhibitor-manual" element={<ExhibitorManual />} />
-          <Route path="/my-team" element={<MyTeam />} />
+          
           <Route path="/company-administrators" element={<CompanyAdministrators />} />
           <Route path="/allocate-badges" element={<AllocateBadges />} />
           <Route path="/your-company-badges" element={<YourCompanyBadges />} />

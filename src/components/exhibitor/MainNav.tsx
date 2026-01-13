@@ -34,7 +34,6 @@ const navItems: NavItem[] = [
       { label: 'Manage Shares', href: '/manage-shares' },
       { label: 'Shop', href: '/shop' },
       { label: 'Exhibitor Manual', href: '/exhibitor-manual' },
-      { label: 'My Team', href: '/my-team' },
     ],
   },
   {
