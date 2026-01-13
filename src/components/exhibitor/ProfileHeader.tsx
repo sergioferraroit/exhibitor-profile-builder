@@ -2,13 +2,6 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -19,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Pencil, Eye } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ProfileHeaderProps {
   companyName: string;
@@ -31,12 +25,6 @@ interface ProfileHeaderProps {
   availableLocales: Locale[];
   primaryLocale: Locale;
 }
-
-const LOCALE_LABELS: Record<Locale, string> = {
-  'en-GB': 'English',
-  'fr-FR': 'Français',
-  'ja-JP': '日本語',
-};
 
 export function ProfileHeader({
   companyName,
@@ -51,6 +39,7 @@ export function ProfileHeader({
 }: ProfileHeaderProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedName, setEditedName] = useState(companyName);
+  const { t } = useLanguage();
 
   const handleOpenModal = () => {
     setEditedName(companyName);
@@ -71,14 +60,14 @@ export function ProfileHeader({
           <div className="flex items-center justify-between">
             {/* Left: Page title and progress */}
             <div className="flex flex-col gap-1">
-              <h1 className="text-xl font-semibold text-foreground">Edit company profile</h1>
+              <h1 className="text-xl font-semibold text-foreground">{t('profile.editCompanyProfile')}</h1>
               
               {/* Completion Progress */}
               <div className="flex items-center gap-3">
                 <div className="w-24">
                   <Progress value={completionPercentage} className="h-1.5" />
                 </div>
-                <span className="text-sm text-foreground-secondary">{completionPercentage}% complete</span>
+                <span className="text-sm text-foreground-secondary">{completionPercentage}{t('profile.complete')}</span>
               </div>
             </div>
 
@@ -88,13 +77,13 @@ export function ProfileHeader({
               {/* Preview Button */}
               <Button variant="outline" onClick={onOpenPreview} className="gap-2">
                 <Eye className="h-4 w-4" />
-                Preview
+                {t('profile.preview')}
               </Button>
 
               {/* Fill Profile Button */}
               <Button onClick={onOpenWizard} className="gap-2">
                 <Pencil className="h-4 w-4" />
-                Fill profile
+                {t('profile.fillProfile')}
               </Button>
             </div>
           </div>
@@ -104,25 +93,25 @@ export function ProfileHeader({
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader className="pr-8">
-            <DialogTitle>Edit Company Name</DialogTitle>
+            <DialogTitle>{t('profile.editCompanyName')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="company-name">Company Name</Label>
+              <Label htmlFor="company-name">{t('profile.companyName')}</Label>
               <Input
                 id="company-name"
                 value={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
-                placeholder="Enter company name"
+                placeholder={t('profile.enterCompanyName')}
               />
             </div>
           </div>
           <DialogFooter className="flex-col-reverse sm:flex-row gap-2">
             <Button variant="outline" onClick={() => setIsEditModalOpen(false)} className="w-full sm:w-auto">
-              Cancel
+              {t('profile.cancel')}
             </Button>
             <Button onClick={handleSave} disabled={!editedName.trim()} className="w-full sm:w-auto">
-              Save
+              {t('profile.save')}
             </Button>
           </DialogFooter>
         </DialogContent>

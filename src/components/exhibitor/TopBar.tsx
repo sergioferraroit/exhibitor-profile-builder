@@ -4,13 +4,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Link } from 'react-router-dom';
 import { MobileNav } from './MobileNav';
+import { useLanguage, Language } from '@/contexts/LanguageContext';
 
 interface TopBarProps {
   eventName: string;
   eventDates: string;
   eventLocation: string;
-  language: string;
-  onLanguageChange: (language: string) => void;
   eventEdition: string;
   onEventEditionChange: (edition: string) => void;
 }
@@ -19,11 +18,15 @@ export function TopBar({
   eventName,
   eventDates,
   eventLocation,
-  language,
-  onLanguageChange,
   eventEdition,
   onEventEditionChange
 }: TopBarProps) {
+  const { language, setLanguage, t } = useLanguage();
+
+  const handleLanguageChange = (value: string) => {
+    setLanguage(value as Language);
+  };
+
   return (
     <div className="text-topbar-foreground bg-[#1a1a1a]">
       {/* Desktop Layout */}
@@ -52,8 +55,8 @@ export function TopBar({
           {/* Right: Selectors */}
           <div className="flex items-center gap-6">
             <div className="flex flex-col gap-0.5">
-              <span className="text-xs text-topbar-muted">Language</span>
-              <Select value={language} onValueChange={onLanguageChange}>
+              <span className="text-xs text-topbar-muted">{t('topbar.language')}</span>
+              <Select value={language} onValueChange={handleLanguageChange}>
                 <SelectTrigger className="w-[140px] h-8 bg-transparent border-none text-topbar-foreground text-sm p-0 focus:ring-0">
                   <SelectValue />
                 </SelectTrigger>
@@ -66,7 +69,7 @@ export function TopBar({
             </div>
 
             <div className="flex flex-col gap-0.5">
-              <span className="text-xs text-topbar-muted">Event Edition</span>
+              <span className="text-xs text-topbar-muted">{t('topbar.eventEdition')}</span>
               <Select value={eventEdition} onValueChange={onEventEditionChange}>
                 <SelectTrigger className="w-[180px] h-8 bg-transparent border-none text-topbar-foreground text-sm p-0 focus:ring-0">
                   <SelectValue />
@@ -87,32 +90,32 @@ export function TopBar({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-64 bg-white z-50">
                 <div className="px-4 py-3">
-                  <p className="text-xs text-muted-foreground">Company name</p>
+                  <p className="text-xs text-muted-foreground">{t('topbar.companyName')}</p>
                   <p className="font-medium text-foreground">Acme Corporation</p>
                 </div>
                 <DropdownMenuSeparator />
                 <div className="px-4 py-3">
-                  <p className="text-xs text-muted-foreground">Stand number</p>
+                  <p className="text-xs text-muted-foreground">{t('topbar.standNumber')}</p>
                   <p className="font-medium text-foreground">E40</p>
                 </div>
                 <DropdownMenuSeparator />
                 <div className="px-4 py-3">
-                  <p className="text-xs text-muted-foreground">Digital offering</p>
+                  <p className="text-xs text-muted-foreground">{t('topbar.digitalOffering')}</p>
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-foreground">Exhibitor Profile</span>
-                    <Link to="/shop" className="text-primary underline text-sm">Upgrade</Link>
+                    <span className="font-medium text-foreground">{t('topbar.exhibitorProfile')}</span>
+                    <Link to="/shop" className="text-primary underline text-sm">{t('topbar.upgrade')}</Link>
                   </div>
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link to="/edit-company-profile" className="text-primary underline cursor-pointer px-4 py-2">
-                    Edit company profile
+                    {t('topbar.editCompanyProfile')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link to="/login" className="text-primary underline cursor-pointer px-4 py-2">
-                    Logout
+                    {t('topbar.logout')}
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -157,32 +160,32 @@ export function TopBar({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-64 bg-white z-50">
                   <div className="px-4 py-3">
-                    <p className="text-xs text-muted-foreground">Company name</p>
+                    <p className="text-xs text-muted-foreground">{t('topbar.companyName')}</p>
                     <p className="font-medium text-foreground">Acme Corporation</p>
                   </div>
                   <DropdownMenuSeparator />
                   <div className="px-4 py-3">
-                    <p className="text-xs text-muted-foreground">Stand number</p>
+                    <p className="text-xs text-muted-foreground">{t('topbar.standNumber')}</p>
                     <p className="font-medium text-foreground">E40</p>
                   </div>
                   <DropdownMenuSeparator />
                   <div className="px-4 py-3">
-                    <p className="text-xs text-muted-foreground">Digital offering</p>
+                    <p className="text-xs text-muted-foreground">{t('topbar.digitalOffering')}</p>
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-foreground">Exhibitor Profile</span>
-                      <Link to="/shop" className="text-primary underline text-sm">Upgrade</Link>
+                      <span className="font-medium text-foreground">{t('topbar.exhibitorProfile')}</span>
+                      <Link to="/shop" className="text-primary underline text-sm">{t('topbar.upgrade')}</Link>
                     </div>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link to="/edit-company-profile" className="text-primary underline cursor-pointer px-4 py-2">
-                      Edit company profile
+                      {t('topbar.editCompanyProfile')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link to="/login" className="text-primary underline cursor-pointer px-4 py-2">
-                      Logout
+                      {t('topbar.logout')}
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -191,7 +194,6 @@ export function TopBar({
               {/* Burger Menu */}
               <MobileNav 
                 eventEdition={eventEdition === '2025' ? 'The London Book Fair 2025' : 'The London Book Fair 2024'}
-                language={language === 'en-GB' ? 'English (GB)' : language === 'fr-FR' ? 'Français' : '日本語'}
               />
             </div>
           </div>

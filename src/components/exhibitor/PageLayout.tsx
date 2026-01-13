@@ -10,7 +10,6 @@ interface PageLayoutProps {
 }
 
 export function PageLayout({ children, withContainer = false }: PageLayoutProps) {
-  const [language, setLanguage] = useState('en-GB');
   const [eventEdition, setEventEdition] = useState('2025');
 
   return (
@@ -19,8 +18,6 @@ export function PageLayout({ children, withContainer = false }: PageLayoutProps)
         eventName="The London Book Fair"
         eventDates="8-10 April 2025"
         eventLocation="Olympia London"
-        language={language}
-        onLanguageChange={setLanguage}
         eventEdition={eventEdition}
         onEventEditionChange={setEventEdition}
       />

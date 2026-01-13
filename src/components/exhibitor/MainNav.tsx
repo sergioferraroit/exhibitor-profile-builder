@@ -9,71 +9,73 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NavChild {
-  label: string;
+  labelKey: string;
   href: string;
   external?: boolean;
 }
 
 interface NavItem {
-  label: string;
+  labelKey: string;
   href?: string;
   children?: NavChild[];
 }
 
 const navItems: NavItem[] = [
   {
-    label: 'My show',
+    labelKey: 'nav.myShow',
     children: [
-      { label: 'Admin, Marketing & Operations', href: '/admin-marketing-operations' },
-      { label: 'Edit Company Profile', href: '/edit-company-profile' },
-      { label: 'Product Listing', href: '/product-listing' },
-      { label: 'Add Product or Service', href: '/add-product' },
-      { label: 'Manage Meetings', href: 'https://meetings.example.com', external: true },
-      { label: 'Manage Shares', href: '/manage-shares' },
-      { label: 'Shop', href: '/shop' },
-      { label: 'Exhibitor Manual', href: '/exhibitor-manual' },
+      { labelKey: 'nav.adminMarketingOperations', href: '/admin-marketing-operations' },
+      { labelKey: 'nav.editCompanyProfile', href: '/edit-company-profile' },
+      { labelKey: 'nav.productListing', href: '/product-listing' },
+      { labelKey: 'nav.addProductOrService', href: '/add-product' },
+      { labelKey: 'nav.manageMeetings', href: 'https://meetings.example.com', external: true },
+      { labelKey: 'nav.manageShares', href: '/manage-shares' },
+      { labelKey: 'nav.shop', href: '/shop' },
+      { labelKey: 'nav.exhibitorManual', href: '/exhibitor-manual' },
     ],
   },
   {
-    label: 'My team',
+    labelKey: 'nav.myTeam',
     children: [
-      { label: 'Company Administrators', href: '/company-administrators' },
-      { label: 'Allocate Badges', href: '/allocate-badges' },
-      { label: 'Your Company Badges', href: '/your-company-badges' },
+      { labelKey: 'nav.companyAdministrators', href: '/company-administrators' },
+      { labelKey: 'nav.allocateBadges', href: '/allocate-badges' },
+      { labelKey: 'nav.yourCompanyBadges', href: '/your-company-badges' },
     ],
   },
   {
-    label: 'Lead capture',
+    labelKey: 'nav.leadCapture',
     children: [
-      { label: 'Lead Manager App', href: '/lead-manager-app' },
-      { label: 'Create Offer', href: '/create-offer' },
-      { label: 'Invite Your Customers', href: '/invite-customers' },
+      { labelKey: 'nav.leadManagerApp', href: '/lead-manager-app' },
+      { labelKey: 'nav.createOffer', href: '/create-offer' },
+      { labelKey: 'nav.inviteYourCustomers', href: '/invite-customers' },
     ],
   },
   {
-    label: 'Analytics',
+    labelKey: 'nav.analytics',
     children: [
-      { label: 'Exhibitor Dashboard', href: '/exhibitor-dashboard' },
-      { label: 'Profile Viewer', href: '/profile-viewer' },
-      { label: 'Benchmark Analytics', href: '/benchmark-analytics' },
+      { labelKey: 'nav.exhibitorDashboard', href: '/exhibitor-dashboard' },
+      { labelKey: 'nav.profileViewer', href: '/profile-viewer' },
+      { labelKey: 'nav.benchmarkAnalytics', href: '/benchmark-analytics' },
     ],
   },
   {
-    label: 'Help',
+    labelKey: 'nav.help',
     children: [
-      { label: 'Home Page Guided Tour', href: '/home-guided-tour' },
-      { label: 'Company Profile Help', href: '/company-profile-help' },
-      { label: 'Lead Manager App Help', href: '/lead-manager-help' },
-      { label: 'Offer Help', href: '/offer-help' },
-      { label: 'Exhibitor Dashboard Help', href: '/exhibitor-dashboard-help' },
+      { labelKey: 'nav.homePageGuidedTour', href: '/home-guided-tour' },
+      { labelKey: 'nav.companyProfileHelp', href: '/company-profile-help' },
+      { labelKey: 'nav.leadManagerAppHelp', href: '/lead-manager-help' },
+      { labelKey: 'nav.offerHelp', href: '/offer-help' },
+      { labelKey: 'nav.exhibitorDashboardHelp', href: '/exhibitor-dashboard-help' },
     ],
   },
 ];
 
 export function MainNav() {
   const location = useLocation();
+  const { t } = useLanguage();
 
   const isActiveSection = (children?: NavChild[]) => {
     if (!children) return false;
@@ -101,7 +103,7 @@ export function MainNav() {
           <NavigationMenu>
             <NavigationMenuList>
               {navItems.map((item) => (
-                <NavigationMenuItem key={item.label}>
+                <NavigationMenuItem key={item.labelKey}>
                   {item.children ? (
                     <>
                       <NavigationMenuTrigger 
@@ -110,7 +112,7 @@ export function MainNav() {
                           isActiveSection(item.children) && "text-primary font-semibold"
                         )}
                       >
-                        {item.label}
+                        {t(item.labelKey)}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="grid w-[280px] gap-1 p-2 bg-popover border rounded-md shadow-lg">
@@ -128,7 +130,7 @@ export function MainNav() {
                                       'focus:bg-accent focus:text-accent-foreground'
                                     )}
                                   >
-                                    {child.label}
+                                    {t(child.labelKey)}
                                     <ExternalLink className="h-3 w-3 text-muted-foreground" />
                                   </a>
                                 ) : (
@@ -141,7 +143,7 @@ export function MainNav() {
                                       location.pathname === child.href && 'bg-accent text-accent-foreground font-medium'
                                     )}
                                   >
-                                    {child.label}
+                                    {t(child.labelKey)}
                                   </Link>
                                 )}
                               </NavigationMenuLink>
@@ -156,7 +158,7 @@ export function MainNav() {
                         to={item.href!}
                         className="flex items-center px-4 py-2 text-sm font-medium hover:bg-muted rounded-md transition-colors"
                       >
-                        {item.label}
+                        {t(item.labelKey)}
                       </Link>
                     </NavigationMenuLink>
                   )}

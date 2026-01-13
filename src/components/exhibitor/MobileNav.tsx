@@ -2,85 +2,83 @@ import { useState } from 'react';
 import { Menu, X, ChevronRight, ChevronLeft, Home, ExternalLink } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useLanguage, Language } from '@/contexts/LanguageContext';
 
 interface NavChild {
-  label: string;
+  labelKey: string;
   href: string;
   external?: boolean;
 }
 
 interface NavItem {
-  label: string;
+  labelKey: string;
   href?: string;
   children?: NavChild[];
 }
 
 const navItems: NavItem[] = [
   {
-    label: 'My show',
+    labelKey: 'nav.myShow',
     children: [
-      { label: 'Admin, Marketing & Operations', href: '/admin-marketing-operations' },
-      { label: 'Edit Company Profile', href: '/edit-company-profile' },
-      { label: 'Product Listing', href: '/product-listing' },
-      { label: 'Add Product or Service', href: '/add-product' },
-      { label: 'Manage Meetings', href: 'https://meetings.example.com', external: true },
-      { label: 'Manage Shares', href: '/manage-shares' },
-      { label: 'Shop', href: '/shop' },
-      { label: 'Exhibitor Manual', href: '/exhibitor-manual' },
+      { labelKey: 'nav.adminMarketingOperations', href: '/admin-marketing-operations' },
+      { labelKey: 'nav.editCompanyProfile', href: '/edit-company-profile' },
+      { labelKey: 'nav.productListing', href: '/product-listing' },
+      { labelKey: 'nav.addProductOrService', href: '/add-product' },
+      { labelKey: 'nav.manageMeetings', href: 'https://meetings.example.com', external: true },
+      { labelKey: 'nav.manageShares', href: '/manage-shares' },
+      { labelKey: 'nav.shop', href: '/shop' },
+      { labelKey: 'nav.exhibitorManual', href: '/exhibitor-manual' },
     ],
   },
   {
-    label: 'My team',
+    labelKey: 'nav.myTeam',
     children: [
-      { label: 'Company Administrators', href: '/company-administrators' },
-      { label: 'Allocate Badges', href: '/allocate-badges' },
-      { label: 'Your Company Badges', href: '/your-company-badges' },
+      { labelKey: 'nav.companyAdministrators', href: '/company-administrators' },
+      { labelKey: 'nav.allocateBadges', href: '/allocate-badges' },
+      { labelKey: 'nav.yourCompanyBadges', href: '/your-company-badges' },
     ],
   },
   {
-    label: 'Lead capture',
+    labelKey: 'nav.leadCapture',
     children: [
-      { label: 'Lead Manager App', href: '/lead-manager-app' },
-      { label: 'Create Offer', href: '/create-offer' },
-      { label: 'Invite Your Customers', href: '/invite-customers' },
+      { labelKey: 'nav.leadManagerApp', href: '/lead-manager-app' },
+      { labelKey: 'nav.createOffer', href: '/create-offer' },
+      { labelKey: 'nav.inviteYourCustomers', href: '/invite-customers' },
     ],
   },
   {
-    label: 'Analytics',
+    labelKey: 'nav.analytics',
     children: [
-      { label: 'Exhibitor Dashboard', href: '/exhibitor-dashboard' },
-      { label: 'Profile Viewer', href: '/profile-viewer' },
-      { label: 'Benchmark Analytics', href: '/benchmark-analytics' },
+      { labelKey: 'nav.exhibitorDashboard', href: '/exhibitor-dashboard' },
+      { labelKey: 'nav.profileViewer', href: '/profile-viewer' },
+      { labelKey: 'nav.benchmarkAnalytics', href: '/benchmark-analytics' },
     ],
   },
   {
-    label: 'Help',
+    labelKey: 'nav.help',
     children: [
-      { label: 'Home Page Guided Tour', href: '/home-guided-tour' },
-      { label: 'Company Profile Help', href: '/company-profile-help' },
-      { label: 'Lead Manager App Help', href: '/lead-manager-help' },
-      { label: 'Offer Help', href: '/offer-help' },
-      { label: 'Exhibitor Dashboard Help', href: '/exhibitor-dashboard-help' },
+      { labelKey: 'nav.homePageGuidedTour', href: '/home-guided-tour' },
+      { labelKey: 'nav.companyProfileHelp', href: '/company-profile-help' },
+      { labelKey: 'nav.leadManagerAppHelp', href: '/lead-manager-help' },
+      { labelKey: 'nav.offerHelp', href: '/offer-help' },
+      { labelKey: 'nav.exhibitorDashboardHelp', href: '/exhibitor-dashboard-help' },
     ],
   },
 ];
 
 interface MobileNavProps {
   eventEdition?: string;
-  language?: string;
-  onLanguageClick?: () => void;
   onEventEditionClick?: () => void;
 }
 
 export function MobileNav({ 
   eventEdition = 'The London Book Fair 2025',
-  language = 'English (GB)',
-  onLanguageClick,
   onEventEditionClick
 }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<NavItem | null>(null);
   const location = useLocation();
+  const { language, setLanguage, t } = useLanguage();
 
   const handleClose = () => {
     setIsOpen(false);
@@ -99,6 +97,19 @@ export function MobileNav({
 
   const handleLinkClick = () => {
     handleClose();
+  };
+
+  const handleLanguageChange = (lang: Language) => {
+    setLanguage(lang);
+  };
+
+  const getLanguageLabel = () => {
+    switch (language) {
+      case 'en-GB': return 'English (GB)';
+      case 'fr-FR': return 'Français';
+      case 'ja-JP': return '日本語';
+      default: return 'English (GB)';
+    }
   };
 
   return (
@@ -137,7 +148,7 @@ export function MobileNav({
             <div className="flex-1 overflow-y-auto px-4 py-6">
               {/* Event Edition */}
               <div className="mb-4">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">Event edition</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">{t('mobile.eventEdition')}</span>
                 <button
                   onClick={onEventEditionClick}
                   className="flex items-center justify-between w-full py-3 text-left"
@@ -149,14 +160,39 @@ export function MobileNav({
 
               {/* Language */}
               <div className="mb-6 pb-6 border-b">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">Language</span>
-                <button
-                  onClick={onLanguageClick}
-                  className="flex items-center justify-between w-full py-3 text-left"
-                >
-                  <span className="text-base">{language}</span>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </button>
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">{t('topbar.language')}</span>
+                <div className="flex flex-col gap-2 mt-2">
+                  <button
+                    onClick={() => handleLanguageChange('en-GB')}
+                    className={cn(
+                      "flex items-center justify-between w-full py-2 text-left rounded px-2",
+                      language === 'en-GB' ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted"
+                    )}
+                  >
+                    <span className="text-base">English (GB)</span>
+                    {language === 'en-GB' && <span className="text-primary">✓</span>}
+                  </button>
+                  <button
+                    onClick={() => handleLanguageChange('fr-FR')}
+                    className={cn(
+                      "flex items-center justify-between w-full py-2 text-left rounded px-2",
+                      language === 'fr-FR' ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted"
+                    )}
+                  >
+                    <span className="text-base">Français</span>
+                    {language === 'fr-FR' && <span className="text-primary">✓</span>}
+                  </button>
+                  <button
+                    onClick={() => handleLanguageChange('ja-JP')}
+                    className={cn(
+                      "flex items-center justify-between w-full py-2 text-left rounded px-2",
+                      language === 'ja-JP' ? "bg-primary/10 text-primary font-medium" : "hover:bg-muted"
+                    )}
+                  >
+                    <span className="text-base">日本語</span>
+                    {language === 'ja-JP' && <span className="text-primary">✓</span>}
+                  </button>
+                </div>
               </div>
 
               {/* Navigation Items */}
@@ -171,13 +207,13 @@ export function MobileNav({
                   )}
                 >
                   <Home className="h-5 w-5" />
-                  Home
+                  {t('nav.home')}
                 </Link>
 
                 {/* Nav Items with Children */}
                 {navItems.map((item) => (
                   <button
-                    key={item.label}
+                    key={item.labelKey}
                     onClick={() => handleNavItemClick(item)}
                     className={cn(
                       "flex items-center justify-between w-full py-3 text-base text-left transition-colors",
@@ -186,7 +222,7 @@ export function MobileNav({
                         : "hover:text-primary"
                     )}
                   >
-                    {item.label}
+                    {t(item.labelKey)}
                     <ChevronRight className="h-5 w-5 text-muted-foreground" />
                   </button>
                 ))}
@@ -222,7 +258,7 @@ export function MobileNav({
             {/* Submenu Title */}
             {activeSubmenu && (
               <div className="px-4 pt-6 pb-4">
-                <h2 className="text-lg font-medium text-muted-foreground">{activeSubmenu.label}</h2>
+                <h2 className="text-lg font-medium text-muted-foreground">{t(activeSubmenu.labelKey)}</h2>
               </div>
             )}
 
@@ -239,7 +275,7 @@ export function MobileNav({
                         onClick={handleLinkClick}
                         className="flex items-center justify-between py-3 text-base hover:text-primary transition-colors"
                       >
-                        {child.label}
+                        {t(child.labelKey)}
                         <ExternalLink className="h-4 w-4 text-muted-foreground" />
                       </a>
                     ) : (
@@ -253,7 +289,7 @@ export function MobileNav({
                             : "hover:text-primary"
                         )}
                       >
-                        {child.label}
+                        {t(child.labelKey)}
                       </Link>
                     )}
                   </div>

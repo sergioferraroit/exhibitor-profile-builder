@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Calendar, MapPin, Phone, Check, Info, Timer } from 'lucide-react';
+import { ChevronRight, Calendar, MapPin, Phone, Info, Timer } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
@@ -10,10 +10,11 @@ import { TopBar } from '@/components/exhibitor/TopBar';
 import { PageContainer, LayoutGrid } from '@/components/layout/LayoutGrid';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Separator } from '@/components/ui/separator';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Task {
   id: string;
-  title: string;
+  titleKey: string;
   status: 'overdue' | 'completed' | 'pending';
   dueDate: string;
   mandatory?: boolean;
@@ -27,23 +28,23 @@ interface ProfileViewer {
 }
 
 const Home = () => {
-  const [language, setLanguage] = useState('en-GB');
   const [eventEdition, setEventEdition] = useState('2025');
+  const { t } = useLanguage();
   
   const [tasks, setTasks] = useState<Task[]>([
-    { id: '1', title: 'Edit company profile', status: 'overdue', dueDate: '24th Jan 2025', checked: false, link: '/edit-company-profile' },
-    { id: '2', title: 'Manage sharers', status: 'overdue', dueDate: '6th Feb 2025', checked: false, link: '/manage-shares' },
-    { id: '3', title: 'Admin, marketing and operations', status: 'pending', dueDate: '14th Feb 2025', mandatory: true, checked: false, link: '/admin-marketing-operations' },
-    { id: '4', title: 'Invite customers', status: 'completed', dueDate: '16th Feb 2025', checked: true, link: '/invite-customers' },
-    { id: '5', title: 'Manage badges', status: 'completed', dueDate: '24th Jan 2025', checked: true, link: '/your-company-badges' },
-    { id: '6', title: 'Create Offer to capture leads', status: 'completed', dueDate: '24th Jan 2025', checked: true },
-    { id: '7', title: 'View Exhibitor manual', status: 'pending', dueDate: '1st Mar 2025', checked: false },
-    { id: '8', title: 'Custom task for operations', status: 'pending', dueDate: '1st Mar 2025', checked: false },
-    { id: '9', title: 'Explore the shop', status: 'completed', dueDate: '3rd Mar 2025', checked: true },
-    { id: '10', title: 'Upgrade package', status: 'completed', dueDate: '3rd Mar 2025', checked: true },
-    { id: '11', title: 'Set up meetings', status: 'pending', dueDate: '10th Mar 2025', checked: false },
-    { id: '12', title: 'Upload documents for Colleqt', status: 'pending', dueDate: '10th Mar 2025', checked: false },
-    { id: '13', title: 'Set up Lead Manager App', status: 'pending', dueDate: '10th Mar 2025', checked: false },
+    { id: '1', titleKey: 'task.editCompanyProfile', status: 'overdue', dueDate: '24th Jan 2025', checked: false, link: '/edit-company-profile' },
+    { id: '2', titleKey: 'task.manageSharers', status: 'overdue', dueDate: '6th Feb 2025', checked: false, link: '/manage-shares' },
+    { id: '3', titleKey: 'task.adminMarketingOperations', status: 'pending', dueDate: '14th Feb 2025', mandatory: true, checked: false, link: '/admin-marketing-operations' },
+    { id: '4', titleKey: 'task.inviteCustomers', status: 'completed', dueDate: '16th Feb 2025', checked: true, link: '/invite-customers' },
+    { id: '5', titleKey: 'task.manageBadges', status: 'completed', dueDate: '24th Jan 2025', checked: true, link: '/your-company-badges' },
+    { id: '6', titleKey: 'task.createOfferToCapture', status: 'completed', dueDate: '24th Jan 2025', checked: true },
+    { id: '7', titleKey: 'task.viewExhibitorManual', status: 'pending', dueDate: '1st Mar 2025', checked: false },
+    { id: '8', titleKey: 'task.customTaskOperations', status: 'pending', dueDate: '1st Mar 2025', checked: false },
+    { id: '9', titleKey: 'task.exploreTheShop', status: 'completed', dueDate: '3rd Mar 2025', checked: true },
+    { id: '10', titleKey: 'task.upgradePackage', status: 'completed', dueDate: '3rd Mar 2025', checked: true },
+    { id: '11', titleKey: 'task.setUpMeetings', status: 'pending', dueDate: '10th Mar 2025', checked: false },
+    { id: '12', titleKey: 'task.uploadDocuments', status: 'pending', dueDate: '10th Mar 2025', checked: false },
+    { id: '13', titleKey: 'task.setUpLeadManagerApp', status: 'pending', dueDate: '10th Mar 2025', checked: false },
   ]);
 
   const profileViewers: ProfileViewer[] = [
@@ -59,13 +60,10 @@ const Home = () => {
       if (task.id !== taskId) return task;
       
       const newChecked = !task.checked;
-      // When checked, mark as completed; when unchecked, determine if overdue or pending
       let newStatus: Task['status'];
       if (newChecked) {
         newStatus = 'completed';
       } else {
-        // Check if the task is overdue based on due date
-        // For simplicity, tasks with status 'overdue' before completion stay overdue when unchecked
         newStatus = task.status === 'completed' ? 'pending' : task.status;
       }
       
@@ -79,8 +77,6 @@ const Home = () => {
         eventName="The London Book Fair"
         eventDates="11 - 13 March 2025"
         eventLocation="Olympia London"
-        language={language}
-        onLanguageChange={setLanguage}
         eventEdition={eventEdition}
         onEventEditionChange={setEventEdition}
       />
@@ -94,7 +90,7 @@ const Home = () => {
             <Card className="rounded-[20px] border-[hsl(0_0%_84%)]">
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-semibold">Task progress</CardTitle>
+                  <CardTitle className="text-lg font-semibold">{t('home.taskProgress')}</CardTitle>
                   <span className="text-sm text-muted-foreground">{progressPercentage}%</span>
                 </div>
                 <Progress value={progressPercentage} className="h-2" />
@@ -105,11 +101,11 @@ const Home = () => {
                         <Info className="h-3.5 w-3.5 text-muted-foreground cursor-pointer" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-[200px]">
-                        <p>Complete your tasks on time to maximise your success at the show.</p>
+                        <p>{t('home.completeYourTasks')}</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
-                  <span>{completedTasks} of {tasks.length} tasks completed</span>
+                  <span>{completedTasks} of {tasks.length} {t('home.tasksCompleted').replace('{completed}', '').replace('{total}', '').replace('of', '').replace('tasks completed', '').trim() || 'tasks completed'}</span>
                 </div>
               </CardHeader>
               <Separator />
@@ -131,26 +127,26 @@ const Home = () => {
                         className="flex-1 flex items-center gap-3 min-w-0"
                       >
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">{task.title}</p>
+                        <p className="text-sm font-medium truncate">{t(task.titleKey)}</p>
                         <div className="flex items-center gap-1 text-xs">
                           {task.status === 'overdue' && (
                             <span className="text-[#E00021] flex items-center gap-1">
-                              <Timer className="h-3 w-3" /> Overdue {task.dueDate}
+                              <Timer className="h-3 w-3" /> {t('home.overdue')} {task.dueDate}
                             </span>
                           )}
                           {task.status === 'completed' && (
                             <span className="text-green-600 flex items-center gap-1">
-                              ✓ Completed <Timer className="h-3 w-3" /> Due {task.dueDate}
+                              ✓ {t('home.completed')} <Timer className="h-3 w-3" /> {t('home.due')} {task.dueDate}
                             </span>
                           )}
                           {task.status === 'pending' && (
                             <span className="text-muted-foreground flex items-center gap-1">
-                              <Timer className="h-3 w-3" /> Due {task.dueDate}
+                              <Timer className="h-3 w-3" /> {t('home.due')} {task.dueDate}
                             </span>
                           )}
                         </div>
                         {task.mandatory && (
-                          <span className="text-xs text-destructive">{task.mandatory ? '7 mandatory' : ''}</span>
+                          <span className="text-xs text-destructive">7 {t('home.mandatory')}</span>
                         )}
                       </div>
                       <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
@@ -166,12 +162,12 @@ const Home = () => {
             <div className="col-span-full md:col-span-4 space-y-6">
             <Card className="rounded-[20px] border-[hsl(0_0%_84%)]">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">Recommended actions</CardTitle>
+                <CardTitle className="text-lg font-semibold">{t('home.recommendedActions')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Profile Completion */}
                 <div className="text-center pb-6 border-b">
-                  <h3 className="font-semibold mb-4">Profile Completion</h3>
+                  <h3 className="font-semibold mb-4">{t('home.profileCompletion')}</h3>
                   <div className="relative w-20 h-20 mx-auto mb-4">
                     <svg className="w-20 h-20 transform -rotate-90">
                       <circle cx="40" cy="40" r="35" stroke="currentColor" strokeWidth="6" fill="none" className="text-muted" />
@@ -182,36 +178,36 @@ const Home = () => {
                     </svg>
                     <span className="absolute inset-0 flex items-center justify-center text-lg font-bold">30%</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-2">Your profile is 30% complete</p>
+                  <p className="text-sm text-muted-foreground mb-2">{t('home.yourProfileIs').replace('{percentage}', '30')}</p>
                   <p className="text-xs text-muted-foreground mb-4">
-                    Do you know that completed profiles get an average of <strong>17 times more views</strong> than incomplete profiles?
+                    {t('home.profileViewsBoost')}
                   </p>
                   <Button variant="outline" asChild>
-                    <Link to="/edit-company-profile">Edit profile</Link>
+                    <Link to="/edit-company-profile">{t('home.editProfile')}</Link>
                   </Button>
                 </div>
 
                 {/* Capture More Leads */}
                 <div className="text-center pb-6 border-b">
-                  <h3 className="font-semibold mb-4">Capture more leads</h3>
+                  <h3 className="font-semibold mb-4">{t('home.captureMoreLeads')}</h3>
                   <div className="w-16 h-16 mx-auto mb-4 bg-orange-100 rounded-full flex items-center justify-center">
                     <span className="text-3xl">🤝</span>
                   </div>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Want to make over 50 additional connections at the show? <span className="text-xs">(additional cost applies)</span>
+                    {t('home.wantConnections')} <span className="text-xs">{t('home.additionalCostApplies')}</span>
                   </p>
                   <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-                    Request Lead Booster Info
+                    {t('home.requestLeadBoosterInfo')}
                   </Button>
                 </div>
 
                 {/* Invite Your Customers */}
                 <div className="pb-6 border-b">
-                  <h3 className="font-semibold mb-4">Invite your customers</h3>
+                  <h3 className="font-semibold mb-4">{t('home.inviteYourCustomers')}</h3>
                   <div className="space-y-3">
                     <div>
                       <div className="flex justify-between text-sm mb-1">
-                        <span>Invites allocated</span>
+                        <span>{t('home.invitesAllocated')}</span>
                         <span className="font-medium">46</span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -220,7 +216,7 @@ const Home = () => {
                     </div>
                     <div>
                       <div className="flex justify-between text-sm mb-1">
-                        <span>Customers viewed</span>
+                        <span>{t('home.customersViewed')}</span>
                         <span className="font-medium">38</span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -229,7 +225,7 @@ const Home = () => {
                     </div>
                     <div>
                       <div className="flex justify-between text-sm mb-1">
-                        <span>Customers registered</span>
+                        <span>{t('home.customersRegistered')}</span>
                         <span className="font-medium">32</span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -238,24 +234,24 @@ const Home = () => {
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-3 mb-3">
-                    Ensure you use all your invites for maximum value
+                    {t('home.ensureUseInvites')}
                   </p>
                   <Button variant="outline" asChild>
-                    <Link to="/invite-customers">Invite more customers</Link>
+                    <Link to="/invite-customers">{t('home.inviteMoreCustomers')}</Link>
                   </Button>
                   <p className="text-xs text-muted-foreground mt-3 text-center">
-                    Looking to invite more customers?{' '}
-                    <a href="#" className="text-blue-600 hover:underline">Buy more invites</a>
+                    {t('home.lookingInviteMore')}{' '}
+                    <a href="#" className="text-blue-600 hover:underline">{t('home.buyMoreInvites')}</a>
                   </p>
                 </div>
 
                 {/* Compare with Competitors */}
                 <div>
-                  <h3 className="font-semibold mb-4">Compare with competitors</h3>
+                  <h3 className="font-semibold mb-4">{t('home.compareCompetitors')}</h3>
                   <div className="space-y-3">
                     <div>
                       <div className="flex justify-between text-sm mb-1">
-                        <span>Your Profile views</span>
+                        <span>{t('home.yourProfileViews')}</span>
                         <span className="font-medium">267</span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -264,7 +260,7 @@ const Home = () => {
                     </div>
                     <div>
                       <div className="flex justify-between text-sm mb-1">
-                        <span>Average Profile views</span>
+                        <span>{t('home.averageProfileViews')}</span>
                         <span className="font-medium">?</span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -273,10 +269,10 @@ const Home = () => {
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-3 mb-3 text-center">
-                    Please answer a few pending profile questions to unlock your insights and get matched with the right benchmarks.
+                    {t('home.answerPendingQuestions')}
                   </p>
                   <div className="text-center">
-                    <Button variant="outline">Unlock full report</Button>
+                    <Button variant="outline">{t('home.unlockFullReport')}</Button>
                   </div>
                 </div>
               </CardContent>
@@ -287,13 +283,13 @@ const Home = () => {
             <div className="col-span-full md:col-span-4 space-y-6">
             <Card className="rounded-[20px] border-[hsl(0_0%_84%)]">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">Your performance snapshot</CardTitle>
+                <CardTitle className="text-lg font-semibold">{t('home.performanceSnapshot')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Profile Views */}
                 <div>
-                  <h3 className="font-semibold mb-2">Profile views</h3>
-                  <p className="text-sm text-green-600 mb-4">↑ 15% higher than last week at this time</p>
+                  <h3 className="font-semibold mb-2">{t('home.profileViews')}</h3>
+                  <p className="text-sm text-green-600 mb-4">{t('home.higherThanLastWeek')}</p>
                   
                   {/* Simple Bar Chart Placeholder */}
                   <div className="h-32 flex items-end gap-1 mb-2">
@@ -301,37 +297,37 @@ const Home = () => {
                       <div key={i} className="flex-1 bg-blue-600 rounded-t" style={{ height: `${height}%` }} />
                     ))}
                   </div>
-                  <p className="text-xs text-muted-foreground text-center">Weeks remaining for the show</p>
+                  <p className="text-xs text-muted-foreground text-center">{t('home.weeksRemaining')}</p>
                   
                   <div className="text-center mt-4">
                     <Button variant="outline" asChild>
-                      <Link to="/exhibitor-dashboard">View full report</Link>
+                      <Link to="/exhibitor-dashboard">{t('home.viewFullReport')}</Link>
                     </Button>
                   </div>
                 </div>
 
                 {/* Boost Your Visibility */}
                 <div className="text-center pt-4 border-t">
-                  <h4 className="font-medium mb-2">Boost your visibility</h4>
+                  <h4 className="font-medium mb-2">{t('home.boostVisibility')}</h4>
                   <p className="text-xs text-muted-foreground mb-3">
-                    Stand out from the rest to get your brand seen 5x more often. <span className="italic">(additional cost applies)</span>
+                    {t('home.standOutFromRest')} <span className="italic">{t('home.additionalCostApplies')}</span>
                   </p>
                   <Button className="bg-pink-500 hover:bg-pink-600 text-white">
-                    Ask about Priority plus Profile
+                    {t('home.askAboutPriority')}
                   </Button>
                 </div>
 
                 {/* Profile Viewers */}
                 <div className="pt-4 border-t">
-                  <h3 className="font-semibold mb-2">Your profile viewers</h3>
-                  <p className="text-xs text-muted-foreground text-center mb-3">(Showing 2 of 11)</p>
+                  <h3 className="font-semibold mb-2">{t('home.yourProfileViewers')}</h3>
+                  <p className="text-xs text-muted-foreground text-center mb-3">({t('home.showing').replace('{shown}', '2').replace('{total}', '11')})</p>
                   
                   <div className="border rounded-lg overflow-hidden">
                     <table className="w-full text-sm">
                       <thead className="bg-muted/50">
                         <tr>
-                          <th className="text-left p-2 font-medium">Company name</th>
-                          <th className="text-right p-2 font-medium">Contact no.</th>
+                          <th className="text-left p-2 font-medium">{t('home.companyNameColumn')}</th>
+                          <th className="text-right p-2 font-medium">{t('home.contactNo')}</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y">
@@ -343,12 +339,12 @@ const Home = () => {
                         ))}
                       </tbody>
                     </table>
-                    <div className="text-center py-2 text-xs text-muted-foreground">+ 9 more</div>
+                    <div className="text-center py-2 text-xs text-muted-foreground">{t('home.more').replace('{count}', '9')}</div>
                   </div>
                   
                   <div className="text-center mt-4">
                     <Button variant="outline" asChild>
-                      <Link to="/profile-viewer">Discover my viewers</Link>
+                      <Link to="/profile-viewer">{t('home.discoverMyViewers')}</Link>
                     </Button>
                   </div>
                 </div>
@@ -388,17 +384,17 @@ const Home = () => {
               </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">Useful Links</h4>
+              <h4 className="font-semibold mb-2">{t('footer.usefulLinks')}</h4>
               <ul className="space-y-1 text-sm">
-                <li><a href="#" className="hover:underline">Help</a></li>
-                <li><a href="#" className="hover:underline">Privacy Policy</a></li>
-                <li><a href="#" className="hover:underline">Contact us</a></li>
-                <li><a href="#" className="hover:underline">Meet the team</a></li>
-                <li><a href="#" className="hover:underline">Safety at Our Event</a></li>
+                <li><a href="#" className="hover:underline">{t('footer.help')}</a></li>
+                <li><a href="#" className="hover:underline">{t('footer.privacyPolicy')}</a></li>
+                <li><a href="#" className="hover:underline">{t('footer.contactUs')}</a></li>
+                <li><a href="#" className="hover:underline">{t('footer.meetTheTeam')}</a></li>
+                <li><a href="#" className="hover:underline">{t('footer.safetyAtEvent')}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">Follow Us</h4>
+              <h4 className="font-semibold mb-2">{t('footer.followUs')}</h4>
               <ul className="space-y-1 text-sm">
                 <li><a href="#" className="hover:underline">Twitter</a></li>
                 <li><a href="#" className="hover:underline">Facebook</a></li>
@@ -411,10 +407,10 @@ const Home = () => {
           
           <div className="border-t pt-4">
             <div className="flex flex-wrap gap-4 text-xs text-muted-foreground mb-2">
-              <span className="font-semibold">Privacy Options</span>
-              <a href="#" className="hover:underline">Cookie Policy</a>
-              <a href="#" className="hover:underline">Your Privacy Choices</a>
-              <a href="#" className="hover:underline">RX Global Privacy Policy</a>
+              <span className="font-semibold">{t('footer.privacyOptions')}</span>
+              <a href="#" className="hover:underline">{t('footer.cookiePolicy')}</a>
+              <a href="#" className="hover:underline">{t('footer.yourPrivacyChoices')}</a>
+              <a href="#" className="hover:underline">{t('footer.rxGlobalPrivacyPolicy')}</a>
             </div>
             <p className="text-xs text-muted-foreground">© 2025 RX Global</p>
             <p className="text-xs text-muted-foreground mt-2">
