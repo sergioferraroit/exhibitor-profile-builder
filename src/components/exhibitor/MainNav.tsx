@@ -9,7 +9,6 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { MobileNav } from './MobileNav';
 
 interface NavChild {
   label: string;
@@ -167,10 +166,6 @@ export function MainNav() {
           </NavigationMenu>
         </div>
 
-        {/* Mobile Navigation */}
-        <div className="flex md:hidden items-center justify-end py-2 px-2">
-          <MobileNav />
-        </div>
       </div>
     </nav>
   );

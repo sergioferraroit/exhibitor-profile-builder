@@ -3,6 +3,7 @@ import logoPlaceholder from '@/assets/logo-placeholder.svg';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Link } from 'react-router-dom';
+import { MobileNav } from './MobileNav';
 
 interface TopBarProps {
   eventName: string;
@@ -23,8 +24,10 @@ export function TopBar({
   eventEdition,
   onEventEditionChange
 }: TopBarProps) {
-  return <div className="text-topbar-foreground bg-[#1a1a1a]">
-      <div className="container mx-auto py-3">
+  return (
+    <div className="text-topbar-foreground bg-[#1a1a1a]">
+      {/* Desktop Layout */}
+      <div className="hidden md:block container mx-auto py-3">
         <div className="flex items-center justify-between">
           {/* Left: Event Branding */}
           <div className="flex items-center gap-6">
@@ -90,14 +93,14 @@ export function TopBar({
                 <DropdownMenuSeparator />
                 <div className="px-4 py-3">
                   <p className="text-xs text-muted-foreground">Stand number</p>
-                  <p className="font-medium text-foreground">7B68</p>
+                  <p className="font-medium text-foreground">E40</p>
                 </div>
                 <DropdownMenuSeparator />
                 <div className="px-4 py-3">
                   <p className="text-xs text-muted-foreground">Digital offering</p>
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-foreground">Exhibitor Profile</span>
-                    <Link to="#" className="text-primary underline text-sm">Upgrade</Link>
+                    <Link to="/shop" className="text-primary underline text-sm">Upgrade</Link>
                   </div>
                 </div>
                 <DropdownMenuSeparator />
@@ -117,5 +120,83 @@ export function TopBar({
           </div>
         </div>
       </div>
-    </div>;
+
+      {/* Mobile/Tablet Layout */}
+      <div className="md:hidden">
+        {/* Row 1: Date and Location */}
+        <div className="flex items-center justify-center gap-6 py-2 text-sm border-b border-topbar-muted/20">
+          <div className="flex items-center gap-2 text-topbar-foreground">
+            <Calendar className="h-3.5 w-3.5" />
+            <span>{eventDates}</span>
+          </div>
+          <div className="flex items-center gap-2 text-topbar-foreground">
+            <MapPin className="h-3.5 w-3.5" />
+            <span>{eventLocation}</span>
+          </div>
+        </div>
+
+        {/* Row 2: Logo, Company Dropdown, Burger Menu */}
+        <div className="container mx-auto py-2">
+          <div className="flex items-center justify-between">
+            {/* Show Logo */}
+            <div className="text-base font-bold tracking-wide">
+              <span className="text-topbar-muted">THE LONDON</span>
+              <br />
+              <span className="text-topbar-foreground">BOOK FAIR</span>
+            </div>
+
+            {/* Right: Company Dropdown + Burger */}
+            <div className="flex items-center gap-2">
+              {/* Company Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-1 p-1 rounded hover:bg-topbar-muted/10 transition-colors focus:outline-none">
+                    <img src={logoPlaceholder} alt="Company logo" className="h-10 w-10 object-contain" />
+                    <ChevronDown className="h-4 w-4 opacity-70" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64 bg-white z-50">
+                  <div className="px-4 py-3">
+                    <p className="text-xs text-muted-foreground">Company name</p>
+                    <p className="font-medium text-foreground">Acme Corporation</p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <div className="px-4 py-3">
+                    <p className="text-xs text-muted-foreground">Stand number</p>
+                    <p className="font-medium text-foreground">E40</p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <div className="px-4 py-3">
+                    <p className="text-xs text-muted-foreground">Digital offering</p>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-foreground">Exhibitor Profile</span>
+                      <Link to="/shop" className="text-primary underline text-sm">Upgrade</Link>
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/edit-company-profile" className="text-primary underline cursor-pointer px-4 py-2">
+                      Edit company profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/login" className="text-primary underline cursor-pointer px-4 py-2">
+                      Logout
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Burger Menu */}
+              <MobileNav 
+                eventEdition={eventEdition === '2025' ? 'The London Book Fair 2025' : 'The London Book Fair 2024'}
+                language={language === 'en-GB' ? 'English (GB)' : language === 'fr-FR' ? 'Français' : '日本語'}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
