@@ -83,6 +83,7 @@ const ExhibitorHub = () => {
         onOpenWizard={() => setIsWizardOpen(true)}
         onOpenPreview={() => setIsPreviewOpen(true)}
         onUpdateCompanyName={updateCompanyName}
+        onOpenAISetup={() => setIsAISetupOpen(true)}
         availableLocales={[profile.primaryLocale, ...profile.secondaryLocales]}
         primaryLocale={profile.primaryLocale}
       />
