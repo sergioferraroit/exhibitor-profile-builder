@@ -62,7 +62,8 @@ export function AIProfileSetupModal({
   secondaryLocales,
 }: AIProfileSetupModalProps) {
   const { t } = useLanguage();
-  const allLocales = [primaryLocale, ...secondaryLocales];
+  const safeSecondaryLocales = Array.isArray(secondaryLocales) ? secondaryLocales : [];
+  const allLocales = [primaryLocale, ...safeSecondaryLocales];
   
   const [step, setStep] = useState<Step>('url-input');
   const [websiteUrl, setWebsiteUrl] = useState('');
