@@ -50,8 +50,12 @@ export function PublicProfilePreview({
   const website = getSectionValue(SECTION_IDS.WEBSITE) as string | null;
   const email = getSectionValue(SECTION_IDS.EMAIL) as string | null;
   const phone = getSectionValue(SECTION_IDS.PHONE) as string | null;
-  const filters = getSectionValue(SECTION_IDS.FILTERS) as string[] | null;
-  const matchmaking = getSectionValue(SECTION_IDS.MATCHMAKING) as string[] | null;
+  const filtersValue = getSectionValue(SECTION_IDS.FILTERS);
+  const filters = Array.isArray(filtersValue) ? filtersValue : 
+    (typeof filtersValue === 'string' && filtersValue ? filtersValue.split(',').map(s => s.trim()) : null);
+  const matchmakingValue = getSectionValue(SECTION_IDS.MATCHMAKING);
+  const matchmaking = Array.isArray(matchmakingValue) ? matchmakingValue : 
+    (typeof matchmakingValue === 'string' && matchmakingValue ? matchmakingValue.split(',').map(s => s.trim()) : null);
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
