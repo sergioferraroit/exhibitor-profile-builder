@@ -10,10 +10,9 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Pencil, Eye } from 'lucide-react';
+import { Pencil, Eye, Sparkles } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 import { useLanguage } from '@/contexts/LanguageContext';
-
 interface ProfileHeaderProps {
   companyName: string;
   completionPercentage: number;
@@ -22,6 +21,7 @@ interface ProfileHeaderProps {
   onOpenWizard: () => void;
   onOpenPreview: () => void;
   onUpdateCompanyName: (name: string) => void;
+  onOpenAISetup?: () => void;
   availableLocales: Locale[];
   primaryLocale: Locale;
 }
@@ -34,6 +34,7 @@ export function ProfileHeader({
   onOpenWizard,
   onOpenPreview,
   onUpdateCompanyName,
+  onOpenAISetup,
   availableLocales,
   primaryLocale,
 }: ProfileHeaderProps) {
@@ -73,6 +74,13 @@ export function ProfileHeader({
 
             {/* Right: Language, buttons */}
             <div className="flex items-center gap-4">
+              {/* AI Auto-fill Button */}
+              {onOpenAISetup && (
+                <Button variant="outline" onClick={onOpenAISetup} className="gap-2 border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10">
+                  <Sparkles className="h-4 w-4" />
+                  {t('ai.autoFillProfile')}
+                </Button>
+              )}
 
               {/* Preview Button */}
               <Button variant="outline" onClick={onOpenPreview} className="gap-2">

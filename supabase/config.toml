@@ -1,1 +1,7 @@
 project_id = "gbbkwgpcewmmuhncoxtg"
+
+[functions.scrape-company-profile]
+verify_jwt = false
+
+[functions.translate-content]
+verify_jwt = false

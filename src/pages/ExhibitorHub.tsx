@@ -11,6 +11,7 @@ import { ProductListingTab } from '@/components/exhibitor/ProductListingTab';
 import { SectionEditModal } from '@/components/exhibitor/SectionEditModal';
 import { WizardModal } from '@/components/exhibitor/WizardModal';
 import { PublicProfilePreview } from '@/components/exhibitor/PublicProfilePreview';
+import { AIProfileSetupModal } from '@/components/exhibitor/AIProfileSetupModal';
 import { Locale, SectionId } from '@/types/exhibitor';
 import { toast } from 'sonner';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -50,6 +51,7 @@ const ExhibitorHub = () => {
   const [editingSectionId, setEditingSectionId] = useState<SectionId | null>(null);
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isAISetupOpen, setIsAISetupOpen] = useState(false);
   
   // Top bar state
   const [eventEdition, setEventEdition] = useState('2025');
@@ -177,6 +179,38 @@ const ExhibitorHub = () => {
         onClose={() => setIsPreviewOpen(false)}
         profile={profile}
         selectedLocale={selectedLocale}
+      />
+
+      {/* AI Profile Setup Modal */}
+      <AIProfileSetupModal
+        isOpen={isAISetupOpen}
+        onClose={() => setIsAISetupOpen(false)}
+        onComplete={(data, fieldStates) => {
+          // Apply the extracted data to the profile
+          Object.entries(fieldStates).forEach(([fieldId, state]) => {
+            if (state.action === 'validated' || state.action === 'edited') {
+              const value = state.editedValue || (data as any)[fieldId];
+              if (value && fieldId === 'companyDescription') {
+                updateSection('description', selectedLocale, value[selectedLocale], 'complete');
+              } else if (value && fieldId === 'whyVisit') {
+                updateSection('why-visit', selectedLocale, value[selectedLocale], 'complete');
+              } else if (value && fieldId === 'socialMedia') {
+                const socialLinks = Object.entries(value)
+                  .filter(([_, url]) => url)
+                  .map(([platform, url]) => `${platform}: ${url}`)
+                  .join('\n');
+                updateSection('social-media', selectedLocale, socialLinks, 'complete');
+              } else if (value && fieldId === 'filterTags') {
+                updateSection('filters', selectedLocale, (value as string[]).join(', '), 'complete');
+              } else if (value && fieldId === 'matchmakingTags') {
+                updateSection('matchmaking', selectedLocale, (value as string[]).join(', '), 'complete');
+              }
+            }
+          });
+          toast.success(t('ai.profileUpdated'));
+        }}
+        primaryLocale={profile.primaryLocale}
+        secondaryLocales={profile.secondaryLocales}
       />
       
     </div>
