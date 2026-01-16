@@ -188,23 +188,74 @@ const ExhibitorHub = () => {
         onClose={() => setIsAISetupOpen(false)}
         onComplete={(data, fieldStates) => {
           // Apply the extracted data to the profile
+          const allLocales: Locale[] = [profile.primaryLocale, ...profile.secondaryLocales];
+          
           Object.entries(fieldStates).forEach(([fieldId, state]) => {
             if (state.action === 'validated' || state.action === 'edited') {
               const value = state.editedValue || (data as any)[fieldId];
+              
               if (value && fieldId === 'companyDescription') {
-                updateSection('description', selectedLocale, value[selectedLocale], 'complete');
+                // Update description for all locales
+                allLocales.forEach(locale => {
+                  if (value[locale]) {
+                    updateSection('description', locale, value[locale], 'complete');
+                  }
+                });
               } else if (value && fieldId === 'whyVisit') {
-                updateSection('why-visit', selectedLocale, value[selectedLocale], 'complete');
+                // Update why-visit for all locales
+                allLocales.forEach(locale => {
+                  if (value[locale]) {
+                    updateSection('why-visit', locale, value[locale], 'complete');
+                  }
+                });
+              } else if (value && fieldId === 'logo') {
+                // Update logo (same URL for all locales)
+                allLocales.forEach(locale => {
+                  updateSection('logo', locale, value, 'complete');
+                });
+              } else if (value && fieldId === 'coverImage') {
+                // Update cover image (same URL for all locales)
+                allLocales.forEach(locale => {
+                  updateSection('cover-image', locale, value, 'complete');
+                });
               } else if (value && fieldId === 'socialMedia') {
                 const socialLinks = Object.entries(value)
                   .filter(([_, url]) => url)
                   .map(([platform, url]) => `${platform}: ${url}`)
                   .join('\n');
-                updateSection('social-media', selectedLocale, socialLinks, 'complete');
+                allLocales.forEach(locale => {
+                  updateSection('social-media', locale, socialLinks, 'complete');
+                });
               } else if (value && fieldId === 'filterTags') {
-                updateSection('filters', selectedLocale, (value as string[]).join(', '), 'complete');
+                const tagsString = Array.isArray(value) ? value.join(', ') : value;
+                allLocales.forEach(locale => {
+                  updateSection('filters', locale, tagsString, 'complete');
+                });
               } else if (value && fieldId === 'matchmakingTags') {
-                updateSection('matchmaking', selectedLocale, (value as string[]).join(', '), 'complete');
+                const tagsString = Array.isArray(value) ? value.join(', ') : value;
+                allLocales.forEach(locale => {
+                  updateSection('matchmaking', locale, tagsString, 'complete');
+                });
+              } else if (value && fieldId === 'products' && Array.isArray(value)) {
+                // Add extracted products
+                value.forEach((extractedProduct: { name: Record<Locale, string>; description: Record<Locale, string> }) => {
+                  const newProduct = {
+                    name: extractedProduct.name?.[profile.primaryLocale] || extractedProduct.name?.['en-GB'] || 'Untitled Product',
+                    description: extractedProduct.description?.[profile.primaryLocale] || extractedProduct.description?.['en-GB'] || '',
+                    categories: [] as string[],
+                    images: [] as string[],
+                    documents: [] as { id: string; name: string; type: 'brochure' | 'case-study' | 'white-paper' | 'press-release' | 'other'; url: string }[],
+                    status: 'draft' as const,
+                    localeData: allLocales.reduce((acc, locale) => {
+                      acc[locale] = {
+                        name: extractedProduct.name?.[locale] || extractedProduct.name?.['en-GB'] || 'Untitled Product',
+                        description: extractedProduct.description?.[locale] || extractedProduct.description?.['en-GB'] || '',
+                      };
+                      return acc;
+                    }, {} as Record<Locale, { name: string; description: string }>),
+                  };
+                  addProduct(newProduct);
+                });
               }
             }
           });
