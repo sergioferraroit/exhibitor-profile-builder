@@ -206,7 +206,6 @@ const en: Record<string, string> = {
   'common.cancel': 'Cancel',
   'common.back': 'Back',
   'common.tryAgain': 'Try Again',
-  'exhibitor.productListing': 'Product Listing',
 };
 
 // French translations
