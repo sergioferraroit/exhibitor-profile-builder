@@ -1,15 +1,12 @@
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ChevronDown } from 'lucide-react';
 import HomeIcon from '@/assets/home-icon.svg';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from '@/components/ui/navigation-menu';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -102,75 +99,69 @@ export function MainNav() {
             <img src={HomeIcon} alt="Home" className="h-5 w-5" />
           </Link>
 
-          <NavigationMenu>
-            <NavigationMenuList>
-              {navItems.map((item) => (
-                <NavigationMenuItem key={item.labelKey} className="relative">
-                  {item.children ? (
-                    <>
-                      <NavigationMenuTrigger 
-                        className={cn(
-                          "bg-card hover:bg-background data-[state=open]:bg-background border-b-2 border-transparent",
-                          isActiveSection(item.children) && "border-b-2 border-primary"
+          {navItems.map((item) => (
+            <div key={item.labelKey} className="relative">
+              {item.children ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    className={cn(
+                      "inline-flex h-10 items-center justify-center px-4 py-2 text-sm font-medium transition-colors border-b-2 outline-none",
+                      "bg-card hover:bg-background data-[state=open]:bg-background",
+                      isActiveSection(item.children) 
+                        ? "border-primary" 
+                        : "border-transparent"
+                    )}
+                  >
+                    {t(item.labelKey)}
+                    <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent 
+                    align="start" 
+                    sideOffset={0}
+                    className="w-[220px] bg-popover border rounded-md shadow-lg z-50"
+                  >
+                    {item.children.map((child) => (
+                      <DropdownMenuItem key={child.href} asChild>
+                        {child.external ? (
+                          <a
+                            href={child.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              'flex items-center justify-between w-full cursor-pointer px-3 py-2 text-sm',
+                              'hover:bg-muted focus:bg-muted'
+                            )}
+                          >
+                            {t(child.labelKey)}
+                            <ExternalLink className="h-3 w-3 text-muted-foreground" />
+                          </a>
+                        ) : (
+                          <Link
+                            to={child.href}
+                            className={cn(
+                              'w-full cursor-pointer px-3 py-2 text-sm',
+                              'hover:bg-muted focus:bg-muted',
+                              location.pathname === child.href && 'bg-muted font-medium'
+                            )}
+                          >
+                            {t(child.labelKey)}
+                          </Link>
                         )}
-                      >
-                        {t(item.labelKey)}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent className="absolute top-full left-0">
-                        <ul className="grid w-[220px] gap-0 p-2 bg-popover border rounded-md shadow-lg z-50">
-                          {item.children.map((child) => (
-                            <li key={child.href}>
-                              <NavigationMenuLink asChild>
-                                {child.external ? (
-                                  <a
-                                    href={child.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={cn(
-                                      'flex items-center justify-between select-none rounded-sm px-3 py-2 text-sm leading-none no-underline outline-none transition-colors',
-                                      'hover:bg-muted',
-                                      'focus:bg-muted'
-                                    )}
-                                  >
-                                    {t(child.labelKey)}
-                                    <ExternalLink className="h-3 w-3 text-muted-foreground" />
-                                  </a>
-                                ) : (
-                                  <Link
-                                    to={child.href}
-                                    className={cn(
-                                      'block select-none rounded-sm px-3 py-2 text-sm leading-none no-underline outline-none transition-colors',
-                                      'hover:bg-muted',
-                                      'focus:bg-muted',
-                                      location.pathname === child.href && 'bg-muted font-medium'
-                                    )}
-                                  >
-                                    {t(child.labelKey)}
-                                  </Link>
-                                )}
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
-                        </ul>
-                      </NavigationMenuContent>
-                      <NavigationMenuViewport />
-                    </>
-                  ) : (
-                    <NavigationMenuLink asChild>
-                      <Link
-                        to={item.href!}
-                        className="flex items-center px-4 py-2 text-sm font-medium hover:bg-muted rounded-md transition-colors"
-                      >
-                        {t(item.labelKey)}
-                      </Link>
-                    </NavigationMenuLink>
-                  )}
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link
+                  to={item.href!}
+                  className="flex items-center px-4 py-2 text-sm font-medium hover:bg-background transition-colors"
+                >
+                  {t(item.labelKey)}
+                </Link>
+              )}
+            </div>
+          ))}
         </div>
-
       </div>
     </nav>
   );
