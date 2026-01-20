@@ -85,7 +85,7 @@ export function MainNav() {
     <nav className="bg-card border-b">
       <div className="container mx-auto">
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center justify-center gap-1 py-1">
+        <div className="hidden md:flex items-center justify-center gap-1">
           {/* Home Icon */}
           <Link
             to="/"
