@@ -1,4 +1,5 @@
-import { Home, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import HomeIcon from '@/assets/home-icon.svg';
 import { Link, useLocation } from 'react-router-dom';
 import {
   NavigationMenu,
@@ -97,7 +98,7 @@ export function MainNav() {
                 : "hover:bg-muted"
             )}
           >
-            <Home className="h-5 w-5" />
+            <img src={HomeIcon} alt="Home" className="h-5 w-5" />
           </Link>
 
           <NavigationMenu>
