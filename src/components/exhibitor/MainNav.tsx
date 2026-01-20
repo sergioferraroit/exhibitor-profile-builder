@@ -128,8 +128,8 @@ export function MainNav() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className={cn(
-                              'flex items-center justify-between w-full cursor-pointer px-3 py-2 text-sm',
-                              'hover:bg-muted focus:bg-muted'
+                              'flex items-center justify-between w-full cursor-pointer px-3 py-2 text-sm text-foreground',
+                              'hover:bg-background focus:bg-background'
                             )}
                           >
                             {t(child.labelKey)}
@@ -139,9 +139,9 @@ export function MainNav() {
                           <Link
                             to={child.href}
                             className={cn(
-                              'w-full cursor-pointer px-3 py-2 text-sm',
-                              'hover:bg-muted focus:bg-muted',
-                              location.pathname === child.href && 'bg-muted font-medium'
+                              'w-full cursor-pointer px-3 py-2 text-sm text-foreground',
+                              'hover:bg-background focus:bg-background',
+                              location.pathname === child.href && 'bg-background font-medium'
                             )}
                           >
                             {t(child.labelKey)}
