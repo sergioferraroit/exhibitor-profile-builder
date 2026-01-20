@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Calendar, MapPin, Phone, Info, Timer } from 'lucide-react';
+import { ChevronRight, Timer } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,8 @@ import { PageContainer, LayoutGrid } from '@/components/layout/LayoutGrid';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Separator } from '@/components/ui/separator';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Footer } from '@/components/Footer';
+import { Info } from 'lucide-react';
 
 interface Task {
   id: string;
@@ -72,8 +74,8 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      <TopBar 
+    <div className="min-h-screen bg-muted/30 flex flex-col">
+      <TopBar
         eventName="The London Book Fair"
         eventDates="11 - 13 March 2025"
         eventLocation="Olympia London"
@@ -82,7 +84,7 @@ const Home = () => {
       />
       <MainNav />
       
-      <main className="py-6">
+      <main className="py-6 flex-1">
         <PageContainer>
           <LayoutGrid>
             {/* Task Progress - Left Column */}
@@ -355,70 +357,7 @@ const Home = () => {
         </PageContainer>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-muted mt-8 py-8">
-        <PageContainer>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-gutter mb-8">
-            <div>
-              <div className="flex items-center gap-2 text-sm mb-2">
-                <Calendar className="h-4 w-4" />
-                <span>Tuesday, 11 March 2025</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm mb-2">
-                <Calendar className="h-4 w-4" />
-                <span>Wednesday, 12 March 2025</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Calendar className="h-4 w-4" />
-                <span>Thursday, 13 March 2025</span>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2 text-sm mb-2">
-                <Phone className="h-4 w-4" />
-                <span>+44 (0)20 82712124</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <MapPin className="h-4 w-4" />
-                <span>Olympia London, Hammersmith Road, London, W14 8UX</span>
-              </div>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">{t('footer.usefulLinks')}</h4>
-              <ul className="space-y-1 text-sm">
-                <li><a href="#" className="hover:underline">{t('footer.help')}</a></li>
-                <li><a href="#" className="hover:underline">{t('footer.privacyPolicy')}</a></li>
-                <li><a href="#" className="hover:underline">{t('footer.contactUs')}</a></li>
-                <li><a href="#" className="hover:underline">{t('footer.meetTheTeam')}</a></li>
-                <li><a href="#" className="hover:underline">{t('footer.safetyAtEvent')}</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">{t('footer.followUs')}</h4>
-              <ul className="space-y-1 text-sm">
-                <li><a href="#" className="hover:underline">Twitter</a></li>
-                <li><a href="#" className="hover:underline">Facebook</a></li>
-                <li><a href="#" className="hover:underline">Linkedin</a></li>
-                <li><a href="#" className="hover:underline">Instagram</a></li>
-                <li><a href="#" className="hover:underline">YouTube</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t pt-4">
-            <div className="flex flex-wrap gap-4 text-xs text-muted-foreground mb-2">
-              <span className="font-semibold">{t('footer.privacyOptions')}</span>
-              <a href="#" className="hover:underline">{t('footer.cookiePolicy')}</a>
-              <a href="#" className="hover:underline">{t('footer.yourPrivacyChoices')}</a>
-              <a href="#" className="hover:underline">{t('footer.rxGlobalPrivacyPolicy')}</a>
-            </div>
-            <p className="text-xs text-muted-foreground">© 2025 RX Global</p>
-            <p className="text-xs text-muted-foreground mt-2">
-              The London Book Fair, RX, and Reed Exhibitions are trade marks of Reed Exhibitions Limited and its affiliates. RELX and the "RE" logo are trade marks of RELX Group plc, used under licence. Reed Exhibitions Limited is a private limited company, having its registered and principal office at Gateway House, 28 The Quadrant, Richmond, Surrey, TW9 1DN, registered in England and Wales with Company No. 678540. Business activity: Activities of exhibition and fair organisers VAT No. GB 232 4004 20 Tax ID No: 13960 00581
-            </p>
-          </div>
-        </PageContainer>
-      </footer>
+      <Footer />
     </div>
   );
 };
