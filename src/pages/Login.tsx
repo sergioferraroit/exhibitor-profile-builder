@@ -10,8 +10,8 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Main Content */}
-      <div className="flex-1 flex justify-center pt-16 px-4">
-        <div className="w-full max-w-xl border border-border rounded-md overflow-hidden">
+      <div className="flex justify-center pt-16 px-4 pb-16">
+        <div className="w-full max-w-xl border border-border rounded-md overflow-hidden h-fit">
           {/* Header with show branding */}
           <div className="bg-muted/50 py-4 px-6 text-center border-b-4 border-amber-500">
             <h1 className="text-xl font-bold text-foreground tracking-wide">
