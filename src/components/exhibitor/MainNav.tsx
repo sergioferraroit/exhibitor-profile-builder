@@ -8,6 +8,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  NavigationMenuViewport,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -92,10 +93,10 @@ export function MainNav() {
           <Link
             to="/"
             className={cn(
-              "flex items-center justify-center h-10 w-10 rounded-md transition-colors",
+              "flex items-center justify-center h-10 w-10 transition-colors border-b-2",
               location.pathname === '/' 
-                ? "bg-primary text-primary-foreground" 
-                : "hover:bg-muted"
+                ? "border-primary" 
+                : "border-transparent hover:bg-background"
             )}
           >
             <img src={HomeIcon} alt="Home" className="h-5 w-5" />
@@ -104,19 +105,19 @@ export function MainNav() {
           <NavigationMenu>
             <NavigationMenuList>
               {navItems.map((item) => (
-                <NavigationMenuItem key={item.labelKey}>
+                <NavigationMenuItem key={item.labelKey} className="relative">
                   {item.children ? (
                     <>
                       <NavigationMenuTrigger 
                         className={cn(
-                          "bg-transparent hover:bg-muted data-[state=open]:bg-muted",
-                          isActiveSection(item.children) && "text-primary font-semibold"
+                          "bg-card hover:bg-background data-[state=open]:bg-background border-b-2 border-transparent",
+                          isActiveSection(item.children) && "border-b-2 border-primary"
                         )}
                       >
                         {t(item.labelKey)}
                       </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-[280px] gap-1 p-2 bg-popover border rounded-md shadow-lg">
+                      <NavigationMenuContent className="absolute top-full left-0">
+                        <ul className="grid w-[220px] gap-0 p-2 bg-popover border rounded-md shadow-lg z-50">
                           {item.children.map((child) => (
                             <li key={child.href}>
                               <NavigationMenuLink asChild>
@@ -126,9 +127,9 @@ export function MainNav() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={cn(
-                                      'flex items-center justify-between select-none rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors',
-                                      'hover:bg-accent hover:text-accent-foreground',
-                                      'focus:bg-accent focus:text-accent-foreground'
+                                      'flex items-center justify-between select-none rounded-sm px-3 py-2 text-sm leading-none no-underline outline-none transition-colors',
+                                      'hover:bg-muted',
+                                      'focus:bg-muted'
                                     )}
                                   >
                                     {t(child.labelKey)}
@@ -138,10 +139,10 @@ export function MainNav() {
                                   <Link
                                     to={child.href}
                                     className={cn(
-                                      'block select-none rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors',
-                                      'hover:bg-accent hover:text-accent-foreground',
-                                      'focus:bg-accent focus:text-accent-foreground',
-                                      location.pathname === child.href && 'bg-accent text-accent-foreground font-medium'
+                                      'block select-none rounded-sm px-3 py-2 text-sm leading-none no-underline outline-none transition-colors',
+                                      'hover:bg-muted',
+                                      'focus:bg-muted',
+                                      location.pathname === child.href && 'bg-muted font-medium'
                                     )}
                                   >
                                     {t(child.labelKey)}
@@ -152,6 +153,7 @@ export function MainNav() {
                           ))}
                         </ul>
                       </NavigationMenuContent>
+                      <NavigationMenuViewport />
                     </>
                   ) : (
                     <NavigationMenuLink asChild>
