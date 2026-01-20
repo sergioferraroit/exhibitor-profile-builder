@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Footer } from '@/components/Footer';
 
 export default function ForgotPassword() {
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-6 max-w-6xl">
+    <div className="min-h-screen bg-white flex flex-col">
+      <div className="flex-1 container mx-auto px-4 py-6 max-w-6xl">
         <h1 className="text-3xl font-normal text-foreground mb-2">
           Forgot Password
         </h1>
@@ -30,6 +31,7 @@ export default function ForgotPassword() {
           </Button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
