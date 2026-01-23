@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight, Timer } from "lucide-react";
+import { ChevronRight, Timer, Info } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Separator } from "@/components/ui/separator";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Footer } from "@/components/Footer";
-import { Info } from "lucide-react";
+import chartPictogram from "@/assets/chart-pictogram.svg";
 
 interface Task {
   id: string;
@@ -22,11 +22,6 @@ interface Task {
   mandatory?: boolean;
   checked: boolean;
   link?: string;
-}
-
-interface ProfileViewer {
-  companyName: string;
-  contactNo: string;
 }
 
 const Home = () => {
@@ -85,10 +80,6 @@ const Home = () => {
     { id: "13", titleKey: "task.setUpLeadManagerApp", status: "pending", dueDate: "9th Mar 2026", checked: false },
   ]);
 
-  const profileViewers: ProfileViewer[] = [
-    { companyName: "Actibio cosmetics", contactNo: "+1 9873300134" },
-    { companyName: "Chemyunion Inc", contactNo: "+44 8742220099" },
-  ];
 
   const completedTasks = tasks.filter((t) => t.checked).length;
   const progressPercentage = Math.round((completedTasks / tasks.length) * 100);
@@ -202,209 +193,205 @@ const Home = () => {
 
             {/* Recommended Actions - Middle Column */}
             <div className="col-span-full md:col-span-4 space-y-6">
-              <Card className="rounded-[20px] border-[hsl(0_0%_84%)]">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold">{t("home.recommendedActions")}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* Profile Completion */}
-                  <div className="text-center pb-6 border-b">
-                    <h3 className="font-semibold mb-4">{t("home.profileCompletion")}</h3>
-                    <div className="relative w-20 h-20 mx-auto mb-4">
-                      <svg className="w-20 h-20 transform -rotate-90">
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="35"
-                          stroke="currentColor"
-                          strokeWidth="6"
-                          fill="none"
-                          className="text-muted"
-                        />
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="35"
-                          stroke="currentColor"
-                          strokeWidth="6"
-                          fill="none"
-                          className="text-amber-400"
-                          strokeDasharray={`${30 * 2.2} ${100 * 2.2}`}
-                        />
-                      </svg>
-                      <span className="absolute inset-0 flex items-center justify-center text-lg font-bold">30%</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {t("home.yourProfileIs").replace("{percentage}", "30")}
-                    </p>
-                    <p className="text-xs text-muted-foreground mb-4">{t("home.profileViewsBoost")}</p>
-                    <Button variant="outline" asChild>
-                      <Link to="/edit-company-profile">{t("home.editProfile")}</Link>
-                    </Button>
+              <h2 className="text-lg font-semibold">{t("home.recommendedActions")}</h2>
+              
+              {/* Lead Manager App Card */}
+              <Card className="rounded-[20px] border-[hsl(0_0%_84%)] bg-white">
+                <CardContent className="pt-6 text-center">
+                  <h3 className="font-semibold mb-4">{t("home.leadManagerApp")}</h3>
+                  <div className="mb-4">
+                    <img 
+                      src={chartPictogram} 
+                      alt="Lead Manager" 
+                      className="w-16 h-16 mx-auto"
+                    />
                   </div>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    {t("home.delegatesLoggedIn")}
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    {t("home.customQuestionsCreated")}
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {t("home.addQualifyingQuestions")}
+                  </p>
+                  <Button variant="outline">
+                    {t("home.setupLeadManagerApp")}
+                  </Button>
+                </CardContent>
+              </Card>
 
-                  {/* Capture More Leads */}
-                  <div className="text-center pb-6 border-b">
-                    <h3 className="font-semibold mb-4">{t("home.captureMoreLeads")}</h3>
-                    <div className="w-16 h-16 mx-auto mb-4 bg-orange-100 rounded-full flex items-center justify-center">
-                      <span className="text-3xl">🤝</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {t("home.wantConnections")} <span className="text-xs">{t("home.additionalCostApplies")}</span>
-                    </p>
-                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-                      {t("home.requestLeadBoosterInfo")}
-                    </Button>
+              {/* Lead Booster Card */}
+              <Card className="rounded-[20px] border-[hsl(0_0%_84%)] bg-white">
+                <CardContent className="pt-6 text-center">
+                  <h3 className="font-semibold mb-4">{t("home.leadBooster")}</h3>
+                  <div className="mb-4">
+                    <img 
+                      src={chartPictogram} 
+                      alt="Lead Booster" 
+                      className="w-16 h-16 mx-auto"
+                    />
                   </div>
-
-                  {/* Invite Your Customers */}
-                  <div className="pb-6 border-b">
-                    <h3 className="font-semibold mb-4">{t("home.inviteYourCustomers")}</h3>
-                    <div className="space-y-3">
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>{t("home.invitesAllocated")}</span>
-                          <span className="font-medium">46</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-900 rounded-full" style={{ width: "100%" }} />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>{t("home.customersViewed")}</span>
-                          <span className="font-medium">38</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-700 rounded-full" style={{ width: "82%" }} />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>{t("home.customersRegistered")}</span>
-                          <span className="font-medium">32</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-500 rounded-full" style={{ width: "70%" }} />
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-3 mb-3">{t("home.ensureUseInvites")}</p>
-                    <Button variant="outline" asChild>
-                      <Link to="/invite-customers">{t("home.inviteMoreCustomers")}</Link>
-                    </Button>
-                    <p className="text-xs text-muted-foreground mt-3 text-center">
-                      {t("home.lookingInviteMore")}{" "}
-                      <a href="#" className="text-blue-600 hover:underline">
-                        {t("home.buyMoreInvites")}
-                      </a>
-                    </p>
-                  </div>
-
-                  {/* Compare with Competitors */}
-                  <div>
-                    <h3 className="font-semibold mb-4">{t("home.compareCompetitors")}</h3>
-                    <div className="space-y-3">
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>{t("home.yourProfileViews")}</span>
-                          <span className="font-medium">267</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-900 rounded-full" style={{ width: "80%" }} />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>{t("home.averageProfileViews")}</span>
-                          <span className="font-medium">?</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div className="h-full bg-orange-300 rounded-full" style={{ width: "50%" }} />
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-3 mb-3 text-center">
-                      {t("home.answerPendingQuestions")}
-                    </p>
-                    <div className="text-center">
-                      <Button variant="outline">{t("home.unlockFullReport")}</Button>
-                    </div>
-                  </div>
+                  <p className="text-sm font-medium mb-1">{t("home.yourOffer")}:</p>
+                  <p className="text-sm text-muted-foreground mb-4 px-4">
+                    "{t("home.offerPlaceholder")}"
+                  </p>
+                  <Button variant="outline">
+                    {t("home.setupLeadBooster")}
+                  </Button>
                 </CardContent>
               </Card>
             </div>
 
             {/* Performance Snapshot - Right Column */}
             <div className="col-span-full md:col-span-4 space-y-6">
-              <Card className="rounded-[20px] border-[hsl(0_0%_84%)]">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold">{t("home.performanceSnapshot")}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* Profile Views */}
-                  <div>
-                    <h3 className="font-semibold mb-2">{t("home.profileViews")}</h3>
-                    <p className="text-sm text-green-600 mb-4">{t("home.higherThanLastWeek")}</p>
-
-                    {/* Simple Bar Chart Placeholder */}
-                    <div className="h-32 flex items-end gap-1 mb-2">
-                      {[25, 30, 20, 35, 40, 30, 25, 20, 15, 45, 50, 35].map((height, i) => (
-                        <div key={i} className="flex-1 bg-blue-600 rounded-t" style={{ height: `${height}%` }} />
-                      ))}
+              <h2 className="text-lg font-semibold">{t("home.performanceSnapshot")}</h2>
+              
+              {/* Leads Download Card */}
+              <Card className="rounded-[20px] border-[hsl(0_0%_84%)] bg-white">
+                <CardContent className="pt-6">
+                  <h3 className="font-semibold mb-4">{t("home.leadsDownload")}</h3>
+                  
+                  <div className="flex items-center gap-6">
+                    {/* Donut Chart */}
+                    <div className="relative w-32 h-32 flex-shrink-0">
+                      <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                        {/* Background circle */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          stroke="hsl(0 0% 90%)"
+                          strokeWidth="12"
+                          fill="none"
+                        />
+                        {/* 40% Unrated - Coral Rose #DA627D */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          stroke="#DA627D"
+                          strokeWidth="12"
+                          fill="none"
+                          strokeDasharray="100.53 251.33"
+                          strokeDashoffset="0"
+                        />
+                        {/* 20% 3 star - Royal Violet #7B2CBF */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          stroke="#7B2CBF"
+                          strokeWidth="12"
+                          fill="none"
+                          strokeDasharray="50.27 251.33"
+                          strokeDashoffset="-100.53"
+                        />
+                        {/* 20% 2 star - Herbal Green #6A994E */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          stroke="#6A994E"
+                          strokeWidth="12"
+                          fill="none"
+                          strokeDasharray="50.27 251.33"
+                          strokeDashoffset="-150.80"
+                        />
+                        {/* 20% 4 star - Amber #F4A261 */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          stroke="#F4A261"
+                          strokeWidth="12"
+                          fill="none"
+                          strokeDasharray="50.27 251.33"
+                          strokeDashoffset="-201.06"
+                        />
+                      </svg>
+                      <span className="absolute inset-0 flex items-center justify-center text-2xl font-bold">234</span>
                     </div>
-                    <p className="text-xs text-muted-foreground text-center">{t("home.weeksRemaining")}</p>
-
-                    <div className="text-center mt-4">
-                      <Button variant="outline" asChild>
-                        <Link to="/exhibitor-dashboard">{t("home.viewFullReport")}</Link>
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* Boost Your Visibility */}
-                  <div className="text-center pt-4 border-t">
-                    <h4 className="font-medium mb-2">{t("home.boostVisibility")}</h4>
-                    <p className="text-xs text-muted-foreground mb-3">
-                      {t("home.standOutFromRest")} <span className="italic">{t("home.additionalCostApplies")}</span>
-                    </p>
-                    <Button className="bg-pink-500 hover:bg-pink-600 text-white">{t("home.askAboutPriority")}</Button>
-                  </div>
-
-                  {/* Profile Viewers */}
-                  <div className="pt-4 border-t">
-                    <h3 className="font-semibold mb-2">{t("home.yourProfileViewers")}</h3>
-                    <p className="text-xs text-muted-foreground text-center mb-3">
-                      ({t("home.showing").replace("{shown}", "2").replace("{total}", "11")})
-                    </p>
-
-                    <div className="border rounded-lg overflow-hidden">
-                      <table className="w-full text-sm">
-                        <thead className="bg-muted/50">
-                          <tr>
-                            <th className="text-left p-2 font-medium">{t("home.companyNameColumn")}</th>
-                            <th className="text-right p-2 font-medium">{t("home.contactNo")}</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y">
-                          {profileViewers.map((viewer, i) => (
-                            <tr key={i}>
-                              <td className="p-2">{viewer.companyName}</td>
-                              <td className="p-2 text-right text-muted-foreground">{viewer.contactNo}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <div className="text-center py-2 text-xs text-muted-foreground">
-                        {t("home.more").replace("{count}", "9")}
+                    
+                    {/* Legend */}
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: "#DA627D" }}></span>
+                        <span className="font-medium">40%</span>
+                        <span className="text-muted-foreground">{t("home.unrated")}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: "#7B2CBF" }}></span>
+                        <span className="font-medium">20%</span>
+                        <span className="text-muted-foreground">{t("home.threeStar")}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: "#6A994E" }}></span>
+                        <span className="font-medium">20%</span>
+                        <span className="text-muted-foreground">{t("home.twoStar")}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: "#F4A261" }}></span>
+                        <span className="font-medium">20%</span>
+                        <span className="text-muted-foreground">{t("home.fourStar")}</span>
                       </div>
                     </div>
+                  </div>
+                  
+                  <p className="text-sm text-muted-foreground mt-4 mb-4 text-center">
+                    {t("home.nudgeBoothTeam")}
+                  </p>
+                  <div className="text-center">
+                    <Button variant="outline">
+                      {t("home.downloadMyLeads")}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
 
-                    <div className="text-center mt-4">
-                      <Button variant="outline" asChild>
-                        <Link to="/profile-viewer">{t("home.discoverMyViewers")}</Link>
-                      </Button>
+              {/* Lead Capture Performance Card */}
+              <Card className="rounded-[20px] border-[hsl(0_0%_84%)] bg-white">
+                <CardContent className="pt-6">
+                  <h3 className="font-semibold mb-4">{t("home.leadCapturePerformance")}</h3>
+                  
+                  {/* Bar Chart */}
+                  <div className="flex items-end justify-center gap-6 h-32 mb-4">
+                    {/* Day 1 */}
+                    <div className="flex flex-col items-center">
+                      <div 
+                        className="w-12 rounded-t" 
+                        style={{ backgroundColor: "#E36414", height: "60%" }}
+                      ></div>
+                      <span className="text-sm mt-2 text-muted-foreground">{t("home.day")} 1</span>
+                      <span className="text-xs text-muted-foreground">326 {t("home.leads")}</span>
                     </div>
+                    {/* Day 2 - Highlighted */}
+                    <div className="flex flex-col items-center">
+                      <div 
+                        className="w-12 rounded-t" 
+                        style={{ backgroundColor: "#E36414", height: "100%" }}
+                      ></div>
+                      <span className="text-sm mt-2" style={{ color: "#E36414" }}>{t("home.day")} 2</span>
+                      <span className="text-xs" style={{ color: "#E36414" }}>544 {t("home.leads")}</span>
+                    </div>
+                    {/* Day 3 - Empty/grey */}
+                    <div className="flex flex-col items-center">
+                      <div 
+                        className="w-12 rounded-t bg-muted" 
+                        style={{ height: "10%" }}
+                      ></div>
+                      <span className="text-sm mt-2 text-muted-foreground">{t("home.day")} 3</span>
+                      <span className="text-xs text-muted-foreground invisible">0 {t("home.leads")}</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-muted-foreground mb-4 text-center">
+                    {t("home.teamCapturedToday")}
+                  </p>
+                  <div className="text-center">
+                    <Button variant="outline">
+                      {t("home.viewFullReport")}
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
