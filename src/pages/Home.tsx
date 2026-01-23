@@ -192,7 +192,7 @@ const Home = () => {
             </div>
 
             {/* Recommended Actions - Middle Column */}
-            <div className="col-span-full md:col-span-4 space-y-[18px]">
+            <div className="col-span-full md:col-span-4 space-y-6">
               <h2 className="text-lg font-semibold">{t("home.recommendedActions")}</h2>
               
               {/* Lead Manager App Card */}
@@ -244,7 +244,7 @@ const Home = () => {
             </div>
 
             {/* Performance Snapshot - Right Column */}
-            <div className="col-span-full md:col-span-4 space-y-[18px]">
+            <div className="col-span-full md:col-span-4 space-y-6">
               <h2 className="text-lg font-semibold">{t("home.performanceSnapshot")}</h2>
               
               {/* Leads Download Card */}
