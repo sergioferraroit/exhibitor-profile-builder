@@ -75,14 +75,14 @@ const Home = () => {
       checked: true,
       link: "/your-company-badges",
     },
-    { id: "6", titleKey: "task.createOfferToCapture", status: "completed", dueDate: "24th Jan 2025", checked: true },
-    { id: "7", titleKey: "task.viewExhibitorManual", status: "pending", dueDate: "1st Mar 2025", checked: false },
-    { id: "8", titleKey: "task.customTaskOperations", status: "pending", dueDate: "1st Mar 2025", checked: false },
-    { id: "9", titleKey: "task.exploreTheShop", status: "completed", dueDate: "3rd Mar 2025", checked: true },
-    { id: "10", titleKey: "task.upgradePackage", status: "completed", dueDate: "3rd Mar 2025", checked: true },
-    { id: "11", titleKey: "task.setUpMeetings", status: "pending", dueDate: "10th Mar 2025", checked: false },
-    { id: "12", titleKey: "task.uploadDocuments", status: "pending", dueDate: "10th Mar 2025", checked: false },
-    { id: "13", titleKey: "task.setUpLeadManagerApp", status: "pending", dueDate: "10th Mar 2025", checked: false },
+    { id: "6", titleKey: "task.createOfferToCapture", status: "completed", dueDate: "24th Jan 2026", checked: true },
+    { id: "7", titleKey: "task.viewExhibitorManual", status: "pending", dueDate: "1st Mar 2026", checked: false },
+    { id: "8", titleKey: "task.customTaskOperations", status: "pending", dueDate: "1st Mar 2026", checked: false },
+    { id: "9", titleKey: "task.exploreTheShop", status: "completed", dueDate: "3rd Mar 2026", checked: true },
+    { id: "10", titleKey: "task.upgradePackage", status: "completed", dueDate: "3rd Mar 2026", checked: true },
+    { id: "11", titleKey: "task.setUpMeetings", status: "pending", dueDate: "9th Mar 2026", checked: false },
+    { id: "12", titleKey: "task.uploadDocuments", status: "pending", dueDate: "9th Mar 2026", checked: false },
+    { id: "13", titleKey: "task.setUpLeadManagerApp", status: "pending", dueDate: "9th Mar 2026", checked: false },
   ]);
 
   const profileViewers: ProfileViewer[] = [
