@@ -355,12 +355,12 @@ const Home = () => {
                   <h3 className="font-semibold mb-4">{t("home.leadCapturePerformance")}</h3>
                   
                   {/* Bar Chart */}
-                  <div className="flex items-end justify-center gap-6 h-32 mb-4">
+                  <div className="flex items-end justify-center gap-8 h-32 mb-4">
                     {/* Day 1 */}
                     <div className="flex flex-col items-center">
                       <div 
-                        className="w-12 rounded-t" 
-                        style={{ backgroundColor: "#E36414", height: "60%" }}
+                        className="w-14 rounded-t" 
+                        style={{ backgroundColor: "#E36414", height: "75px" }}
                       ></div>
                       <span className="text-sm mt-2 text-muted-foreground">{t("home.day")} 1</span>
                       <span className="text-xs text-muted-foreground">326 {t("home.leads")}</span>
@@ -368,20 +368,20 @@ const Home = () => {
                     {/* Day 2 - Highlighted */}
                     <div className="flex flex-col items-center">
                       <div 
-                        className="w-12 rounded-t" 
-                        style={{ backgroundColor: "#E36414", height: "100%" }}
+                        className="w-14 rounded-t" 
+                        style={{ backgroundColor: "#E36414", height: "100px" }}
                       ></div>
-                      <span className="text-sm mt-2" style={{ color: "#E36414" }}>{t("home.day")} 2</span>
-                      <span className="text-xs" style={{ color: "#E36414" }}>544 {t("home.leads")}</span>
+                      <span className="text-sm mt-2 font-medium" style={{ color: "#E36414" }}>{t("home.day")} 2</span>
+                      <span className="text-xs font-medium" style={{ color: "#E36414" }}>544 {t("home.leads")}</span>
                     </div>
                     {/* Day 3 - Empty/grey */}
                     <div className="flex flex-col items-center">
                       <div 
-                        className="w-12 rounded-t bg-muted" 
-                        style={{ height: "10%" }}
+                        className="w-14 rounded-t bg-muted" 
+                        style={{ height: "12px" }}
                       ></div>
                       <span className="text-sm mt-2 text-muted-foreground">{t("home.day")} 3</span>
-                      <span className="text-xs text-muted-foreground invisible">0 {t("home.leads")}</span>
+                      <span className="text-xs text-muted-foreground invisible">-</span>
                     </div>
                   </div>
                   
