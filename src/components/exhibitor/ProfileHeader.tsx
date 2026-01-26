@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Pencil, Eye, Sparkles } from 'lucide-react';
+import { Pencil, Eye } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -22,7 +22,6 @@ interface ProfileHeaderProps {
   onOpenWizard: () => void;
   onOpenPreview: () => void;
   onUpdateCompanyName: (name: string) => void;
-  onOpenAISetup?: () => void;
   availableLocales: Locale[];
   primaryLocale: Locale;
 }
@@ -30,14 +29,9 @@ interface ProfileHeaderProps {
 export function ProfileHeader({
   companyName,
   completionPercentage,
-  selectedLocale,
-  onLocaleChange,
   onOpenWizard,
   onOpenPreview,
   onUpdateCompanyName,
-  onOpenAISetup,
-  availableLocales,
-  primaryLocale,
 }: ProfileHeaderProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedName, setEditedName] = useState(companyName);
@@ -69,14 +63,6 @@ export function ProfileHeader({
             <div className="flex items-center gap-4">
               {/* Circular Progress Ring */}
               <CircularProgressRing value={completionPercentage} size={40} strokeWidth={4} />
-
-              {/* AI Auto-fill Button */}
-              {onOpenAISetup && (
-                <Button variant="outline" onClick={onOpenAISetup} className="gap-2 border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10">
-                  <Sparkles className="h-4 w-4" />
-                  {t('ai.autoFillProfile')}
-                </Button>
-              )}
 
               {/* Preview Button */}
               <Button variant="outline" onClick={onOpenPreview} className="gap-2">
