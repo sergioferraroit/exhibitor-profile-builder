@@ -160,11 +160,18 @@ export default {
   				'smoky-blue': 'hsl(var(--data-smoky-blue))',
   				turquoise: 'hsl(var(--data-turquoise))'
   			},
-  			topbar: {
-  				DEFAULT: 'hsl(var(--topbar-bg))',
-  				foreground: 'hsl(var(--topbar-foreground))',
-  				muted: 'hsl(var(--topbar-muted))'
-  			}
+			topbar: {
+				DEFAULT: 'hsl(var(--topbar-bg))',
+				foreground: 'hsl(var(--topbar-foreground))',
+				muted: 'hsl(var(--topbar-muted))'
+			},
+			'progress-ring': {
+				low: 'hsl(var(--progress-ring-low))',
+				medium: 'hsl(var(--progress-ring-medium))',
+				high: 'hsl(var(--progress-ring-high))',
+				complete: 'hsl(var(--progress-ring-complete))',
+				track: 'hsl(var(--progress-ring-track))'
+			}
   		},
   		gap: {
   			gutter: '1.5rem'

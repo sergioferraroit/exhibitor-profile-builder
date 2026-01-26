@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { CircularProgressRing } from '@/components/ui/circular-progress-ring';
 import {
   Dialog,
   DialogContent,
@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Pencil, Eye, Sparkles } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 import { useLanguage } from '@/contexts/LanguageContext';
+
 interface ProfileHeaderProps {
   companyName: string;
   completionPercentage: number;
@@ -59,21 +60,16 @@ export function ProfileHeader({
       <header className="bg-card border-b">
         <div className="container mx-auto py-4">
           <div className="flex items-center justify-between">
-            {/* Left: Page title and progress */}
+            {/* Left: Page title */}
             <div className="flex flex-col gap-1">
               <h1 className="text-xl font-semibold text-foreground">{t('profile.editCompanyProfile')}</h1>
-              
-              {/* Completion Progress */}
-              <div className="flex items-center gap-3">
-                <div className="w-24">
-                  <Progress value={completionPercentage} className="h-1.5" />
-                </div>
-                <span className="text-sm text-foreground-secondary">{completionPercentage}{t('profile.complete')}</span>
-              </div>
             </div>
 
-            {/* Right: Language, buttons */}
+            {/* Right: Progress ring and buttons */}
             <div className="flex items-center gap-4">
+              {/* Circular Progress Ring */}
+              <CircularProgressRing value={completionPercentage} size={40} strokeWidth={4} />
+
               {/* AI Auto-fill Button */}
               {onOpenAISetup && (
                 <Button variant="outline" onClick={onOpenAISetup} className="gap-2 border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10">
@@ -88,7 +84,7 @@ export function ProfileHeader({
                 {t('profile.preview')}
               </Button>
 
-              {/* Fill Profile Button */}
+              {/* Complete Profile Button */}
               <Button onClick={onOpenWizard} className="gap-2">
                 <Pencil className="h-4 w-4" />
                 {t('profile.fillProfile')}
