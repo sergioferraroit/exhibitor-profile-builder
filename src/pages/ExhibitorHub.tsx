@@ -86,7 +86,7 @@ const ExhibitorHub = () => {
 
       <main className="container mx-auto py-6">
         <Tabs value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="mb-6 bg-transparent px-1 py-1.5 rounded-full border border-border inline-flex gap-0">
+          <TabsList className="mb-6 bg-transparent p-1 rounded-full border border-border inline-flex gap-0">
             <TabsTrigger
               value="profile"
               className="px-4 py-2 text-sm font-medium rounded-full transition-all gap-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted"
