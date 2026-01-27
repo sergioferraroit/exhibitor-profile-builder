@@ -1,19 +1,12 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CircularProgressRing } from '@/components/ui/circular-progress-ring';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 import { useLanguage } from '@/contexts/LanguageContext';
-
 interface ProfileHeaderProps {
   companyName: string;
   completionPercentage: number;
@@ -25,34 +18,31 @@ interface ProfileHeaderProps {
   availableLocales: Locale[];
   primaryLocale: Locale;
 }
-
 export function ProfileHeader({
   companyName,
   completionPercentage,
   onOpenWizard,
   onOpenPreview,
-  onUpdateCompanyName,
+  onUpdateCompanyName
 }: ProfileHeaderProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedName, setEditedName] = useState(companyName);
-  const { t } = useLanguage();
-
+  const {
+    t
+  } = useLanguage();
   const handleOpenModal = () => {
     setEditedName(companyName);
     setIsEditModalOpen(true);
   };
-
   const handleSave = () => {
     if (editedName.trim()) {
       onUpdateCompanyName(editedName.trim());
       setIsEditModalOpen(false);
     }
   };
-
-  return (
-    <>
+  return <>
       <header className="bg-card border-b">
-        <div className="container mx-auto py-4">
+        <div className="container mx-auto my-0 py-[4px]">
           <div className="flex items-center justify-between">
             {/* Left: Page title */}
             <div className="flex flex-col gap-1">
@@ -69,12 +59,7 @@ export function ProfileHeader({
 
               {/* Complete Profile Button with embedded progress ring */}
               <Button onClick={onOpenWizard} className="h-12 gap-0 pl-1 pr-3">
-                <CircularProgressRing 
-                  value={completionPercentage} 
-                  size={40} 
-                  strokeWidth={4} 
-                  variant="inverted"
-                />
+                <CircularProgressRing value={completionPercentage} size={40} strokeWidth={4} variant="inverted" />
                 <span className="px-3">{t('profile.fillProfile')}</span>
               </Button>
             </div>
@@ -90,12 +75,7 @@ export function ProfileHeader({
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <Label htmlFor="company-name">{t('profile.companyName')}</Label>
-              <Input
-                id="company-name"
-                value={editedName}
-                onChange={(e) => setEditedName(e.target.value)}
-                placeholder={t('profile.enterCompanyName')}
-              />
+              <Input id="company-name" value={editedName} onChange={e => setEditedName(e.target.value)} placeholder={t('profile.enterCompanyName')} />
             </div>
           </div>
           <DialogFooter className="flex-col-reverse sm:flex-row gap-2">
@@ -108,6 +88,5 @@ export function ProfileHeader({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
-  );
+    </>;
 }
