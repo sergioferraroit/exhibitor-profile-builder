@@ -46,7 +46,8 @@ const CircularProgressRing = React.forwardRef<
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
-        className="transform -rotate-90"
+        className="transform -rotate-90 !w-auto !h-auto"
+        style={{ width: size, height: size }}
       >
         {/* Background ring (white outline) */}
         <circle
