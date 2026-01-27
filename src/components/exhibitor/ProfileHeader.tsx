@@ -68,11 +68,11 @@ export function ProfileHeader({
               </Button>
 
               {/* Complete Profile Button with embedded progress ring */}
-              <Button onClick={onOpenWizard} className="gap-2 pl-2">
+              <Button onClick={onOpenWizard} className="gap-2.5 pl-1.5 h-11">
                 <CircularProgressRing 
                   value={completionPercentage} 
-                  size={28} 
-                  strokeWidth={2.5} 
+                  size={36} 
+                  strokeWidth={3} 
                   className="text-primary-foreground"
                   variant="inverted"
                 />
