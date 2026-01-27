@@ -91,14 +91,18 @@ const ExhibitorHub = () => {
               value="profile"
               className="px-4 py-2 text-sm font-medium rounded-full transition-all gap-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted"
             >
-              <img src={CompanyProfileIcon} alt="" className="w-[17px] h-[18px]" />
+              {activeTab === "profile" && (
+                <img src={CompanyProfileIcon} alt="" className="w-[17px] h-[18px]" />
+              )}
               {t("exhibitor.companyProfile")}
             </TabsTrigger>
             <TabsTrigger
               value="products"
               className="px-4 py-2 text-sm font-medium rounded-full transition-all gap-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted"
             >
-              <img src={ProductListingIcon} alt="" className="w-[19px] h-[15px]" />
+              {activeTab === "products" && (
+                <img src={ProductListingIcon} alt="" className="w-[19px] h-[15px]" />
+              )}
               {t("exhibitor.productListing")}
             </TabsTrigger>
           </TabsList>
