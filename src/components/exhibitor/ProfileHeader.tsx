@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Pencil, Eye } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -59,20 +59,23 @@ export function ProfileHeader({
               <h1 className="text-xl font-semibold text-foreground">{t('profile.editCompanyProfile')}</h1>
             </div>
 
-            {/* Right: Progress ring and buttons */}
+            {/* Right: Buttons */}
             <div className="flex items-center gap-4">
-              {/* Circular Progress Ring */}
-              <CircularProgressRing value={completionPercentage} size={40} strokeWidth={4} />
-
               {/* Preview Button */}
               <Button variant="outline" onClick={onOpenPreview} className="gap-2">
                 <Eye className="h-4 w-4" />
                 {t('profile.preview')}
               </Button>
 
-              {/* Complete Profile Button */}
-              <Button onClick={onOpenWizard} className="gap-2">
-                <Pencil className="h-4 w-4" />
+              {/* Complete Profile Button with embedded progress ring */}
+              <Button onClick={onOpenWizard} className="gap-2 pl-2">
+                <CircularProgressRing 
+                  value={completionPercentage} 
+                  size={28} 
+                  strokeWidth={2.5} 
+                  className="text-primary-foreground"
+                  variant="inverted"
+                />
                 {t('profile.fillProfile')}
               </Button>
             </div>
