@@ -28,6 +28,13 @@ const CircularProgressRing = React.forwardRef<
   const center = size / 2;
 
   const isInverted = variant === "inverted";
+  
+  // Calculate font size based on ring size and whether showing 100%
+  const getFontSize = () => {
+    if (size <= 32) return 8;
+    if (size <= 40) return 10;
+    return 12;
+  };
 
   return (
     <div
@@ -41,16 +48,16 @@ const CircularProgressRing = React.forwardRef<
         viewBox={`0 0 ${size} ${size}`}
         className="transform -rotate-90"
       >
-        {/* Background track */}
+        {/* Background ring (white outline) */}
         <circle
           cx={center}
           cy={center}
           r={radius}
           fill="none"
-          className={isInverted ? "stroke-primary-foreground/30" : "stroke-progress-ring-track"}
+          className={isInverted ? "stroke-primary-foreground" : "stroke-progress-ring-track"}
           strokeWidth={strokeWidth}
         />
-        {/* Progress arc */}
+        {/* Progress arc (semi-transparent primary) */}
         <circle
           cx={center}
           cy={center}
@@ -58,7 +65,7 @@ const CircularProgressRing = React.forwardRef<
           fill="none"
           className={cn(
             "transition-all duration-300 ease-out",
-            isInverted ? "stroke-primary-foreground" : getColorClass(normalizedValue)
+            isInverted ? "stroke-primary/50" : getColorClass(normalizedValue)
           )}
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
@@ -67,11 +74,13 @@ const CircularProgressRing = React.forwardRef<
         />
       </svg>
       {showPercentage && (
-        <span className={cn(
-          "absolute font-medium",
-          isInverted ? "text-primary-foreground" : "text-foreground",
-          size <= 32 ? "text-[8px]" : "text-xs"
-        )}>
+        <span 
+          className={cn(
+            "absolute font-normal tracking-tight",
+            isInverted ? "text-primary-foreground" : "text-foreground"
+          )}
+          style={{ fontSize: getFontSize() }}
+        >
           {Math.round(normalizedValue)}%
         </span>
       )}
