@@ -68,9 +68,9 @@ const CircularProgressRing = React.forwardRef<
       </svg>
       {showPercentage && (
         <span className={cn(
-          "absolute font-semibold",
+          "absolute font-medium",
           isInverted ? "text-primary-foreground" : "text-foreground",
-          size <= 28 ? "text-[7px]" : size <= 36 ? "text-[9px]" : "text-xs"
+          size <= 32 ? "text-[8px]" : "text-xs"
         )}>
           {Math.round(normalizedValue)}%
         </span>
