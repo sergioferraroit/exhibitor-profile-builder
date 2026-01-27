@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CompanyProfileIcon from "@/assets/company-profile-icon.svg";
+import ProductListingIcon from "@/assets/product-listing-icon.svg";
 import { useExhibitorProfile } from "@/hooks/useExhibitorProfile";
 import { useProfileCompletion } from "@/hooks/useProfileCompletion";
 import { TopBar } from "@/components/exhibitor/TopBar";
@@ -84,17 +86,19 @@ const ExhibitorHub = () => {
 
       <main className="container mx-auto py-6">
         <Tabs value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="mb-6 bg-muted/50 p-1 rounded-lg border border-border">
+          <TabsList className="mb-6 bg-transparent p-1 rounded-full border border-border inline-flex gap-0">
             <TabsTrigger
               value="profile"
-              className="px-6 py-2.5 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border rounded-md transition-all"
+              className="px-4 py-2 text-sm font-medium rounded-full transition-all gap-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted"
             >
+              <img src={CompanyProfileIcon} alt="" className="w-[17px] h-[18px]" />
               {t("exhibitor.companyProfile")}
             </TabsTrigger>
             <TabsTrigger
               value="products"
-              className="px-6 py-2.5 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border rounded-md transition-all"
+              className="px-4 py-2 text-sm font-medium rounded-full transition-all gap-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted"
             >
+              <img src={ProductListingIcon} alt="" className="w-[19px] h-[15px]" />
               {t("exhibitor.productListing")}
             </TabsTrigger>
           </TabsList>
