@@ -7,6 +7,7 @@ interface CircularProgressRingProps {
   strokeWidth?: number;
   className?: string;
   showPercentage?: boolean;
+  variant?: "default" | "inverted";
 }
 
 const getColorClass = (percentage: number): string => {
@@ -19,12 +20,14 @@ const getColorClass = (percentage: number): string => {
 const CircularProgressRing = React.forwardRef<
   HTMLDivElement,
   CircularProgressRingProps
->(({ value, size = 48, strokeWidth = 4, className, showPercentage = true }, ref) => {
+>(({ value, size = 48, strokeWidth = 4, className, showPercentage = true, variant = "default" }, ref) => {
   const normalizedValue = Math.min(100, Math.max(0, value));
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (normalizedValue / 100) * circumference;
   const center = size / 2;
+
+  const isInverted = variant === "inverted";
 
   return (
     <div
@@ -44,7 +47,7 @@ const CircularProgressRing = React.forwardRef<
           cy={center}
           r={radius}
           fill="none"
-          className="stroke-progress-ring-track"
+          className={isInverted ? "stroke-primary-foreground/30" : "stroke-progress-ring-track"}
           strokeWidth={strokeWidth}
         />
         {/* Progress arc */}
@@ -53,7 +56,10 @@ const CircularProgressRing = React.forwardRef<
           cy={center}
           r={radius}
           fill="none"
-          className={cn("transition-all duration-300 ease-out", getColorClass(normalizedValue))}
+          className={cn(
+            "transition-all duration-300 ease-out",
+            isInverted ? "stroke-primary-foreground" : getColorClass(normalizedValue)
+          )}
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
@@ -61,7 +67,11 @@ const CircularProgressRing = React.forwardRef<
         />
       </svg>
       {showPercentage && (
-        <span className="absolute text-xs font-medium text-foreground">
+        <span className={cn(
+          "absolute font-medium",
+          isInverted ? "text-primary-foreground" : "text-foreground",
+          size <= 32 ? "text-[8px]" : "text-xs"
+        )}>
           {Math.round(normalizedValue)}%
         </span>
       )}
