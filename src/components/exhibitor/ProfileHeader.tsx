@@ -42,7 +42,7 @@ export function ProfileHeader({
   };
   return <>
       <header className="bg-card border-b">
-        <div className="container mx-auto my-0 py-[4px]">
+        <div className="container mx-auto my-0 py-[8px]">
           <div className="flex items-center justify-between">
             {/* Left: Page title */}
             <div className="flex flex-col gap-1">
