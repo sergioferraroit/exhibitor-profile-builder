@@ -52,7 +52,7 @@ export function ProfileHeader({
             {/* Right: Buttons */}
             <div className="flex items-center gap-4">
               {/* Preview Button */}
-              <Button variant="outline" onClick={onOpenPreview} className="gap-2">
+              <Button variant="outline" onClick={onOpenPreview} className="h-12 gap-2">
                 <Eye className="h-4 w-4" />
                 {t('profile.preview')}
               </Button>
