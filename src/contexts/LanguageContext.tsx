@@ -191,6 +191,8 @@ const en: Record<string, string> = {
   'profile.enterCompanyName': 'Enter company name',
   'profile.cancel': 'Cancel',
   'profile.save': 'Save',
+  'profile.sectionsFulfilled': 'sections fulfilled',
+  'profile.sectionsFulfilledTooltip': 'Complete all sections to maximize your profile visibility and attract more visitors.',
   
   // ExhibitorHub Tabs
   'exhibitor.companyProfile': 'Company Profile',
@@ -428,6 +430,8 @@ const fr: Record<string, string> = {
   'profile.enterCompanyName': 'Entrer le nom de l\'entreprise',
   'profile.cancel': 'Annuler',
   'profile.save': 'Enregistrer',
+  'profile.sectionsFulfilled': 'sections remplies',
+  'profile.sectionsFulfilledTooltip': 'Complétez toutes les sections pour maximiser la visibilité de votre profil et attirer plus de visiteurs.',
   
   // ExhibitorHub Tabs
   'exhibitor.companyProfile': 'Profil de l\'entreprise',
@@ -665,6 +669,8 @@ const ja: Record<string, string> = {
   'profile.enterCompanyName': '会社名を入力',
   'profile.cancel': 'キャンセル',
   'profile.save': '保存',
+  'profile.sectionsFulfilled': 'セクション完了',
+  'profile.sectionsFulfilledTooltip': 'すべてのセクションを完了して、プロフィールの可視性を最大化し、より多くの訪問者を引き付けましょう。',
   
   // ExhibitorHub Tabs
   'exhibitor.companyProfile': '会社プロフィール',

@@ -38,6 +38,14 @@ const ExhibitorHub = () => {
 
   const completion = useProfileCompletion(profile);
 
+  // Calculate section fulfillment counts
+  const relevantSections = profile.sections.filter(s => !s.isNotRelevant);
+  const fulfilledSections = relevantSections.filter(s => {
+    if (s.id === 'products') return profile.products.length > 0;
+    return s.localeData[profile.primaryLocale]?.status === 'complete';
+  }).length;
+  const totalSections = relevantSections.length;
+
   // Derive active tab from URL
   const activeTab = location.pathname === "/product-listing" ? "products" : "profile";
 
@@ -82,6 +90,8 @@ const ExhibitorHub = () => {
         onUpdateCompanyName={updateCompanyName}
         availableLocales={[profile.primaryLocale, ...profile.secondaryLocales]}
         primaryLocale={profile.primaryLocale}
+        fulfilledSections={fulfilledSections}
+        totalSections={totalSections}
       />
 
       <main className="container mx-auto py-6">
