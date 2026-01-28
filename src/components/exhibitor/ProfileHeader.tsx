@@ -70,16 +70,16 @@ export function ProfileHeader({
 
             {/* Right: Buttons */}
             <div className="flex items-center gap-4">
-              {/* Preview Button */}
-              <Button variant="outline" onClick={onOpenPreview} className="h-12 gap-2">
-                <Eye className="h-4 w-4" />
-                {t('profile.preview')}
-              </Button>
-
               {/* Complete Profile Button with embedded progress ring */}
               <Button onClick={onOpenWizard} className="h-12 gap-0 pl-1 pr-3">
                 <CircularProgressRing value={completionPercentage} size={40} strokeWidth={4} variant="inverted" />
                 <span className="px-3">{t('profile.fillProfile')}</span>
+              </Button>
+
+              {/* Preview Button */}
+              <Button variant="outline" onClick={onOpenPreview} className="h-12 gap-2">
+                <Eye className="h-4 w-4" />
+                {t('profile.preview')}
               </Button>
             </div>
           </div>
