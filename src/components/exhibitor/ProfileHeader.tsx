@@ -4,9 +4,11 @@ import { CircularProgressRing } from '@/components/ui/circular-progress-ring';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Eye } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Eye, Info } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 import { useLanguage } from '@/contexts/LanguageContext';
+
 interface ProfileHeaderProps {
   companyName: string;
   completionPercentage: number;
@@ -17,13 +19,17 @@ interface ProfileHeaderProps {
   onUpdateCompanyName: (name: string) => void;
   availableLocales: Locale[];
   primaryLocale: Locale;
+  fulfilledSections: number;
+  totalSections: number;
 }
 export function ProfileHeader({
   companyName,
   completionPercentage,
   onOpenWizard,
   onOpenPreview,
-  onUpdateCompanyName
+  onUpdateCompanyName,
+  fulfilledSections,
+  totalSections
 }: ProfileHeaderProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedName, setEditedName] = useState(companyName);
@@ -47,6 +53,19 @@ export function ProfileHeader({
             {/* Left: Page title */}
             <div className="flex flex-col gap-1">
               <h1 className="text-xl font-semibold text-foreground">{t('profile.editCompanyProfile')}</h1>
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-3.5 w-3.5 text-muted-foreground cursor-pointer" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-[200px]">
+                      <p>{t('profile.sectionsFulfilledTooltip')}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <span>{fulfilledSections} of {totalSections} {t('profile.sectionsFulfilled')}</span>
+              </div>
             </div>
 
             {/* Right: Buttons */}
