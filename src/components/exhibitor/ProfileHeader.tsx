@@ -1,18 +1,14 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { CircularProgressRing } from '@/components/ui/circular-progress-ring';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Pencil, Eye, Sparkles } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Eye, Info } from 'lucide-react';
 import { Locale } from '@/types/exhibitor';
 import { useLanguage } from '@/contexts/LanguageContext';
+
 interface ProfileHeaderProps {
   companyName: string;
   completionPercentage: number;
@@ -21,77 +17,69 @@ interface ProfileHeaderProps {
   onOpenWizard: () => void;
   onOpenPreview: () => void;
   onUpdateCompanyName: (name: string) => void;
-  onOpenAISetup?: () => void;
   availableLocales: Locale[];
   primaryLocale: Locale;
+  fulfilledSections: number;
+  totalSections: number;
 }
-
 export function ProfileHeader({
   companyName,
   completionPercentage,
-  selectedLocale,
-  onLocaleChange,
   onOpenWizard,
   onOpenPreview,
   onUpdateCompanyName,
-  onOpenAISetup,
-  availableLocales,
-  primaryLocale,
+  fulfilledSections,
+  totalSections
 }: ProfileHeaderProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedName, setEditedName] = useState(companyName);
-  const { t } = useLanguage();
-
+  const {
+    t
+  } = useLanguage();
   const handleOpenModal = () => {
     setEditedName(companyName);
     setIsEditModalOpen(true);
   };
-
   const handleSave = () => {
     if (editedName.trim()) {
       onUpdateCompanyName(editedName.trim());
       setIsEditModalOpen(false);
     }
   };
-
-  return (
-    <>
+  return <>
       <header className="bg-card border-b">
-        <div className="container mx-auto py-4">
+        <div className="container mx-auto my-0 py-[8px]">
           <div className="flex items-center justify-between">
-            {/* Left: Page title and progress */}
+            {/* Left: Page title */}
             <div className="flex flex-col gap-1">
               <h1 className="text-xl font-semibold text-foreground">{t('profile.editCompanyProfile')}</h1>
-              
-              {/* Completion Progress */}
-              <div className="flex items-center gap-3">
-                <div className="w-24">
-                  <Progress value={completionPercentage} className="h-1.5" />
-                </div>
-                <span className="text-sm text-foreground-secondary">{completionPercentage}{t('profile.complete')}</span>
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-3.5 w-3.5 text-muted-foreground cursor-pointer" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-[200px]">
+                      <p>{t('profile.sectionsFulfilledTooltip')}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <span>{fulfilledSections} of {totalSections} {t('profile.sectionsFulfilled')}</span>
               </div>
             </div>
 
-            {/* Right: Language, buttons */}
+            {/* Right: Buttons */}
             <div className="flex items-center gap-4">
-              {/* AI Auto-fill Button */}
-              {onOpenAISetup && (
-                <Button variant="outline" onClick={onOpenAISetup} className="gap-2 border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10">
-                  <Sparkles className="h-4 w-4" />
-                  {t('ai.autoFillProfile')}
-                </Button>
-              )}
-
-              {/* Preview Button */}
-              <Button variant="outline" onClick={onOpenPreview} className="gap-2">
-                <Eye className="h-4 w-4" />
-                {t('profile.preview')}
+              {/* Complete Profile Button with embedded progress ring */}
+              <Button onClick={onOpenWizard} className="h-12 gap-0 pl-1 pr-3">
+                <CircularProgressRing value={completionPercentage} size={40} strokeWidth={4} variant="inverted" />
+                <span className="px-3">{t('profile.fillProfile')}</span>
               </Button>
 
-              {/* Fill Profile Button */}
-              <Button onClick={onOpenWizard} className="gap-2">
-                <Pencil className="h-4 w-4" />
-                {t('profile.fillProfile')}
+              {/* Preview Button */}
+              <Button variant="outline" onClick={onOpenPreview} className="h-12 gap-2">
+                <Eye className="h-4 w-4" />
+                {t('profile.preview')}
               </Button>
             </div>
           </div>
@@ -106,12 +94,7 @@ export function ProfileHeader({
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <Label htmlFor="company-name">{t('profile.companyName')}</Label>
-              <Input
-                id="company-name"
-                value={editedName}
-                onChange={(e) => setEditedName(e.target.value)}
-                placeholder={t('profile.enterCompanyName')}
-              />
+              <Input id="company-name" value={editedName} onChange={e => setEditedName(e.target.value)} placeholder={t('profile.enterCompanyName')} />
             </div>
           </div>
           <DialogFooter className="flex-col-reverse sm:flex-row gap-2">
@@ -124,6 +107,5 @@ export function ProfileHeader({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
-  );
+    </>;
 }

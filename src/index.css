@@ -112,6 +112,13 @@ All colors MUST be HSL.
     --data-smoky-blue: 215 25% 55%;
     --data-turquoise: 180 65% 50%;
 
+    /* Progress Ring Thresholds */
+    --progress-ring-low: 352 56% 46%;        /* Deep Crimson #B23A48 */
+    --progress-ring-medium: 23 84% 48%;      /* Burnt Orange #E36414 */
+    --progress-ring-high: 200 45% 48%;       /* Ocean Blue #468FAF */
+    --progress-ring-complete: 100 37% 44%;   /* Herbal Green #6A994E */
+    --progress-ring-track: 0 0% 90%;         /* Light gray track */
+
     /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 265 4% 12.9000%;
